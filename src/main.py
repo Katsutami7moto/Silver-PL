@@ -1,5 +1,7 @@
 # coding=utf-8
 
+from translator import translator
+
 """
 var x = 5;
 """
@@ -10,7 +12,7 @@ for line in source:
     lines_of_code.append(line)
 source.close()
 
-c_source = translator(parser(lexer(lines_of_code)))  # импортировать транслятор, остальные пойдут по цепочке
+c_source = translator(lines_of_code)
 
 result = open("result.c", "w")
 for line in c_source:
