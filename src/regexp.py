@@ -1,5 +1,9 @@
 # coding=utf-8
 
+"""
+Ожидает переделки !!!
+"""
+
 # Данная программа:
 # - парсит регэксп в дерево
 # - строит по дереву ДКА без построения НКА
@@ -78,7 +82,7 @@ class Node:
         elif (self.data == "*" or self.data == "+" or self.data == "?") and not self.screened:
             self.f.update(self.child.f)
         else:
-            self.f = {self.position}
+            self.f = {self.position}  # должен быть update() !!!
 
     def lastpos(self):
         if self.data == "|" and not self.screened:
@@ -91,7 +95,7 @@ class Node:
         elif (self.data == "*" or self.data == "+" or self.data == "?") and not self.screened:
             self.l.update(self.child.l)
         else:
-            self.l = {self.position}
+            self.l = {self.position}  # должен быть update() !!!
 
     def followpos(self):
         global followpostable
@@ -288,7 +292,7 @@ def dfabuild(posset):
         dfa[posset] = dict()
     for one in posset:
         symbol = followpostable[one][0]
-        if symbol != '#':
+        if symbol != '#':  # то же, что 'one != hashposnum'
             symstate = set().union(followpostable[one][1])
             if symbol not in dfa[posset] and symbol != '<@>':
                 dfa[posset][symbol] = symstate

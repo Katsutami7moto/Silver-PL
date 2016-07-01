@@ -3,6 +3,6 @@
 from lexer import lexer
 
 
-def parser(tokens):
-    assert isinstance(tokens, list)
+def parser(code):
+    assert isinstance(code, list)
     pass

@@ -3,6 +3,6 @@
 from parser import parser
 
 
-def translator(tree):
-    assert isinstance(tree, Node)
+def translator(code):
+    assert isinstance(code, list)
     pass
