@@ -1,8 +1,5 @@
 # coding=utf-8
 
-"""
-Ожидает переделки !!!
-"""
 
 # Данная программа:
 # - парсит регэксп в дерево
@@ -22,13 +19,23 @@ TAB = '\t'
 # regexp = "((1?1?0)*1?)#"  # Лаба 1, задание 2
 # regexp = "(2\\*2\\=1\\+1\\+1\\+1)#"
 # regexp = "(\".+\")#"
-regexp = "(n..b)#"
+# regexp = "(n..b)#"
 current = 0
 curposnum = 1
 hashposnum = 0
 followpostable = {}
 anykeytable = set()
 dfa = {}
+
+
+def relaunch():
+    global current, curposnum, hashposnum, followpostable, anykeytable, dfa
+    current = 0
+    curposnum = 1
+    hashposnum = 0
+    followpostable = {}
+    anykeytable = set()
+    dfa = {}
 
 
 class Node:
@@ -47,17 +54,6 @@ class Node:
         self.n = False
         self.f = set()
         self.l = set()
-
-    def setp(self):  # этот метод только для подкласса Leaf !!!
-        if self.screened or\
-                (self.data != "|" and self.data != "." and self.data != "*" and self.data != "+" and self.data != "?"):
-            global curposnum, followpostable, anykeytable
-            self.position = curposnum
-            followpostable[curposnum] = [self.data, set()]
-            if self.anykey:
-                assert isinstance(anykeytable, set)
-                anykeytable.add(self.position)
-            curposnum += 1
 
     def nullable(self):
         if self.data == "|" and not self.screened:
@@ -82,7 +78,7 @@ class Node:
         elif (self.data == "*" or self.data == "+" or self.data == "?") and not self.screened:
             self.f.update(self.child.f)
         else:
-            self.f = {self.position}  # должен быть update() !!!
+            self.f.update({self.position})
 
     def lastpos(self):
         if self.data == "|" and not self.screened:
@@ -95,7 +91,7 @@ class Node:
         elif (self.data == "*" or self.data == "+" or self.data == "?") and not self.screened:
             self.l.update(self.child.l)
         else:
-            self.l = {self.position}  # должен быть update() !!!
+            self.l.update({self.position})
 
     def followpos(self):
         global followpostable
@@ -139,7 +135,6 @@ class UnaryNode(Node):
     def postorderwalk_p(self):
         if self:
             self.child.postorderwalk_p()
-            self.setp()
 
     def postorderwalk_w(self):
         if self:
@@ -148,6 +143,15 @@ class UnaryNode(Node):
 
 
 class Leaf(Node):
+    def setp(self):
+        global curposnum, followpostable, anykeytable
+        self.position = curposnum
+        followpostable[curposnum] = [self.data, set()]
+        if self.anykey:
+            assert isinstance(anykeytable, set)
+            anykeytable.add(self.position)
+        curposnum += 1
+
     def printtree(self, h):
         print TAB * h + self.getdata()
 
@@ -210,7 +214,6 @@ class BinaryNode(Node):
         if self:
             self.lchild.postorderwalk_p()
             self.rchild.postorderwalk_p()
-            self.setp()
 
     def postorderwalk_w(self):
         if self:
@@ -251,26 +254,26 @@ def makeand(term):
     return result
 
 
-def parse():
-    global regexp, current
+def parse(regular):
+    global current
     terms = []
     term = []
-    while current < len(regexp) and regexp[current] != ')':
-        if regexp[current] == '(':
+    while current < len(regular) and regular[current] != ')':
+        if regular[current] == '(':
             current += 1
-            term.append(parse())
-        elif regexp[current] == '|':
+            term.append(parse(regular))
+        elif regular[current] == '|':
             terms.append(term)
             term = []
-        elif regexp[current] == '*' or regexp[current] == '+' or regexp[current] == '?':
-            term.append(createunode(regexp[current], term.pop()))
-        elif regexp[current] == '\\':
+        elif regular[current] == '*' or regular[current] == '+' or regular[current] == '?':
+            term.append(createunode(regular[current], term.pop()))
+        elif regular[current] == '\\':
             current += 1
-            term.append(createleaf(regexp[current], True, False))
-        elif regexp[current] == '.':
+            term.append(createleaf(regular[current], True, False))
+        elif regular[current] == '.':
             term.append(createleaf("<@>", False, True))
         else:
-            term.append(createleaf(regexp[current], False, False))
+            term.append(createleaf(regular[current], False, False))
         current += 1
     terms.append(term)
     return makeor(terms)
@@ -292,12 +295,12 @@ def dfabuild(posset):
         dfa[posset] = dict()
     for one in posset:
         symbol = followpostable[one][0]
-        if symbol != '#':  # то же, что 'one != hashposnum'
+        if one != hashposnum:
             symstate = set().union(followpostable[one][1])
             if symbol not in dfa[posset] and symbol != '<@>':
                 dfa[posset][symbol] = symstate
             elif symbol == '<@>':
-                temp = anykeytable & posset
+                temp = anykeytable & posset  # intersection
                 if any(temp):
                     dfa[posset][1] = symstate
             else:
@@ -332,27 +335,52 @@ def dfareader(stt, state, word):
         return
 
 
-def unittest():
-    test = parse()
-    calc(test)
-    test.printtree(0)
-    print "Hash is at position ", hashposnum
-    print followpostable
+def dfareturner(stt, state, word):
+    assert isinstance(word, str)
+    for symbol in word:
+        if symbol in stt[state]:
+            state = frozenset().union(stt[state][symbol])
+        elif 1 in stt[state] and stt[state][1]:
+            state = frozenset().union(stt[state][1])
+        else:
+            return False
+    if stt[state][0]:
+        return True
+    else:
+        return False
 
+
+def returner(regular, word):
     global dfa
-    ffs = frozenset().union(test.f)
-    dfabuild(ffs)
+    tree = parse(regular)
+    calc(tree)
+    begin_state = frozenset().union(tree.f)
+    dfabuild(begin_state)
+    result = dfareturner(dfa, begin_state, word)
+    relaunch()
+    return result
 
-    print "========================"
-    print dfa.keys()
-    for one in dfa:
-        print "========================"
-        print dfa[one]
-
-    print "========================"
-    print
-    w = input("Enter a word: ")
-    dfareader(dfa, ffs, w)
-
-
-unittest()
+# def unittest():
+#     test = parse(regexp)
+#     calc(test)
+#     test.printtree(0)
+#     print "Hash is at position ", hashposnum
+#     print followpostable
+#
+#     global dfa
+#     ffs = frozenset().union(test.f)
+#     dfabuild(ffs)
+#
+#     print "========================"
+#     print dfa.keys()
+#     for one in dfa:
+#         print "========================"
+#         print dfa[one]
+#
+#     print "========================"
+#     print
+#     w = input("Enter a word: ")
+#     dfareader(dfa, ffs, w)
+#
+#
+# unittest()
