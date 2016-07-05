@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from regexp import returner
+import regexp
 
 symbols = {
     '+': 'plus',
@@ -69,13 +69,13 @@ def check(word):
     if word in keywords:
         tokens.append(make_token(word))
     else:
-        if returner(r_cover(r_ident), word):
+        if regexp.returner(r_cover(r_ident), word):
             tokens.append(make_token("ident", word))
-        elif returner(r_cover(r_int), word):
+        elif regexp.returner(r_cover(r_int), word):
             tokens.append(make_token("int", int(word)))
-        elif returner(r_cover(r_float), word):
+        elif regexp.returner(r_cover(r_float), word):
             tokens.append(make_token("float", float(word)))
-        elif returner(r_cover(r_string), word):
+        elif regexp.returner(r_cover(r_string), word):
             tokens.append(make_token("string", word))
         else:
             raise NameError, "Некорректная лексема"

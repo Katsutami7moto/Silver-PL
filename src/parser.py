@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from lexer import lexer, Token
+import lexer
 
 
 class Node:
@@ -42,7 +42,7 @@ def p_param(term):
     assert isinstance(term, list)
     if len(term) == 1:
         subj = term[0]
-        assert isinstance(subj, Token)
+        assert isinstance(subj, lexer.Token)
         if subj.type in datas:
             return Node(subj.type, subj.value)
         elif subj.type in {"True", "False"}:
@@ -75,7 +75,7 @@ def p_sem(check):
 
 
 def c_sem(kot):
-    assert isinstance(kot, Token)
+    assert isinstance(kot, lexer.Token)
     if kot.type in sems:
         return kot.type
     else:
@@ -97,7 +97,7 @@ def p_block():
 def parser(code):
     assert isinstance(code, list)
     global tokens_list
-    tokens_list = lexer(code)
+    tokens_list = lexer.lexer(code)
     if tokens_list:
         p_block()
     return nodes

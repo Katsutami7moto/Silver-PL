@@ -4,7 +4,9 @@
     <list default="true" id="9008df4e-1652-4c48-b5cc-600fd6786a2d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lexer.py" afterPath="$PROJECT_DIR$/src/lexer.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main.py" afterPath="$PROJECT_DIR$/src/main.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/parser.py" afterPath="$PROJECT_DIR$/src/parser.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/translator.py" afterPath="$PROJECT_DIR$/src/translator.py" />
     </list>
     <ignored path="Cool-PL.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -48,8 +50,8 @@
       <file leaf-file-name="parser.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/parser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1071">
-              <caret line="63" column="17" selection-start-line="63" selection-start-column="17" selection-end-line="63" selection-end-column="17" />
+            <state relative-caret-position="306">
+              <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -58,11 +60,11 @@
       <file leaf-file-name="lexer.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/lexer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="451">
-              <caret line="82" column="0" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
+            <state relative-caret-position="833">
+              <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
               <folding>
-                <element signature="e#2249#2288#0" expanded="false" />
-                <marker date="1467722575437" expanded="true" signature="2409:2413" ph="..." />
+                <element signature="e#2263#2302#0" expanded="false" />
+                <marker date="1467734705093" expanded="true" signature="2423:2427" ph="..." />
               </folding>
             </state>
           </provider>
@@ -96,12 +98,12 @@
       <list>
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/../study/dfa_regexp/regexp_dfa_parsing.py" />
-        <option value="$PROJECT_DIR$/src/main.py" />
-        <option value="$PROJECT_DIR$/src/translator.py" />
         <option value="$PROJECT_DIR$/src/regexp.py" />
         <option value="$PROJECT_DIR$/../study/pl_compiler/stage one.py" />
-        <option value="$PROJECT_DIR$/src/lexer.py" />
         <option value="$PROJECT_DIR$/src/parser.py" />
+        <option value="$PROJECT_DIR$/src/lexer.py" />
+        <option value="$PROJECT_DIR$/src/translator.py" />
+        <option value="$PROJECT_DIR$/src/main.py" />
       </list>
     </option>
   </component>
@@ -469,7 +471,14 @@
       <option name="project" value="LOCAL" />
       <updated>1467718656906</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="first version of parser is done">
+      <created>1467734578453</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1467734578453</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -515,7 +524,8 @@
     <MESSAGE value="regular expressions for Silver lexems" />
     <MESSAGE value="lexer on work" />
     <MESSAGE value="first version of lexer is done" />
-    <option name="LAST_COMMIT_MESSAGE" value="first version of lexer is done" />
+    <MESSAGE value="first version of parser is done" />
+    <option name="LAST_COMMIT_MESSAGE" value="first version of parser is done" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -553,8 +563,8 @@
         <state relative-caret-position="425">
           <caret line="25" column="11" selection-start-line="25" selection-start-column="11" selection-end-line="25" selection-end-column="11" />
           <folding>
-            <element signature="e#2249#2288#0" expanded="false" />
-            <marker date="1467722575437" expanded="true" signature="2409:2413" ph="..." />
+            <element signature="e#2263#2302#0" expanded="false" />
+            <marker date="1467734705093" expanded="true" signature="2423:2427" ph="..." />
           </folding>
         </state>
       </provider>
@@ -596,8 +606,8 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#2249#2288#0" expanded="false" />
-            <marker date="1467722575437" expanded="true" signature="2409:2413" ph="..." />
+            <element signature="e#2263#2302#0" expanded="false" />
+            <marker date="1467734705093" expanded="true" signature="2423:2427" ph="..." />
           </folding>
         </state>
       </provider>
@@ -639,8 +649,8 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#2249#2288#0" expanded="false" />
-            <marker date="1467722575437" expanded="true" signature="2409:2413" ph="..." />
+            <element signature="e#2263#2302#0" expanded="false" />
+            <marker date="1467734705093" expanded="true" signature="2423:2427" ph="..." />
           </folding>
         </state>
       </provider>
@@ -682,8 +692,8 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#2249#2288#0" expanded="false" />
-            <marker date="1467722575437" expanded="true" signature="2409:2413" ph="..." />
+            <element signature="e#2263#2302#0" expanded="false" />
+            <marker date="1467734705093" expanded="true" signature="2423:2427" ph="..." />
           </folding>
         </state>
       </provider>
@@ -732,8 +742,8 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#2249#2288#0" expanded="false" />
-            <marker date="1467722575437" expanded="true" signature="2409:2413" ph="..." />
+            <element signature="e#2263#2302#0" expanded="false" />
+            <marker date="1467734705093" expanded="true" signature="2423:2427" ph="..." />
           </folding>
         </state>
       </provider>
@@ -808,14 +818,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../study/pl_compiler/stage one.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="313">
@@ -826,11 +828,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/lexer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="451">
-          <caret line="82" column="0" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
+        <state relative-caret-position="833">
+          <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
           <folding>
-            <element signature="e#2249#2288#0" expanded="false" />
-            <marker date="1467722575437" expanded="true" signature="2409:2413" ph="..." />
+            <element signature="e#2263#2302#0" expanded="false" />
+            <marker date="1467734705093" expanded="true" signature="2423:2427" ph="..." />
           </folding>
         </state>
       </provider>
@@ -843,10 +845,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/parser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1071">
-          <caret line="63" column="17" selection-start-line="63" selection-start-column="17" selection-end-line="63" selection-end-column="17" />
+        <state relative-caret-position="306">
+          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
           <folding />
         </state>
       </provider>
