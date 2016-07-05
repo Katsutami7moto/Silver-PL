@@ -9,6 +9,7 @@ from regexp import returner
 
 symbols = {'+', '-', '*', '/', '%', '=', '<', '>', '(', ')', '[', ']', '{', '}', ';', ','}
 tokens = []
+other = ""
 r_ident = "(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z)" \
           "(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|0|1|2|3|4|5|6|7|8|9)*"
 r_int = "0|(1|2|3|4|5|6|7|8|9)(0|1|2|3|4|5|6|7|8|9)*"
@@ -38,8 +39,17 @@ def reg_cover(reg):
 
 def lexer(code):
     assert isinstance(code, list)
-
-    pass
+    global other
+    for line in code:
+        assert isinstance(line, str)
+        for sym in line:
+            if sym in symbols:
+                if len(other) != 0:
+                    check(other)
+                    other = ""
+                tokens.append(make_sign_token(sym))
+            else:
+                other += sym
 
 # if returner("(n..b)#", "n00b"):
 #     print "Good!"
