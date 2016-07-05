@@ -1,4 +1,3 @@
 var x = 5;
-var y = 7;
+var y = 7.900;
 var z = 34.54;
-var afg34 = "coo-coo";

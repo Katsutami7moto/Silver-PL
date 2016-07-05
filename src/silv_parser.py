@@ -33,10 +33,8 @@ sems = {
     "return"
 }
 datas = {
-    "ident",
     "int",
-    "double",
-    "string"
+    "double"
 }
 
 
@@ -68,7 +66,7 @@ def p_sem(check):
     if check:
         term = []
         current += 1
-        while tokens_list[current] != 'semicolon':
+        while tokens_list[current].type != 'semicolon':
             term.append(tokens_list[current])
             current += 1
         current += 1
@@ -96,10 +94,10 @@ def p_block():
         p_instructions()
 
 
-def parser(code):
+def parsing(code):
     assert isinstance(code, list)
     global tokens_list
-    tokens_list = lexer.lexer(code)
+    tokens_list = lexer.lexing(code)
     if tokens_list:
         p_block()
     return nodes

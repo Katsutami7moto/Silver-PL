@@ -64,36 +64,43 @@ def r_cover(reg):
     return "(" + reg + ")#"
 
 
-def check(word):
-    assert isinstance(word, str)
-    if word in keywords:
-        tokens.append(make_token(word))
-    else:
-        if regexp.returner(r_cover(r_ident), word):
-            tokens.append(make_token("ident", word))
-        elif regexp.returner(r_cover(r_int), word):
-            tokens.append(make_token("int", word))
-        elif regexp.returner(r_cover(r_float), word):
-            tokens.append(make_token("double", word))
-        elif regexp.returner(r_cover(r_string), word):
-            tokens.append(make_token("string", word))
+def check():
+    global other
+    if len(other) != 0:
+        if other in keywords:
+            tokens.append(make_token(other))
         else:
-            raise NameError, "Некорректная лексема"
+            if regexp.returner(r_cover(r_ident), other):
+                tokens.append(make_token("ident", other))
+            elif regexp.returner(r_cover(r_int), other):
+                tokens.append(make_token("int", other))
+            elif regexp.returner(r_cover(r_float), other):
+                tokens.append(make_token("double", other))
+            elif regexp.returner(r_cover(r_string), other):
+                tokens.append(make_token("string", other))
+            else:
+                raise NameError, "Некорректная лексема"
+        other = ''
 
 
-def lexer(code):
+def lexing(code):
     assert isinstance(code, list)
     global other
+    in_string = False
     for line in code:
         assert isinstance(line, str)
         for sym in line:
-            if sym in symbols:
-                if len(other) != 0:
-                    check(other)
-                    other = ""
+            if sym in symbols and not in_string:
+                check()
                 tokens.append(make_token(symbols[sym]))
-            elif sym in ignore:
+            elif sym in ignore and not in_string:
+                check()
                 continue
             else:
                 other += sym
+                if sym == '"':
+                    if not in_string:
+                        in_string = True
+                    else:
+                        in_string = False
     return tokens

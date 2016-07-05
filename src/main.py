@@ -1,20 +1,19 @@
 # coding=utf-8
 
-import translator
-
 """
 var x = 5;
 """
+import translator
 
-source = open("examples\one_var.silver")
+source = open("J:\Nicolas\GitHub\Silver-PL\examples\\many_vars.silver")
 lines_of_code = []
 for line in source:
     lines_of_code.append(line)
 source.close()
 
-c_source = translator.translator(lines_of_code)
+c_source = translator.translating(lines_of_code)
 
-result = open("examples\\result.c", "w")
+result = open("J:\Nicolas\GitHub\Silver-PL\examples\\result.c", "w")
 for line in c_source:
     result.write(line + '\n')
 result.close()
