@@ -20,6 +20,7 @@ symbols = {
     ';': 'semicolon',
     ',': 'comma'
 }
+ignore = {'\n', '\t', ' '}
 keywords = {
     "var",
     "const",
@@ -35,7 +36,9 @@ keywords = {
     "if",
     "elif",
     "else",
-    "return"
+    "return",
+    "True",
+    "False"
 }
 other = ""
 tokens = []
@@ -89,6 +92,8 @@ def lexer(code):
                     check(other)
                     other = ""
                 tokens.append(make_token(symbols[sym]))
+            elif sym in ignore:
+                continue
             else:
                 other += sym
     return tokens
