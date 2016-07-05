@@ -12,9 +12,11 @@ class Node:
         self.rchild = None
 
     def setl(self, obj):
+        assert isinstance(obj, Node)
         self.lchild = obj
 
     def setr(self, obj):
+        assert isinstance(obj, Node)
         self.rchild = obj
 
 
@@ -33,7 +35,7 @@ sems = {
 datas = {
     "ident",
     "int",
-    "float",
+    "double",
     "string"
 }
 

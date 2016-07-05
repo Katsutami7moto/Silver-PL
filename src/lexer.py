@@ -72,9 +72,9 @@ def check(word):
         if regexp.returner(r_cover(r_ident), word):
             tokens.append(make_token("ident", word))
         elif regexp.returner(r_cover(r_int), word):
-            tokens.append(make_token("int", int(word)))
+            tokens.append(make_token("int", word))
         elif regexp.returner(r_cover(r_float), word):
-            tokens.append(make_token("float", float(word)))
+            tokens.append(make_token("double", word))
         elif regexp.returner(r_cover(r_string), word):
             tokens.append(make_token("string", word))
         else:
@@ -97,13 +97,3 @@ def lexer(code):
             else:
                 other += sym
     return tokens
-
-# if returner(r_cover("n..b"), "n00b"):
-#     print "Good!"
-# else:
-#     print "Bad!"
-#
-# if returner(r_cover("\".+\""), '"ghjvbjdvg"'):
-#     print "Good!"
-# else:
-#     print "Bad!"
