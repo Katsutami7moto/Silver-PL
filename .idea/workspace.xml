@@ -37,8 +37,8 @@
       <file leaf-file-name="silv_parser.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/silv_parser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="754">
-              <caret line="81" column="0" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
+            <state relative-caret-position="758">
+              <caret line="78" column="0" selection-start-line="78" selection-start-column="0" selection-end-line="78" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -49,7 +49,9 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="778">
               <caret line="102" column="0" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
-              <folding />
+              <folding>
+                <marker date="1467799932781" expanded="true" signature="2014:2089" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -525,7 +527,14 @@
       <option name="project" value="LOCAL" />
       <updated>1467803262250</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Stage 1.76">
+      <created>1467805777140</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1467805777140</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -576,7 +585,8 @@
     <MESSAGE value="1st stage complete: parsing int and double is correct" />
     <MESSAGE value="1.5 stage complete: added symbol table (in parser), supported &quot;var y = x;&quot;, supported strings" />
     <MESSAGE value="1.75 stage complete:&#10;you are stopped if you try to define defined variable:&#10;&quot;var x = 9; var x = 98;&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.75 stage complete:&#10;you are stopped if you try to define defined variable:&#10;&quot;var x = 9; var x = 98;&quot;" />
+    <MESSAGE value="Stage 1.76" />
+    <option name="LAST_COMMIT_MESSAGE" value="Stage 1.76" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -613,7 +623,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1802">
           <caret line="106" column="0" selection-start-line="106" selection-start-column="0" selection-end-line="106" selection-end-column="0" />
-          <folding />
+          <folding>
+            <marker date="1467799932781" expanded="true" signature="2014:2089" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -645,7 +657,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="425">
           <caret line="25" column="11" selection-start-line="25" selection-start-column="11" selection-end-line="25" selection-end-column="11" />
-          <folding />
+          <folding>
+            <marker date="1467799932781" expanded="true" signature="2014:2089" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -684,7 +698,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <marker date="1467799932781" expanded="true" signature="2014:2089" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -723,7 +739,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <marker date="1467799932781" expanded="true" signature="2014:2089" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -762,7 +780,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <marker date="1467799932781" expanded="true" signature="2014:2089" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -808,7 +828,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <marker date="1467799932781" expanded="true" signature="2014:2089" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -895,27 +917,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/many_vars.silver">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/lexer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="778">
           <caret line="102" column="0" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/result.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-          <folding />
+          <folding>
+            <marker date="1467799932781" expanded="true" signature="2014:2089" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -927,10 +935,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/examples/many_vars.silver">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="14" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/result.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/silv_parser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="754">
-          <caret line="81" column="0" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
+        <state relative-caret-position="758">
+          <caret line="78" column="0" selection-start-line="78" selection-start-column="0" selection-end-line="78" selection-end-column="0" />
           <folding />
         </state>
       </provider>

@@ -44,9 +44,7 @@ def p_var(term):
     assert isinstance(term, list)
     if term[0].type == 'ident' and term[1].type == 'equal':
         nd = Node('var', term[0].value)
-        try:
-            print symbol_table['vars'][nd.value]
-        except KeyError:
+        if nd.value not in symbol_table['vars']:
             ndr = term[2:]
             if len(ndr) == 1:
                 subj = ndr[0]
@@ -60,14 +58,12 @@ def p_var(term):
                     symbol_table['vars'][nd.value] = tmp.type
                     nd.setr(tmp)
                 elif subj.type == 'ident':
-                    try:
-                        find = symbol_table['vars'][subj.value]
-                    except KeyError:
-                        raise NameError, "Попытка определения через неопределённую переменную"
-                    else:
-                        tmp = Node(find, subj.value)
+                    if subj.value in symbol_table['vars']:
+                        tmp = Node(symbol_table['vars'][subj.value], subj.value)
                         symbol_table['vars'][nd.value] = tmp.type
                         nd.setr(tmp)
+                    else:
+                        raise NameError, "Попытка определения через неопределённую переменную"
                 else:
                     raise NameError, "Некорректный параметр"
             elif len(ndr) > 1:
