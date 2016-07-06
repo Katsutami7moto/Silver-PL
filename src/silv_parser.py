@@ -53,8 +53,12 @@ def p_def(term, t):
                     tmp = Node(subj.type, subj.value)
                     symbol_table['vars'][nd.value] = [tmp.type, t]
                     nd.setr(tmp)
-                elif subj.type in {"True", "False"}:
-                    tmp = Node(subj.type)
+                elif subj.type == "True":
+                    tmp = Node("int", "1")
+                    symbol_table['vars'][nd.value] = [tmp.type, t]
+                    nd.setr(tmp)
+                elif subj.type == "False":
+                    tmp = Node("int", "0")
                     symbol_table['vars'][nd.value] = [tmp.type, t]
                     nd.setr(tmp)
                 elif subj.type == 'ident':

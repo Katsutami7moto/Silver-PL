@@ -3,4 +3,6 @@ var y = 7.9;
 const a76 = x;
 const ssss3 = "Hello World!";
 const z = 34.54;
+var flag = False;
+const fff = True;
 var g4333 = z;
