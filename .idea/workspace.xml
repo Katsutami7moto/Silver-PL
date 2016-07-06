@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="9008df4e-1652-4c48-b5cc-600fd6786a2d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/many_vars.silver" afterPath="$PROJECT_DIR$/examples/many_vars.silver" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/result.c" afterPath="$PROJECT_DIR$/examples/result.c" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/silv_parser.py" afterPath="$PROJECT_DIR$/src/silv_parser.py" />
     </list>
     <ignored path="Cool-PL.iws" />
@@ -39,8 +37,8 @@
       <file leaf-file-name="silv_parser.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/silv_parser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="710">
-              <caret line="79" column="0" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
+            <state relative-caret-position="754">
+              <caret line="81" column="0" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -83,8 +81,8 @@
         <option value="$PROJECT_DIR$/src/lexer.py" />
         <option value="$PROJECT_DIR$/src/translator.py" />
         <option value="$PROJECT_DIR$/examples/result.c" />
-        <option value="$PROJECT_DIR$/src/silv_parser.py" />
         <option value="$PROJECT_DIR$/examples/many_vars.silver" />
+        <option value="$PROJECT_DIR$/src/silv_parser.py" />
       </list>
     </option>
   </component>
@@ -520,7 +518,14 @@
       <option name="project" value="LOCAL" />
       <updated>1467802203062</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="1.75 stage complete:&#10;you are stopped if you try to define defined variable:&#10;&quot;var x = 9; var x = 98;&quot;">
+      <created>1467803262250</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1467803262250</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -570,7 +575,8 @@
     <MESSAGE value="first version of translator is done" />
     <MESSAGE value="1st stage complete: parsing int and double is correct" />
     <MESSAGE value="1.5 stage complete: added symbol table (in parser), supported &quot;var y = x;&quot;, supported strings" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.5 stage complete: added symbol table (in parser), supported &quot;var y = x;&quot;, supported strings" />
+    <MESSAGE value="1.75 stage complete:&#10;you are stopped if you try to define defined variable:&#10;&quot;var x = 9; var x = 98;&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.75 stage complete:&#10;you are stopped if you try to define defined variable:&#10;&quot;var x = 9; var x = 98;&quot;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -889,14 +895,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/result.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/examples/many_vars.silver">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -913,6 +911,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/examples/result.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/translator.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="629">
@@ -923,8 +929,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/silv_parser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="710">
-          <caret line="79" column="0" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
+        <state relative-caret-position="754">
+          <caret line="81" column="0" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
           <folding />
         </state>
       </provider>

@@ -45,7 +45,7 @@ def p_var(term):
     if term[0].type == 'ident' and term[1].type == 'equal':
         nd = Node('var', term[0].value)
         try:
-            find = symbol_table['vars'][nd.value]
+            print symbol_table['vars'][nd.value]
         except KeyError:
             ndr = term[2:]
             if len(ndr) == 1:
@@ -53,7 +53,7 @@ def p_var(term):
                 assert isinstance(subj, lexer.Token)
                 if subj.type in datas:
                     tmp = Node(subj.type, subj.value)
-                    symbol_table['vars'][nd.value] = tmp.type
+                    symbol_table['vars'][nd.value] = tmp.type  # TODO: должно быть и указание на то, что это переменная
                     nd.setr(tmp)
                 elif subj.type in {"True", "False"}:
                     tmp = Node(subj.type)
@@ -70,12 +70,15 @@ def p_var(term):
                         nd.setr(tmp)
                 else:
                     raise NameError, "Некорректный параметр"
-            else:
+            elif len(ndr) > 1:
                 pass  # для сложных параметров
+            else:
+                raise NameError, "Отсутствует параметр"
         else:
             raise NameError, "Попытка определения уже определённой переменной"
-
         return nd
+    else:
+        raise NameError, "Некорректное использование оператора var"
 
 
 def p_sem(kot):
