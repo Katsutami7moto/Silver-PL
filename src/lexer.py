@@ -50,13 +50,9 @@ r_string = "\".+\""
 
 
 class Token:
-    def __init__(self, t, v):
+    def __init__(self, t, v=None):
         self.type = t
         self.value = v
-
-
-def make_token(typ, value=None):
-    return Token(typ, value)
 
 
 def r_cover(reg):
@@ -68,16 +64,16 @@ def check():
     global other
     if len(other) != 0:
         if other in keywords:
-            tokens.append(make_token(other))
+            tokens.append(Token(other))
         else:
             if regexp.returner(r_cover(r_ident), other):
-                tokens.append(make_token("ident", other))
+                tokens.append(Token("ident", other))
             elif regexp.returner(r_cover(r_int), other):
-                tokens.append(make_token("int", other))
+                tokens.append(Token("int", other))
             elif regexp.returner(r_cover(r_float), other):
-                tokens.append(make_token("double", other))
+                tokens.append(Token("double", other))
             elif regexp.returner(r_cover(r_string), other):
-                tokens.append(make_token("string", other))
+                tokens.append(Token("string", other))
             else:
                 raise NameError, "Некорректная лексема"
         other = ''
@@ -92,7 +88,7 @@ def lexing(code):
         for sym in line:
             if sym in symbols and not in_string:
                 check()
-                tokens.append(make_token(symbols[sym]))
+                tokens.append(Token(symbols[sym]))
             elif sym in ignore and not in_string:
                 check()
                 continue

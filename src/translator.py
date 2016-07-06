@@ -8,12 +8,19 @@ def t_var(node):
     assert isinstance(node.rchild, silv_parser.Node)
     s = ''
     if not (node.rchild.lchild and node.rchild.rchild):
-        s += node.rchild.type
-        s += ' '
-        s += node.value
-        s += ' = '
-        s += node.rchild.value
-        s += ';'
+        if node.rchild.type == 'string':
+            s += 'char '
+            s += node.value
+            s += '[] = '
+            s += node.rchild.value
+            s += ';'
+        else:
+            s += node.rchild.type
+            s += ' '
+            s += node.value
+            s += ' = '
+            s += node.rchild.value
+            s += ';'
     else:
         pass  # для сложных параметров
     return s

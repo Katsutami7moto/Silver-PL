@@ -34,59 +34,64 @@ sems = {
 }
 datas = {
     "int",
-    "double"
+    "double",
+    'string'
 }
-
-
-def p_param(term):
-    assert isinstance(term, list)
-    if len(term) == 1:
-        subj = term[0]
-        assert isinstance(subj, lexer.Token)
-        if subj.type in datas:
-            return Node(subj.type, subj.value)
-        elif subj.type in {"True", "False"}:
-            return Node(subj.type)
-        else:
-            pass  # параметр - один токен, но не данные и не идентификатор
-    else:
-        pass  # для сложных параметров
+symbol_table = dict(vars=dict())
 
 
 def p_var(term):
     assert isinstance(term, list)
     if term[0].type == 'ident' and term[1].type == 'equal':
         nd = Node('var', term[0].value)
-        nd.setr(p_param(term[2:]))
+        ndr = term[2:]
+        if len(ndr) == 1:
+            subj = ndr[0]
+            assert isinstance(subj, lexer.Token)
+            if subj.type in datas:
+                tmp = Node(subj.type, subj.value)
+                symbol_table['vars'][nd.value] = tmp.type
+                nd.setr(tmp)
+            elif subj.type in {"True", "False"}:
+                tmp = Node(subj.type)
+                symbol_table['vars'][nd.value] = tmp.type
+                nd.setr(tmp)
+            elif subj.type == 'ident':
+                try:
+                    find = symbol_table['vars'][subj.value]
+                except KeyError:
+                    raise NameError, "Попытка определения через неопределённую переменную"
+                else:
+                    tmp = Node(find, subj.value)
+                    symbol_table['vars'][nd.value] = tmp.type
+                    nd.setr(tmp)
+            else:
+                raise NameError, "Некорректный параметр"
+        else:
+            pass  # для сложных параметров
+
         return nd
 
 
-def p_sem(check):
+def p_sem(kot):
+    assert isinstance(kot, lexer.Token)
     global current
-    if check:
+    if kot.type in sems:
         term = []
         current += 1
         while tokens_list[current].type != 'semicolon':
             term.append(tokens_list[current])
             current += 1
         current += 1
-        func = 'p_' + check + '(term)'
+        func = 'p_' + kot.type + '(term)'
         nodes.append(eval(func))
 
 
-def c_sem(kot):
-    assert isinstance(kot, lexer.Token)
-    if kot.type in sems:
-        return kot.type
-    else:
-        return False
-
-
 def p_instructions():
-    p_sem(c_sem(tokens_list[current]))
-    # p_curl(c_curl(tokens_list[current]))
-    # p_curl_sem(c_curl_sem(tokens_list[current]))
-    # p_curl_plus(c_curl_plus(tokens_list[current]))
+    p_sem(tokens_list[current])
+    # p_curl(tokens_list[current])
+    # p_curl_sem(tokens_list[current])
+    # p_curl_plus(tokens_list[current])
 
 
 def p_block():
