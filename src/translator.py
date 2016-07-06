@@ -4,10 +4,20 @@ import silv_parser
 
 
 def t_var(node):
+    return t_def(node)
+
+
+def t_const(node):
+    return t_def(node, True)
+
+
+def t_def(node, const=False):
     assert isinstance(node, silv_parser.Node)
     assert isinstance(node.rchild, silv_parser.Node)
     s = ''
     if not (node.rchild.lchild and node.rchild.rchild):
+        if const:
+            s += 'const '
         if node.rchild.type == 'string':
             s += 'char '
             s += node.value

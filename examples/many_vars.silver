@@ -1,6 +1,6 @@
 var x = 5;
-var y = 7.900;
-var a76 = x;
-var ssss3 = "Hello World!";
-var z = 34.54;
+var y = 7.9;
+const a76 = x;
+const ssss3 = "Hello World!";
+const z = 34.54;
 var g4333 = z;

@@ -40,10 +40,10 @@ datas = {
 symbol_table = dict(vars=dict())
 
 
-def p_var(term):
+def p_def(term, t):
     assert isinstance(term, list)
     if term[0].type == 'ident' and term[1].type == 'equal':
-        nd = Node('var', term[0].value)
+        nd = Node(t, term[0].value)
         if nd.value not in symbol_table['vars']:
             ndr = term[2:]
             if len(ndr) == 1:
@@ -51,16 +51,16 @@ def p_var(term):
                 assert isinstance(subj, lexer.Token)
                 if subj.type in datas:
                     tmp = Node(subj.type, subj.value)
-                    symbol_table['vars'][nd.value] = tmp.type  # TODO: должно быть и указание на то, что это переменная
+                    symbol_table['vars'][nd.value] = [tmp.type, t]
                     nd.setr(tmp)
                 elif subj.type in {"True", "False"}:
                     tmp = Node(subj.type)
-                    symbol_table['vars'][nd.value] = tmp.type
+                    symbol_table['vars'][nd.value] = [tmp.type, t]
                     nd.setr(tmp)
                 elif subj.type == 'ident':
                     if subj.value in symbol_table['vars']:
-                        tmp = Node(symbol_table['vars'][subj.value], subj.value)
-                        symbol_table['vars'][nd.value] = tmp.type
+                        tmp = Node(symbol_table['vars'][subj.value][0], subj.value)
+                        symbol_table['vars'][nd.value] = [tmp.type, t]
                         nd.setr(tmp)
                     else:
                         raise NameError, "Попытка определения через неопределённую переменную"
@@ -74,7 +74,15 @@ def p_var(term):
             raise NameError, "Попытка определения уже определённой переменной"
         return nd
     else:
-        raise NameError, "Некорректное использование оператора var"
+        raise NameError, "Некорректное использование оператора " + t
+
+
+def p_var(term):
+    return p_def(term, 'var')
+
+
+def p_const(term):
+    return p_def(term, 'const')
 
 
 def p_sem(kot):
