@@ -35,48 +35,53 @@ sems = {
 datas = {
     "int",
     "double",
-    'string'
+    "string"
 }
-symbol_table = dict(vars=dict())
+symbol_table = dict(names=dict())
+
+
+def p_atom(token):
+    assert isinstance(token, lexer.Token)
+    if token.type in datas:
+        tmp = Node(token.type, token.value)
+    elif token.type == "True":
+        tmp = Node("int", "1")
+    elif token.type == "False":
+        tmp = Node("int", "0")
+    elif token.type == 'ident':
+        if token.value in symbol_table['names']:
+            tmp = Node(symbol_table['names'][token.value][0], token.value)
+        else:
+            raise NameError, "Попытка определения через неопределённую переменную"
+    else:
+        raise NameError, "Некорректный параметр"
+    return [tmp, tmp.type]
+
+
+def p_param(tokens):
+    assert isinstance(tokens, list)
+    if len(tokens) == 1:
+        return p_atom(tokens[0])
+    # else:
+    #     return p_expr(tokens)
 
 
 def p_def(term, t):
     assert isinstance(term, list)
     if term[0].type == 'ident' and term[1].type == 'equal':
-        nd = Node(t, term[0].value)
-        if nd.value not in symbol_table['vars']:
+        nd = Node([t, ''], term[0].value)
+        if nd.value not in symbol_table['names']:
             ndr = term[2:]
-            if len(ndr) == 1:
-                subj = ndr[0]
-                assert isinstance(subj, lexer.Token)
-                if subj.type in datas:
-                    tmp = Node(subj.type, subj.value)
-                    symbol_table['vars'][nd.value] = [tmp.type, t]
-                    nd.setr(tmp)
-                elif subj.type == "True":
-                    tmp = Node("int", "1")
-                    symbol_table['vars'][nd.value] = [tmp.type, t]
-                    nd.setr(tmp)
-                elif subj.type == "False":
-                    tmp = Node("int", "0")
-                    symbol_table['vars'][nd.value] = [tmp.type, t]
-                    nd.setr(tmp)
-                elif subj.type == 'ident':
-                    if subj.value in symbol_table['vars']:
-                        tmp = Node(symbol_table['vars'][subj.value][0], subj.value)
-                        symbol_table['vars'][nd.value] = [tmp.type, t]
-                        nd.setr(tmp)
-                    else:
-                        raise NameError, "Попытка определения через неопределённую переменную"
-                else:
-                    raise NameError, "Некорректный параметр"
-            elif len(ndr) > 1:
-                pass  # для сложных параметров
-            else:
+            if len(ndr) == 0:
                 raise NameError, "Отсутствует параметр"
+            else:
+                par = p_param(ndr)
+                symbol_table['names'][nd.value] = [par[1], t]
+                nd.setr(par[0])
+                nd.type[1] = par[1]
+                return nd
         else:
             raise NameError, "Попытка определения уже определённой переменной"
-        return nd
     else:
         raise NameError, "Некорректное использование оператора " + t
 
