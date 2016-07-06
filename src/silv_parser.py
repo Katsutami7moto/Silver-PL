@@ -44,31 +44,36 @@ def p_var(term):
     assert isinstance(term, list)
     if term[0].type == 'ident' and term[1].type == 'equal':
         nd = Node('var', term[0].value)
-        ndr = term[2:]
-        if len(ndr) == 1:
-            subj = ndr[0]
-            assert isinstance(subj, lexer.Token)
-            if subj.type in datas:
-                tmp = Node(subj.type, subj.value)
-                symbol_table['vars'][nd.value] = tmp.type
-                nd.setr(tmp)
-            elif subj.type in {"True", "False"}:
-                tmp = Node(subj.type)
-                symbol_table['vars'][nd.value] = tmp.type
-                nd.setr(tmp)
-            elif subj.type == 'ident':
-                try:
-                    find = symbol_table['vars'][subj.value]
-                except KeyError:
-                    raise NameError, "Попытка определения через неопределённую переменную"
-                else:
-                    tmp = Node(find, subj.value)
+        try:
+            find = symbol_table['vars'][nd.value]
+        except KeyError:
+            ndr = term[2:]
+            if len(ndr) == 1:
+                subj = ndr[0]
+                assert isinstance(subj, lexer.Token)
+                if subj.type in datas:
+                    tmp = Node(subj.type, subj.value)
                     symbol_table['vars'][nd.value] = tmp.type
                     nd.setr(tmp)
+                elif subj.type in {"True", "False"}:
+                    tmp = Node(subj.type)
+                    symbol_table['vars'][nd.value] = tmp.type
+                    nd.setr(tmp)
+                elif subj.type == 'ident':
+                    try:
+                        find = symbol_table['vars'][subj.value]
+                    except KeyError:
+                        raise NameError, "Попытка определения через неопределённую переменную"
+                    else:
+                        tmp = Node(find, subj.value)
+                        symbol_table['vars'][nd.value] = tmp.type
+                        nd.setr(tmp)
+                else:
+                    raise NameError, "Некорректный параметр"
             else:
-                raise NameError, "Некорректный параметр"
+                pass  # для сложных параметров
         else:
-            pass  # для сложных параметров
+            raise NameError, "Попытка определения уже определённой переменной"
 
         return nd
 
