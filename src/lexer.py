@@ -18,7 +18,8 @@ symbols = {
     '{': 'left-curl',
     '}': 'right-curl',
     ';': 'semicolon',
-    ',': 'comma'
+    ',': 'comma',
+    '!': 'exclam'
 }
 ignore = {'\n', '\t', ' '}
 keywords = {
@@ -38,7 +39,10 @@ keywords = {
     "else",
     "return",
     "True",
-    "False"
+    "False",
+    "and",
+    "or",
+    "not"
 }
 other = ""
 tokens = []
