@@ -11,6 +11,21 @@ def t_const(node):
     return t_def(node, True)
 
 
+def walk_expr_tree(node):
+    s = ''
+    if node.value:
+        s += node.value
+    else:
+        s += '('
+        if node.lchild:
+            s += walk_expr_tree(node.lchild)
+            s += node.type
+        if node.rchild:
+            s += walk_expr_tree(node.rchild)
+        s += ')'
+    return s
+
+
 def t_def(node, const=False):
     assert isinstance(node, silv_parser.Node)
     assert isinstance(node.rchild, silv_parser.Node)
@@ -32,7 +47,21 @@ def t_def(node, const=False):
             s += node.rchild.value
             s += ';'
     else:
-        pass  # для сложных параметров
+        if const:
+            s += 'const '
+        if node.type[1] == 'string':
+            s += 'char '
+            s += node.value
+            s += '[] = '
+            s += walk_expr_tree(node.rchild)
+            s += ';'
+        else:
+            s += node.type[1]
+            s += ' '
+            s += node.value
+            s += ' = '
+            s += walk_expr_tree(node.rchild)
+            s += ';'
     return s
 
 

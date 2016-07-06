@@ -67,29 +67,35 @@ def create_bi_node(operation, left, right):
 
 def p_operand(term):
     assert isinstance(term, list)
-    curr = 1
-    ts = []
-    t = []
     op = ''
     met = False
     if term[0].type == 'minus':
         op += '-'
+        met = True
     elif term[0].type == 'not':
         op += '!'
-    if term[1].type == 'left-paren' and term[-1].type == 'right-paren':
-        tmp = p_expr(term[2:-1])
-        return [create_bi_node(op, None, tmp[0]), tmp[1]]
+        met = True
+    if met:
+        if term[1].type == 'left-paren' and term[-1].type == 'right-paren':
+            tmp = p_expr(term[2:-1], 0)
+            return [create_bi_node(op, None, tmp[0]), tmp[1]]
+        else:
+            tmp = p_expr(term[1:], 0)
+            return [create_bi_node(op, None, tmp[0]), tmp[1]]
     else:
-        tmp = p_expr(term[1:])
-        return [create_bi_node(op, None, tmp[0]), tmp[1]]
+        return p_expr(term, 0)
 
 
 def make_mult_node(terms, operation):
     if len(terms) == 1:
         return p_operand(terms[0])
     elif len(terms) == 2:
-        return [create_bi_node(operation, p_operand(terms[0]), p_operand(terms[1])), '']
-    # TODO: внимательно !
+        n1 = p_expr(terms[0], 0)
+        n2 = p_expr(terms[1], 0)
+        if n1[1] == 'float' or n2[1] == 'float':
+            return [create_bi_node(operation, n1[0], n2[0]), 'float']
+        else:
+            return [create_bi_node(operation, n1[0], n2[0]), 'int']
 
 
 def p_mult(term):
@@ -103,7 +109,7 @@ def p_mult(term):
         if not met:
             if term[curr].type == 'left-paren':
                 curr += 1
-                t.append(p_expr(term))
+                t.append(p_expr(term, 0))
             elif term[curr].type == 'mul':
                 op += '*'
                 ts.append(t)
@@ -132,8 +138,12 @@ def make_addit_node(terms, operation):
     if len(terms) == 1:
         return p_mult(terms[0])
     elif len(terms) == 2:
-        return [create_bi_node(operation, p_mult(terms[0]), p_mult(terms[1])), '']
-    # TODO: внимательно !
+        n1 = p_expr(terms[0], 0)
+        n2 = p_expr(terms[1], 0)
+        if n1[1] == 'float' or n2[1] == 'float':
+            return [create_bi_node(operation, n1[0], n2[0]), 'float']
+        else:
+            return [create_bi_node(operation, n1[0], n2[0]), 'int']
 
 
 def p_addit(term):
@@ -147,7 +157,7 @@ def p_addit(term):
         if not met:
             if term[curr].type == 'left-paren':
                 curr += 1
-                t.append(p_expr(term))
+                t.append(p_expr(term, 0))
             elif term[curr].type == 'plus' and curr != 0:
                 op += '+'
                 ts.append(t)
@@ -172,7 +182,7 @@ def make_comp_node(terms, operation):
     if len(terms) == 1:
         return p_addit(terms[0])
     elif len(terms) == 2:
-        return [create_bi_node(operation, p_addit(terms[0]), p_addit(terms[1])), 'int']
+        return [create_bi_node(operation, p_expr(terms[0], 0)[0], p_expr(terms[1], 0)[0]), 'int']
 
 
 def p_comp(term):
@@ -186,7 +196,7 @@ def p_comp(term):
         if not met:
             if term[curr].type == 'left-paren':
                 curr += 1
-                t.append(p_expr(term))
+                t.append(p_expr(term, 0))
             elif term[curr].type == 'left-chev':
                 op += '<'
                 if term[curr + 1].type == 'equal':
@@ -217,7 +227,7 @@ def make_equal_node(terms, operation):
     if len(terms) == 1:
         return p_comp(terms[0])
     elif len(terms) == 2:
-        return [create_bi_node(operation, p_comp(terms[0]), p_comp(terms[1])), 'int']
+        return [create_bi_node(operation, p_expr(terms[0], 0)[0], p_expr(terms[1], 0)[0]), 'int']
 
 
 def p_equal(term):
@@ -231,7 +241,7 @@ def p_equal(term):
         if not met:
             if term[curr].type == 'left-paren':
                 curr += 1
-                t.append(p_expr(term))
+                t.append(p_expr(term, 0))
             elif term[curr].type == 'exclam':
                 if term[curr + 1].type == 'equal':
                     op += '!='
@@ -260,7 +270,7 @@ def make_and_node(terms):
     if len(terms) == 1:
         return p_equal(terms[0])
     elif len(terms) == 2:
-        return [create_bi_node('&&', p_equal(terms[0]), p_equal(terms[1])), 'int']
+        return [create_bi_node('&&', p_expr(terms[0], 0)[0], p_expr(terms[1], 0)[0]), 'int']
 
 
 def p_and(term):
@@ -273,7 +283,7 @@ def p_and(term):
         if not met:
             if term[curr].type == 'left-paren':
                 curr += 1
-                t.append(p_expr(term))
+                t.append(p_expr(term, 0))
             elif term[curr].type == 'and':
                 ts.append(t)
                 t = []
@@ -292,12 +302,11 @@ def make_or_node(terms):
     if len(terms) == 1:
         return p_and(terms[0])
     elif len(terms) == 2:
-        return [create_bi_node('||', p_and(terms[0]), p_and(terms[1])), 'int']
+        return [create_bi_node('||', p_expr(terms[0], 0)[0], p_expr(terms[1], 0)[0]), 'int']
 
 
-def p_or(tokens):
+def p_or(tokens, curr):
     assert isinstance(tokens, list)
-    curr = 0
     ts = []
     t = []
     met = False
@@ -305,7 +314,7 @@ def p_or(tokens):
         if not met:
             if tokens[curr].type == 'left-paren':
                 curr += 1
-                t.append(p_expr(tokens))
+                t.append(p_expr(tokens, curr))
             elif tokens[curr].type == 'or':
                 ts.append(t)
                 t = []
@@ -319,9 +328,10 @@ def p_or(tokens):
     return make_or_node(ts)
 
 
-def p_expr(tokens):
+def p_expr(tokens, curr):
     """
     Возвращает список из узла и типа (на случай, если нужно установить тип параметра)
+    :param curr:
     :param tokens:
     :return: list
     """
@@ -329,7 +339,7 @@ def p_expr(tokens):
     if len(tokens) == 1:
         return p_atom(tokens[0])
     else:
-        return p_or(tokens)
+        return p_or(tokens, curr)
 
 
 def p_def(term, t):
@@ -341,7 +351,7 @@ def p_def(term, t):
             if len(ndr) == 0:
                 raise NameError, "Отсутствует параметр"
             else:
-                par = p_param(ndr)
+                par = p_expr(ndr, 0)
                 symbol_table['names'][nd.value] = [par[1], t]
                 nd.setr(par[0])
                 nd.type[1] = par[1]
