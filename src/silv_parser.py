@@ -77,9 +77,9 @@ def build_tree(tokens):
         nd.setr(build_tree(tokens[2]))
     elif len(tokens) == 2:
         nd = Node(tokens[0])
-        nd.setr(build_tree([2]))
+        nd.setr(build_tree(tokens[1]))
     elif len(tokens) == 1:
-        nd = tokens[0]
+        nd = p_atom(tokens[0])
     return nd
 
 
@@ -90,7 +90,10 @@ def p_operand(tokens):
     """
     t = []
     if len(tokens) == 1:
-        return p_expr(tokens[0])
+        if isinstance(tokens[0], list):
+            return p_or(tokens[0])
+        elif isinstance(tokens[0], lexer.Token):
+            return tokens
     elif len(tokens) == 2:
         if tokens[0].type == 'minus':
             t.append('-')
@@ -110,41 +113,46 @@ def p_mult(tokens):
     met = False
     global level1, math
     for token in tokens:
-        if not isinstance(token, lexer.Token):
-            if isinstance(token, list):
-                t.append(token)
-        else:
-            if token.type == 'mul':
-                met = True
-                ts.append(t)
-                ts.append('*')
-                t = []
-                if level1:
-                    math = True
-                    level1 = False
-            elif token.type == 'div':
-                met = True
-                ts.append(t)
-                ts.append('/')
-                t = []
-                if level1:
-                    math = True
-                    level1 = False
-            elif token.type == 'mod':
-                met = True
-                ts.append(t)
-                ts.append('%')
-                t = []
-                if level1:
-                    math = True
-                    level1 = False
+        if isinstance(token, lexer.Token):
+            if not met:
+                if token.type == 'mul':
+                    met = True
+                    ts.append(t)
+                    ts.append('*')
+                    t = []
+                    if level1:
+                        math = True
+                        level1 = False
+                    continue
+                elif token.type == 'div':
+                    met = True
+                    ts.append(t)
+                    ts.append('/')
+                    t = []
+                    if level1:
+                        math = True
+                        level1 = False
+                    continue
+                elif token.type == 'mod':
+                    met = True
+                    ts.append(t)
+                    ts.append('%')
+                    t = []
+                    if level1:
+                        math = True
+                        level1 = False
+                    continue
             else:
                 t.append(token)
-    ts.append(t)
-    if met:
-        return ts
+        else:
+            t.append(token)
+    if not met:
+        return p_operand(tokens)
     else:
-        return p_operand(ts)
+        ts.append(t)
+        ts[0] = p_or(ts[0])
+        ts[-1] = p_or(ts[-1])
+        return ts
 
 
 def p_addit(tokens):
@@ -157,33 +165,40 @@ def p_addit(tokens):
     met = False
     global level1, math
     for token in tokens:
-        if not isinstance(token, lexer.Token):
-            if isinstance(token, list):
-                t.append(token)
-        else:
-            if token.type == 'plus':
-                met = True
-                ts.append(t)
-                ts.append('+')
-                t = []
-                if level1:
-                    math = True
-                    level1 = False
-            elif token.type == 'minus':
-                met = True
-                ts.append(t)
-                ts.append('-')
-                t = []
-                if level1:
-                    math = True
-                    level1 = False
+        if isinstance(token, lexer.Token):
+            if not met:
+                if token.type == 'plus':
+                    met = True
+                    ts.append(t)
+                    ts.append('+')
+                    t = []
+                    if level1:
+                        math = True
+                        level1 = False
+                    continue
+                elif token.type == 'minus':
+                    if len(t) == 0:
+                        t.append(token)
+                    else:
+                        met = True
+                        ts.append(t)
+                        ts.append('-')
+                        t = []
+                        if level1:
+                            math = True
+                            level1 = False
+                    continue
             else:
                 t.append(token)
-    ts.append(t)
-    if met:
-        return ts
+        else:
+            t.append(token)
+    if not met:
+        return p_mult(tokens)
     else:
-        return p_mult(ts)
+        ts.append(t)
+        ts[0] = p_or(ts[0])
+        ts[-1] = p_or(ts[-1])
+        return ts
 
 
 def p_comp(tokens):
@@ -196,30 +211,65 @@ def p_comp(tokens):
     met = False
     global level1, def_type
     for token in tokens:
-        if not isinstance(token, lexer.Token):
-            if isinstance(token, list):
-                t.append(token)
-        else:
-            if token.type == '<' or token.type == '>'\
-                    or token.type == '<=' or token.type == '>='\
-                    or token.type == '=' or token.type == '!=':
-                met = True
-                ts.append(t)
-                if token.type == '=':
-                    ts.append('==')
-                else:
+        if isinstance(token, lexer.Token):
+            if not met:
+                if token.type == '<' or token.type == '>' or token.type == '<=' or token.type == '>=':
+                    met = True
+                    ts.append(t)
                     ts.append(token.type)
-                t = []
-                if level1:
-                    def_type = 'int'
-                    level1 = False
+                    t = []
+                    if level1:
+                        def_type = 'int'
+                        level1 = False
+                    continue
             else:
                 t.append(token)
-    ts.append(t)
-    if met:
-        return ts
+        else:
+            t.append(token)
+    if not met:
+        return p_addit(tokens)
     else:
-        return p_addit(ts)
+        ts.append(t)
+        ts[0] = p_or(ts[0])
+        ts[-1] = p_or(ts[-1])
+        return ts
+
+
+def p_equal(tokens):
+    """
+    :rtype: list
+    :type tokens: list
+    """
+    ts = []
+    t = []
+    met = False
+    global level1, def_type
+    for token in tokens:
+        if isinstance(token, lexer.Token):
+            if not met:
+                if token.type == '=' or token.type == '!=':
+                    met = True
+                    ts.append(t)
+                    if token.type == '=':
+                        ts.append('==')
+                    else:
+                        ts.append(token.type)
+                    t = []
+                    if level1:
+                        def_type = 'int'
+                        level1 = False
+                    continue
+            else:
+                t.append(token)
+        else:
+            t.append(token)
+    if not met:
+        return p_comp(tokens)
+    else:
+        ts.append(t)
+        ts[0] = p_or(ts[0])
+        ts[-1] = p_or(ts[-1])
+        return ts
 
 
 def p_and(tokens):
@@ -232,11 +282,8 @@ def p_and(tokens):
     met = False
     global level1, def_type
     for token in tokens:
-        if not isinstance(token, lexer.Token):
-            if isinstance(token, list):
-                t.append(token)
-        else:
-            if token.type == 'and':
+        if isinstance(token, lexer.Token):
+            if token.type == 'and' and not met:
                 met = True
                 ts.append(t)
                 ts.append('&&')
@@ -246,11 +293,15 @@ def p_and(tokens):
                     level1 = False
             else:
                 t.append(token)
-    ts.append(t)
-    if met:
-        return ts
+        else:
+            t.append(token)
+    if not met:
+        return p_equal(tokens)
     else:
-        return p_comp(ts)
+        ts.append(t)
+        ts[0] = p_or(ts[0])
+        ts[-1] = p_or(ts[-1])
+        return ts
 
 
 def p_or(tokens):
@@ -263,11 +314,8 @@ def p_or(tokens):
     met = False
     global level1, def_type
     for token in tokens:
-        if not isinstance(token, lexer.Token):
-            if isinstance(token, list):
-                t.append(token)
-        else:
-            if token.type == 'or':
+        if isinstance(token, lexer.Token):
+            if token.type == 'or' and not met:
                 met = True
                 ts.append(t)
                 ts.append('||')
@@ -277,11 +325,15 @@ def p_or(tokens):
                     level1 = False
             else:
                 t.append(token)
-    ts.append(t)
-    if met:
-        return ts
+        else:
+            t.append(token)
+    if not met:
+        return p_and(tokens)
     else:
-        return p_and(ts)
+        ts.append(t)
+        ts[0] = p_or(ts[0])
+        ts[-1] = p_or(ts[-1])
+        return ts
 
 
 def p_expr(tokens):
