@@ -30,38 +30,21 @@ def t_def(node, const=False):
     assert isinstance(node, silv_parser.Node)
     assert isinstance(node.rchild, silv_parser.Node)
     s = ''
-    if not (node.rchild.lchild and node.rchild.rchild):
-        if const:
-            s += 'const '
-        if node.type[1] == 'string':
-            s += 'char '
-            s += node.value
-            s += '[] = '
-            s += node.rchild.value
-            s += ';'
-        else:
-            s += node.type[1]
-            s += ' '
-            s += node.value
-            s += ' = '
-            s += node.rchild.value
-            s += ';'
+    if const:
+        s += 'const '
+    if node.type[1] == 'string':
+        s += 'char '
+        s += node.value
+        s += '[] = '
+        s += walk_expr_tree(node.rchild)
+        s += ';'
     else:
-        if const:
-            s += 'const '
-        if node.type[1] == 'string':
-            s += 'char '
-            s += node.value
-            s += '[] = '
-            s += walk_expr_tree(node.rchild)
-            s += ';'
-        else:
-            s += node.type[1]
-            s += ' '
-            s += node.value
-            s += ' = '
-            s += walk_expr_tree(node.rchild)
-            s += ';'
+        s += node.type[1]
+        s += ' '
+        s += node.value
+        s += ' = '
+        s += walk_expr_tree(node.rchild)
+        s += ';'
     return s
 
 

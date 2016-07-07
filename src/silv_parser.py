@@ -21,7 +21,11 @@ class Node:
 
 
 nodes = []
+level1 = True
+math = False
+def_type = ''
 current = 0
+curr = 0
 tokens_list = []
 sems = {
     "var",
@@ -41,7 +45,10 @@ symbol_table = dict(names=dict())
 
 
 def p_atom(token):
-    assert isinstance(token, lexer.Token)
+    """
+    :rtype: Node
+    :type token: lexer.Token
+    """
     if token.type in datas:
         tmp = Node(token.type, token.value)
     elif token.type == "True":
@@ -55,295 +62,276 @@ def p_atom(token):
             raise NameError, "Попытка определения через неопределённую переменную"
     else:
         raise NameError, "Некорректный параметр"
-    return [tmp, tmp.type]
+    return tmp
 
 
-def create_bi_node(operation, left, right):
-    nd = Node(operation)
-    nd.setl(left)
-    nd.setr(right)
+def build_tree(tokens):
+    """
+    :rtype: Node
+    :type tokens: list
+    """
+    nd = None
+    if len(tokens) == 3:
+        nd = Node(tokens[1])
+        nd.setl(build_tree(tokens[0]))
+        nd.setr(build_tree(tokens[2]))
+    elif len(tokens) == 2:
+        nd = Node(tokens[0])
+        nd.setr(build_tree([2]))
+    elif len(tokens) == 1:
+        nd = tokens[0]
     return nd
 
 
-def p_operand(term):
-    assert isinstance(term, list)
-    op = ''
+def p_operand(tokens):
+    """
+    :rtype: list
+    :type tokens: list
+    """
+    t = []
+    if len(tokens) == 1:
+        return p_expr(tokens[0])
+    elif len(tokens) == 2:
+        if tokens[0].type == 'minus':
+            t.append('-')
+        elif tokens[0].type == 'not':
+            t.append('!')
+        t.append(tokens[1])
+        return t
+
+
+def p_mult(tokens):
+    """
+    :rtype: list
+    :type tokens: list
+    """
+    t = []
     met = False
-    if term[0].type == 'minus':
-        op += '-'
-        met = True
-    elif term[0].type == 'not':
-        op += '!'
-        met = True
+    global level1, math
+    for token in tokens:
+        if not isinstance(token, lexer.Token):
+            if isinstance(token, list):
+                t.append(p_expr(token))
+        else:
+            if token.type == 'mul':
+                t.append('*')
+                met = True
+                if level1:
+                    math = True
+                    level1 = False
+            elif token.type == 'div':
+                t.append('/')
+                met = True
+                if level1:
+                    math = True
+                    level1 = False
+            elif token.type == 'mod':
+                t.append('/')
+                met = True
+                if level1:
+                    math = True
+                    level1 = False
+            else:
+                t.append(token)
     if met:
-        if term[1].type == 'left-paren' and term[-1].type == 'right-paren':
-            tmp = p_expr(term[2:-1], 0)
-            return [create_bi_node(op, None, tmp[0]), tmp[1]]
-        else:
-            tmp = p_expr(term[1:], 0)
-            return [create_bi_node(op, None, tmp[0]), tmp[1]]
+        return t
     else:
-        return p_expr(term, 0)
+        return p_operand(t)
 
 
-def make_mult_node(terms, operation):
-    if len(terms) == 1:
-        return p_operand(terms[0])
-    elif len(terms) == 2:
-        n1 = p_expr(terms[0], 0)
-        n2 = p_expr(terms[1], 0)
-        if n1[1] == 'float' or n2[1] == 'float':
-            return [create_bi_node(operation, n1[0], n2[0]), 'float']
-        else:
-            return [create_bi_node(operation, n1[0], n2[0]), 'int']
-
-
-def p_mult(term):
-    assert isinstance(term, list)
-    curr = 0
-    ts = []
+def p_addit(tokens):
+    """
+    :rtype: list
+    :type tokens: list
+    """
     t = []
-    op = ''
     met = False
-    while curr < len(term) and term[curr].type != 'right-paren':
-        if not met:
-            if term[curr].type == 'left-paren':
-                curr += 1
-                t.append(p_expr(term, 0))
-            elif term[curr].type == 'mul':
-                op += '*'
-                ts.append(t)
-                t = []
+    global level1, math
+    for token in tokens:
+        if not isinstance(token, lexer.Token):
+            if isinstance(token, list):
+                t.append(p_expr(token))
+        else:
+            if token.type == 'plus':
+                t.append('+')
                 met = True
-            elif term[curr].type == 'div':
-                op += '/'
-                ts.append(t)
-                t = []
+                if level1:
+                    math = True
+                    level1 = False
+            elif token.type == 'minus':
+                t.append('-')
                 met = True
-            elif term[curr].type == 'mod':
-                op += '%'
-                ts.append(t)
-                t = []
-                met = True
+                if level1:
+                    math = True
+                    level1 = False
             else:
-                t.append(term[curr])
-        else:
-            t.append(term[curr])
-        curr += 1
-    ts.append(t)
-    return make_mult_node(ts, op)
+                t.append(token)
+    if met:
+        return t
+    else:
+        return p_mult(t)
 
 
-def make_addit_node(terms, operation):
-    if len(terms) == 1:
-        return p_mult(terms[0])
-    elif len(terms) == 2:
-        n1 = p_expr(terms[0], 0)
-        n2 = p_expr(terms[1], 0)
-        if n1[1] == 'float' or n2[1] == 'float':
-            return [create_bi_node(operation, n1[0], n2[0]), 'float']
-        else:
-            return [create_bi_node(operation, n1[0], n2[0]), 'int']
-
-
-def p_addit(term):
-    assert isinstance(term, list)
-    curr = 0
-    ts = []
+def p_comp(tokens):
+    """
+    :rtype: list
+    :type tokens: list
+    """
     t = []
-    op = ''
     met = False
-    while curr < len(term) and term[curr].type != 'right-paren':
-        if not met:
-            if term[curr].type == 'left-paren':
-                curr += 1
-                t.append(p_expr(term, 0))
-            elif term[curr].type == 'plus' and curr != 0:
-                op += '+'
-                ts.append(t)
-                t = []
+    less = False
+    more = False
+    eq = False
+    global level1, def_type
+    for token in tokens:
+        if not isinstance(token, lexer.Token):
+            if isinstance(token, list):
+                t.append(p_expr(token))
+        else:
+            if token.type == 'left-chev':
+                less = True
+                continue
+            elif token.type == 'right-chev':
+                more = True
+                continue
+            elif token.type == 'equal':
                 met = True
-            elif term[curr].type == 'minus' and curr != 0:
-                op += '-'
-                ts.append(t)
-                t = []
-                met = True
+                eq = True
+                if less:
+                    t.append('<=')
+                elif more:
+                    t.append('>=')
+                if level1:
+                    def_type = 'int'
+                    level1 = False
             else:
-                t.append(term[curr])
-        else:
-            t.append(term[curr])
-        curr += 1
-    ts.append(t)
-    return make_addit_node(ts, op)
-
-
-def make_comp_node(terms, operation):
-    assert isinstance(terms, list)
-    if len(terms) == 1:
-        return p_addit(terms[0])
-    elif len(terms) == 2:
-        return [create_bi_node(operation, p_expr(terms[0], 0)[0], p_expr(terms[1], 0)[0]), 'int']
-
-
-def p_comp(term):
-    assert isinstance(term, list)
-    curr = 0
-    ts = []
-    t = []
-    op = ''
-    met = False
-    while curr < len(term) and term[curr].type != 'right-paren':
-        if not met:
-            if term[curr].type == 'left-paren':
-                curr += 1
-                t.append(p_expr(term, 0))
-            elif term[curr].type == 'left-chev':
-                op += '<'
-                if term[curr + 1].type == 'equal':
-                    op += '='
-                    curr += 1
-                ts.append(t)
-                t = []
-                met = True
-            elif term[curr].type == 'right-chev':
-                op += '>'
-                if term[curr + 1].type == 'equal':
-                    op += '='
-                    curr += 1
-                ts.append(t)
-                t = []
-                met = True
-            else:
-                t.append(term[curr])
-        else:
-            t.append(term[curr])
-        curr += 1
-    ts.append(t)
-    return make_comp_node(ts, op)
-
-
-def make_equal_node(terms, operation):
-    assert isinstance(terms, list)
-    if len(terms) == 1:
-        return p_comp(terms[0])
-    elif len(terms) == 2:
-        return [create_bi_node(operation, p_expr(terms[0], 0)[0], p_expr(terms[1], 0)[0]), 'int']
-
-
-def p_equal(term):
-    assert isinstance(term, list)
-    curr = 0
-    ts = []
-    t = []
-    op = ''
-    met = False
-    while curr < len(term) and term[curr].type != 'right-paren':
-        if not met:
-            if term[curr].type == 'left-paren':
-                curr += 1
-                t.append(p_expr(term, 0))
-            elif term[curr].type == 'exclam':
-                if term[curr + 1].type == 'equal':
-                    op += '!='
-                    curr += 1
-                    ts.append(t)
-                    t = []
+                if not eq and (less or more):
                     met = True
+                    if less:
+                        t.append('<')
+                    elif more:
+                        t.append('>')
+                    if level1:
+                        def_type = 'int'
+                        level1 = False
+                t.append(token)
+    if met:
+        return t
+    else:
+        return p_addit(t)
+
+
+def p_equal(tokens):
+    """
+    :rtype: list
+    :type tokens: list
+    """
+    t = []
+    met = False
+    n = False
+    global level1, def_type
+    for token in tokens:
+        if not isinstance(token, lexer.Token):
+            if isinstance(token, list):
+                t.append(p_expr(token))
+        else:
+            if token.type == 'exclam':
+                n = True
+                continue
+            elif token.type == 'equal':
+                met = True
+                if n:
+                    t.append('!=')
                 else:
-                    pass  # некорректный оператор
-            elif term[curr].type == 'equal':
-                op += '=='
-                ts.append(t)
-                t = []
-                met = True
+                    t.append('==')
+                if level1:
+                    def_type = 'int'
+                    level1 = False
             else:
-                t.append(term[curr])
-        else:
-            t.append(term[curr])
-        curr += 1
-    ts.append(t)
-    return make_equal_node(ts, op)
+                t.append(token)
+    if met:
+        return t
+    else:
+        return p_comp(t)
 
 
-def make_and_node(terms):
-    assert isinstance(terms, list)
-    if len(terms) == 1:
-        return p_equal(terms[0])
-    elif len(terms) == 2:
-        return [create_bi_node('&&', p_expr(terms[0], 0)[0], p_expr(terms[1], 0)[0]), 'int']
-
-
-def p_and(term):
-    assert isinstance(term, list)
-    curr = 0
-    ts = []
+def p_and(tokens):
+    """
+    :rtype: list
+    :type tokens: list
+    """
     t = []
     met = False
-    while curr < len(term) and term[curr].type != 'right-paren':
-        if not met:
-            if term[curr].type == 'left-paren':
-                curr += 1
-                t.append(p_expr(term, 0))
-            elif term[curr].type == 'and':
-                ts.append(t)
-                t = []
-                met = True
-            else:
-                t.append(term[curr])
+    global level1, def_type
+    for token in tokens:
+        if not isinstance(token, lexer.Token):
+            if isinstance(token, list):
+                t.append(p_expr(token))
         else:
-            t.append(term[curr])
-        curr += 1
-    ts.append(t)
-    return make_and_node(ts)
+            if token.type == 'and':
+                met = True
+                t.append('&&')
+                if level1:
+                    def_type = 'int'
+                    level1 = False
+            else:
+                t.append(token)
+    if met:
+        return t
+    else:
+        return p_equal(t)
 
 
-def make_or_node(terms):
-    assert isinstance(terms, list)
-    if len(terms) == 1:
-        return p_and(terms[0])
-    elif len(terms) == 2:
-        return [create_bi_node('||', p_expr(terms[0], 0)[0], p_expr(terms[1], 0)[0]), 'int']
-
-
-def p_or(tokens, curr):
-    assert isinstance(tokens, list)
-    ts = []
+def p_or(tokens):
+    """
+    :rtype: list
+    :type tokens: list
+    """
     t = []
     met = False
-    while curr < len(tokens) and tokens[curr].type != 'right-paren':
-        if not met:
-            if tokens[curr].type == 'left-paren':
-                curr += 1
-                t.append(p_expr(tokens, curr))
-            elif tokens[curr].type == 'or':
-                ts.append(t)
-                t = []
-                met = True
-            else:
-                t.append(tokens[curr])
+    global level1, def_type
+    for token in tokens:
+        if not isinstance(token, lexer.Token):
+            if isinstance(token, list):
+                t.append(p_expr(token))
         else:
-            t.append(tokens[curr])
-        curr += 1
-    ts.append(t)
-    return make_or_node(ts)
+            if token.type == 'or':
+                met = True
+                t.append('||')
+                if level1:
+                    def_type = 'int'
+                    level1 = False
+            else:
+                t.append(token)
+    if met:
+        return t
+    else:
+        return p_and(t)
 
 
-def p_expr(tokens, curr):
+def p_expr(tokens):
     """
-    Возвращает список из узла и типа (на случай, если нужно установить тип параметра)
-    :param curr:
-    :param tokens:
-    :return: list
+    :rtype: list
+    :type tokens: list
     """
-    assert isinstance(tokens, list)
+    t = []
+    global curr
     if len(tokens) == 1:
         return p_atom(tokens[0])
     else:
-        return p_or(tokens, curr)
+        while curr < len(tokens) and tokens[curr].type != 'right-paren':
+            if tokens[curr].type == 'left-paren':
+                curr += 1
+                t.append(p_expr(tokens))
+            else:
+                t.append(tokens[curr])
+            curr += 1
+        return p_or(t)
 
 
 def p_def(term, t):
     assert isinstance(term, list)
+    global def_type
     if term[0].type == 'ident' and term[1].type == 'equal':
         nd = Node([t, ''], term[0].value)
         if nd.value not in symbol_table['names']:
@@ -351,10 +339,14 @@ def p_def(term, t):
             if len(ndr) == 0:
                 raise NameError, "Отсутствует параметр"
             else:
-                par = p_expr(ndr, 0)
-                symbol_table['names'][nd.value] = [par[1], t]
-                nd.setr(par[0])
-                nd.type[1] = par[1]
+                if len(ndr) == 1:
+                    par = p_atom(ndr[0])
+                else:
+                    par = build_tree(p_expr(ndr))
+                symbol_table['names'][nd.value] = [par, t]
+                nd.setr(par)
+                nd.type[1] = def_type
+                def_type = ''
                 return nd
         else:
             raise NameError, "Попытка определения уже определённой переменной"
