@@ -105,38 +105,46 @@ def p_mult(tokens):
     :rtype: list
     :type tokens: list
     """
+    ts = []
     t = []
     met = False
     global level1, math
     for token in tokens:
         if not isinstance(token, lexer.Token):
             if isinstance(token, list):
-                t.append(p_expr(token))
+                t.append(token)
         else:
             if token.type == 'mul':
-                t.append('*')
                 met = True
+                ts.append(t)
+                ts.append('*')
+                t = []
                 if level1:
                     math = True
                     level1 = False
             elif token.type == 'div':
-                t.append('/')
                 met = True
+                ts.append(t)
+                ts.append('/')
+                t = []
                 if level1:
                     math = True
                     level1 = False
             elif token.type == 'mod':
-                t.append('/')
                 met = True
+                ts.append(t)
+                ts.append('%')
+                t = []
                 if level1:
                     math = True
                     level1 = False
             else:
                 t.append(token)
+    ts.append(t)
     if met:
-        return t
+        return ts
     else:
-        return p_operand(t)
+        return p_operand(ts)
 
 
 def p_addit(tokens):
@@ -144,32 +152,38 @@ def p_addit(tokens):
     :rtype: list
     :type tokens: list
     """
+    ts = []
     t = []
     met = False
     global level1, math
     for token in tokens:
         if not isinstance(token, lexer.Token):
             if isinstance(token, list):
-                t.append(p_expr(token))
+                t.append(token)
         else:
             if token.type == 'plus':
-                t.append('+')
                 met = True
+                ts.append(t)
+                ts.append('+')
+                t = []
                 if level1:
                     math = True
                     level1 = False
             elif token.type == 'minus':
-                t.append('-')
                 met = True
+                ts.append(t)
+                ts.append('-')
+                t = []
                 if level1:
                     math = True
                     level1 = False
             else:
                 t.append(token)
+    ts.append(t)
     if met:
-        return t
+        return ts
     else:
-        return p_mult(t)
+        return p_mult(ts)
 
 
 def p_comp(tokens):
@@ -177,82 +191,35 @@ def p_comp(tokens):
     :rtype: list
     :type tokens: list
     """
+    ts = []
     t = []
     met = False
-    less = False
-    more = False
-    eq = False
     global level1, def_type
     for token in tokens:
         if not isinstance(token, lexer.Token):
             if isinstance(token, list):
-                t.append(p_expr(token))
-        else:
-            if token.type == 'left-chev':
-                less = True
-                continue
-            elif token.type == 'right-chev':
-                more = True
-                continue
-            elif token.type == 'equal':
-                met = True
-                eq = True
-                if less:
-                    t.append('<=')
-                elif more:
-                    t.append('>=')
-                if level1:
-                    def_type = 'int'
-                    level1 = False
-            else:
-                if not eq and (less or more):
-                    met = True
-                    if less:
-                        t.append('<')
-                    elif more:
-                        t.append('>')
-                    if level1:
-                        def_type = 'int'
-                        level1 = False
                 t.append(token)
-    if met:
-        return t
-    else:
-        return p_addit(t)
-
-
-def p_equal(tokens):
-    """
-    :rtype: list
-    :type tokens: list
-    """
-    t = []
-    met = False
-    n = False
-    global level1, def_type
-    for token in tokens:
-        if not isinstance(token, lexer.Token):
-            if isinstance(token, list):
-                t.append(p_expr(token))
         else:
-            if token.type == 'exclam':
-                n = True
-                continue
-            elif token.type == 'equal':
+            if token.type == '<' or token.type == '>'\
+                    or token.type == '<=' or token.type == '>='\
+                    or token.type == '=' or token.type == '!=':
                 met = True
-                if n:
-                    t.append('!=')
+                ts.append(t)
+                if token.type == '=':
+                    ts.append('==')
                 else:
-                    t.append('==')
+                    ts.append(token.type)
+                t = []
                 if level1:
                     def_type = 'int'
                     level1 = False
             else:
                 t.append(token)
+    ts.append(t)
     if met:
-        return t
+        return ts
     else:
-        return p_comp(t)
+        return p_addit(ts)
 
 
 def p_and(tokens):
@@ -260,26 +227,30 @@ def p_and(tokens):
     :rtype: list
     :type tokens: list
     """
+    ts = []
     t = []
     met = False
     global level1, def_type
     for token in tokens:
         if not isinstance(token, lexer.Token):
             if isinstance(token, list):
-                t.append(p_expr(token))
+                t.append(token)
         else:
             if token.type == 'and':
                 met = True
-                t.append('&&')
+                ts.append(t)
+                ts.append('&&')
+                t = []
                 if level1:
                     def_type = 'int'
                     level1 = False
             else:
                 t.append(token)
+    ts.append(t)
     if met:
-        return t
+        return ts
     else:
-        return p_equal(t)
+        return p_comp(ts)
 
 
 def p_or(tokens):
@@ -287,26 +258,30 @@ def p_or(tokens):
     :rtype: list
     :type tokens: list
     """
+    ts = []
     t = []
     met = False
     global level1, def_type
     for token in tokens:
         if not isinstance(token, lexer.Token):
             if isinstance(token, list):
-                t.append(p_expr(token))
+                t.append(token)
         else:
             if token.type == 'or':
                 met = True
-                t.append('||')
+                ts.append(t)
+                ts.append('||')
+                t = []
                 if level1:
                     def_type = 'int'
                     level1 = False
             else:
                 t.append(token)
+    ts.append(t)
     if met:
-        return t
+        return ts
     else:
-        return p_and(t)
+        return p_and(ts)
 
 
 def p_expr(tokens):
@@ -316,23 +291,20 @@ def p_expr(tokens):
     """
     t = []
     global curr
-    if len(tokens) == 1:
-        return p_atom(tokens[0])
-    else:
-        while curr < len(tokens) and tokens[curr].type != 'right-paren':
-            if tokens[curr].type == 'left-paren':
-                curr += 1
-                t.append(p_expr(tokens))
-            else:
-                t.append(tokens[curr])
+    while curr < len(tokens) and tokens[curr].type != 'right-paren':
+        if tokens[curr].type == 'left-paren':
             curr += 1
-        return p_or(t)
+            t.append(p_expr(tokens))
+        else:
+            t.append(tokens[curr])
+        curr += 1
+    return t
 
 
 def p_def(term, t):
     assert isinstance(term, list)
     global def_type
-    if term[0].type == 'ident' and term[1].type == 'equal':
+    if term[0].type == 'ident' and term[1].type == '=':
         nd = Node([t, ''], term[0].value)
         if nd.value not in symbol_table['names']:
             ndr = term[2:]
@@ -342,7 +314,7 @@ def p_def(term, t):
                 if len(ndr) == 1:
                     par = p_atom(ndr[0])
                 else:
-                    par = build_tree(p_expr(ndr))
+                    par = build_tree(p_or(p_expr(ndr)))
                 symbol_table['names'][nd.value] = [par, t]
                 nd.setr(par)
                 nd.type[1] = def_type

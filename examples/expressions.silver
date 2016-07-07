@@ -1,1 +1,1 @@
-const log = (1+2*3-4.0/5 < 6) or (6+7*8-9 >= 60) and not (arif = 7);
+const log = (1+2)*(3-4)/5;
