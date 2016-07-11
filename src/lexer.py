@@ -81,7 +81,7 @@ def check():
             elif regexp.returner(r_cover(r_string), other):
                 tokens.append(Token("string", other))
             else:
-                raise NameError, "Некорректная лексема"
+                raise Exception, "Некорректная лексема"
         other = ''
 
 
@@ -111,6 +111,10 @@ def lexing(code):
                 check()
                 continue
             else:
+                if eqplus:
+                    tokens.append(Token(eqp))
+                    eqp = ''
+                    eqplus = False
                 other += sym
                 if sym == '"':
                     if not in_string:

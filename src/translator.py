@@ -19,7 +19,7 @@ def walk_expr_tree(node):
         s += '('
         if node.lchild:
             s += walk_expr_tree(node.lchild)
-            s += node.type
+        s += node.type
         if node.rchild:
             s += walk_expr_tree(node.rchild)
         s += ')'

@@ -39,7 +39,8 @@ sems = {
 datas = {
     "int",
     "double",
-    "string"
+    "string",
+    "ident"
 }
 symbol_table = dict(names=dict())
 
@@ -65,275 +66,312 @@ def p_atom(token):
     return tmp
 
 
+# def p_operand(tokens):
+#     """
+#     :rtype: list
+#     :type tokens: list
+#     """
+#     t = []
+#     if len(tokens) == 1:
+#         if isinstance(tokens[0], list):
+#             return p_or(tokens[0])
+#         elif isinstance(tokens[0], lexer.Token):
+#             return tokens
+#     elif len(tokens) == 2:
+#         if tokens[0].type == 'minus':
+#             t.append('-')
+#         elif tokens[0].type == 'not':
+#             t.append('!')
+#         t.append(tokens[1])
+#         return t
+#
+#
+# def p_mult(tokens):
+#     """
+#     :rtype: list
+#     :type tokens: list
+#     """
+#     ts = []
+#     t = []
+#     met = False
+#     global level1, math
+#     for token in tokens:
+#         if isinstance(token, lexer.Token):
+#             if not met:
+#                 if token.type == 'mul':
+#                     met = True
+#                     ts.append(t)
+#                     ts.append('*')
+#                     t = []
+#                     if level1:
+#                         math = True
+#                         level1 = False
+#                     continue
+#                 elif token.type == 'div':
+#                     met = True
+#                     ts.append(t)
+#                     ts.append('/')
+#                     t = []
+#                     if level1:
+#                         math = True
+#                         level1 = False
+#                     continue
+#                 elif token.type == 'mod':
+#                     met = True
+#                     ts.append(t)
+#                     ts.append('%')
+#                     t = []
+#                     if level1:
+#                         math = True
+#                         level1 = False
+#                     continue
+#             else:
+#                 t.append(token)
+#         else:
+#             t.append(token)
+#     if not met:
+#         return p_operand(tokens)
+#     else:
+#         ts.append(t)
+#         ts[0] = p_or(ts[0])
+#         ts[-1] = p_or(ts[-1])
+#         return ts
+#
+#
+# def p_addit(tokens):
+#     """
+#     :rtype: list
+#     :type tokens: list
+#     """
+#     ts = []
+#     t = []
+#     met = False
+#     global level1, math
+#     for token in tokens:
+#         if isinstance(token, lexer.Token):
+#             if not met:
+#                 if token.type == 'plus':
+#                     met = True
+#                     ts.append(t)
+#                     ts.append('+')
+#                     t = []
+#                     if level1:
+#                         math = True
+#                         level1 = False
+#                     continue
+#                 elif token.type == 'minus':
+#                     if len(t) == 0:
+#                         t.append(token)
+#                     else:
+#                         met = True
+#                         ts.append(t)
+#                         ts.append('-')
+#                         t = []
+#                         if level1:
+#                             math = True
+#                             level1 = False
+#                     continue
+#             else:
+#                 t.append(token)
+#         else:
+#             t.append(token)
+#     if not met:
+#         return p_mult(tokens)
+#     else:
+#         ts.append(t)
+#         ts[0] = p_or(ts[0])
+#         ts[-1] = p_or(ts[-1])
+#         return ts
+#
+#
+# def p_comp(tokens):
+#     """
+#     :rtype: list
+#     :type tokens: list
+#     """
+#     ts = []
+#     t = []
+#     met = False
+#     global level1, def_type
+#     for token in tokens:
+#         if isinstance(token, lexer.Token):
+#             if not met:
+#                 if token.type == '<' or token.type == '>' or token.type == '<=' or token.type == '>=':
+#                     met = True
+#                     ts.append(t)
+#                     ts.append(token.type)
+#                     t = []
+#                     if level1:
+#                         def_type = 'int'
+#                         level1 = False
+#                     continue
+#             else:
+#                 t.append(token)
+#         else:
+#             t.append(token)
+#     if not met:
+#         return p_addit(tokens)
+#     else:
+#         ts.append(t)
+#         ts[0] = p_or(ts[0])
+#         ts[-1] = p_or(ts[-1])
+#         return ts
+#
+#
+# def p_equal(tokens):
+#     """
+#     :rtype: list
+#     :type tokens: list
+#     """
+#     ts = []
+#     t = []
+#     met = False
+#     global level1, def_type
+#     for token in tokens:
+#         if isinstance(token, lexer.Token):
+#             if not met:
+#                 if token.type == '=' or token.type == '!=':
+#                     met = True
+#                     ts.append(t)
+#                     if token.type == '=':
+#                         ts.append('==')
+#                     else:
+#                         ts.append(token.type)
+#                     t = []
+#                     if level1:
+#                         def_type = 'int'
+#                         level1 = False
+#                     continue
+#             else:
+#                 t.append(token)
+#         else:
+#             t.append(token)
+#     if not met:
+#         return p_comp(tokens)
+#     else:
+#         ts.append(t)
+#         ts[0] = p_or(ts[0])
+#         ts[-1] = p_or(ts[-1])
+#         return ts
+#
+#
+# def p_and(tokens):
+#     """
+#     :rtype: list
+#     :type tokens: list
+#     """
+#     ts = []
+#     t = []
+#     met = False
+#     global level1, def_type
+#     for token in tokens:
+#         if isinstance(token, lexer.Token):
+#             if token.type == 'and' and not met:
+#                 met = True
+#                 ts.append(t)
+#                 ts.append('&&')
+#                 t = []
+#                 if level1:
+#                     def_type = 'int'
+#                     level1 = False
+#             else:
+#                 t.append(token)
+#         else:
+#             t.append(token)
+#     if not met:
+#         return p_equal(tokens)
+#     else:
+#         ts.append(t)
+#         ts[0] = p_or(ts[0])
+#         ts[-1] = p_or(ts[-1])
+#         return ts
+#
+#
+# def p_or(tokens):
+#     """
+#     :rtype: list
+#     :type tokens: list
+#     """
+#     ts = []
+#     t = []
+#     met = False
+#     global level1, def_type
+#     for token in tokens:
+#         if isinstance(token, lexer.Token):
+#             if token.type == 'or' and not met:
+#                 met = True
+#                 ts.append(t)
+#                 ts.append('||')
+#                 t = []
+#                 if level1:
+#                     def_type = 'int'
+#                     level1 = False
+#             else:
+#                 t.append(token)
+#         else:
+#             t.append(token)
+#     if not met:
+#         return p_and(tokens)
+#     else:
+#         ts.append(t)
+#         ts[0] = p_or(ts[0])
+#         ts[-1] = p_or(ts[-1])
+#         return ts
+#
+#
+# def p_expr(tokens):
+#     """
+#     :rtype: list
+#     :type tokens: list
+#     """
+#     t = []
+#     global curr
+#     while curr < len(tokens) and tokens[curr].type != 'right-paren':
+#         if tokens[curr].type == 'left-paren':
+#             curr += 1
+#             t.append(p_expr(tokens))
+#         else:
+#             t.append(tokens[curr])
+#         curr += 1
+#     return t
+
+
 def build_tree(tokens):
     """
     :rtype: Node
     :type tokens: list
     """
-    nd = None
-    if len(tokens) == 3:
-        nd = Node(tokens[1])
-        nd.setl(build_tree(tokens[0]))
-        nd.setr(build_tree(tokens[2]))
-    elif len(tokens) == 2:
-        nd = Node(tokens[0])
-        nd.setr(build_tree(tokens[1]))
-    elif len(tokens) == 1:
-        nd = p_atom(tokens[0])
-    return nd
-
-
-def p_operand(tokens):
-    """
-    :rtype: list
-    :type tokens: list
-    """
-    t = []
-    if len(tokens) == 1:
-        if isinstance(tokens[0], list):
-            return p_or(tokens[0])
-        elif isinstance(tokens[0], lexer.Token):
-            return tokens
-    elif len(tokens) == 2:
-        if tokens[0].type == 'minus':
-            t.append('-')
-        elif tokens[0].type == 'not':
-            t.append('!')
-        t.append(tokens[1])
-        return t
-
-
-def p_mult(tokens):
-    """
-    :rtype: list
-    :type tokens: list
-    """
-    ts = []
-    t = []
-    met = False
-    global level1, math
-    for token in tokens:
-        if isinstance(token, lexer.Token):
-            if not met:
-                if token.type == 'mul':
-                    met = True
-                    ts.append(t)
-                    ts.append('*')
-                    t = []
-                    if level1:
-                        math = True
-                        level1 = False
-                    continue
-                elif token.type == 'div':
-                    met = True
-                    ts.append(t)
-                    ts.append('/')
-                    t = []
-                    if level1:
-                        math = True
-                        level1 = False
-                    continue
-                elif token.type == 'mod':
-                    met = True
-                    ts.append(t)
-                    ts.append('%')
-                    t = []
-                    if level1:
-                        math = True
-                        level1 = False
-                    continue
-            else:
-                t.append(token)
+    binary = {'mul': '*', 'div': '/', 'mod': '%', 'plus': '+', 'minus': '-', 'and': '&&', 'or': '||'}
+    unary = {'not': '!', '-u': '-'}
+    global curr
+    while curr < len(tokens):
+        if tokens[curr].type in binary:
+            nd = Node(binary[tokens[curr].type])
+            curr += 1
+            nd.setr(build_tree(tokens))
+            nd.setl(build_tree(tokens))
+            return nd
+        elif tokens[curr].type in {'<', '>', '<=', '>=', '!='}:
+            nd = Node(tokens[curr].type)
+            curr += 1
+            nd.setr(build_tree(tokens))
+            nd.setl(build_tree(tokens))
+            return nd
+        elif tokens[curr].type == '=':
+            nd = Node('==')
+            curr += 1
+            nd.setr(build_tree(tokens))
+            nd.setl(build_tree(tokens))
+            return nd
+        elif tokens[curr].type in unary:
+            nd = Node(unary[tokens[curr].type])
+            curr += 1
+            nd.setr(build_tree(tokens))
+            return nd
         else:
-            t.append(token)
-    if not met:
-        return p_operand(tokens)
-    else:
-        ts.append(t)
-        ts[0] = p_or(ts[0])
-        ts[-1] = p_or(ts[-1])
-        return ts
-
-
-def p_addit(tokens):
-    """
-    :rtype: list
-    :type tokens: list
-    """
-    ts = []
-    t = []
-    met = False
-    global level1, math
-    for token in tokens:
-        if isinstance(token, lexer.Token):
-            if not met:
-                if token.type == 'plus':
-                    met = True
-                    ts.append(t)
-                    ts.append('+')
-                    t = []
-                    if level1:
-                        math = True
-                        level1 = False
-                    continue
-                elif token.type == 'minus':
-                    if len(t) == 0:
-                        t.append(token)
-                    else:
-                        met = True
-                        ts.append(t)
-                        ts.append('-')
-                        t = []
-                        if level1:
-                            math = True
-                            level1 = False
-                    continue
-            else:
-                t.append(token)
-        else:
-            t.append(token)
-    if not met:
-        return p_mult(tokens)
-    else:
-        ts.append(t)
-        ts[0] = p_or(ts[0])
-        ts[-1] = p_or(ts[-1])
-        return ts
-
-
-def p_comp(tokens):
-    """
-    :rtype: list
-    :type tokens: list
-    """
-    ts = []
-    t = []
-    met = False
-    global level1, def_type
-    for token in tokens:
-        if isinstance(token, lexer.Token):
-            if not met:
-                if token.type == '<' or token.type == '>' or token.type == '<=' or token.type == '>=':
-                    met = True
-                    ts.append(t)
-                    ts.append(token.type)
-                    t = []
-                    if level1:
-                        def_type = 'int'
-                        level1 = False
-                    continue
-            else:
-                t.append(token)
-        else:
-            t.append(token)
-    if not met:
-        return p_addit(tokens)
-    else:
-        ts.append(t)
-        ts[0] = p_or(ts[0])
-        ts[-1] = p_or(ts[-1])
-        return ts
-
-
-def p_equal(tokens):
-    """
-    :rtype: list
-    :type tokens: list
-    """
-    ts = []
-    t = []
-    met = False
-    global level1, def_type
-    for token in tokens:
-        if isinstance(token, lexer.Token):
-            if not met:
-                if token.type == '=' or token.type == '!=':
-                    met = True
-                    ts.append(t)
-                    if token.type == '=':
-                        ts.append('==')
-                    else:
-                        ts.append(token.type)
-                    t = []
-                    if level1:
-                        def_type = 'int'
-                        level1 = False
-                    continue
-            else:
-                t.append(token)
-        else:
-            t.append(token)
-    if not met:
-        return p_comp(tokens)
-    else:
-        ts.append(t)
-        ts[0] = p_or(ts[0])
-        ts[-1] = p_or(ts[-1])
-        return ts
-
-
-def p_and(tokens):
-    """
-    :rtype: list
-    :type tokens: list
-    """
-    ts = []
-    t = []
-    met = False
-    global level1, def_type
-    for token in tokens:
-        if isinstance(token, lexer.Token):
-            if token.type == 'and' and not met:
-                met = True
-                ts.append(t)
-                ts.append('&&')
-                t = []
-                if level1:
-                    def_type = 'int'
-                    level1 = False
-            else:
-                t.append(token)
-        else:
-            t.append(token)
-    if not met:
-        return p_equal(tokens)
-    else:
-        ts.append(t)
-        ts[0] = p_or(ts[0])
-        ts[-1] = p_or(ts[-1])
-        return ts
-
-
-def p_or(tokens):
-    """
-    :rtype: list
-    :type tokens: list
-    """
-    ts = []
-    t = []
-    met = False
-    global level1, def_type
-    for token in tokens:
-        if isinstance(token, lexer.Token):
-            if token.type == 'or' and not met:
-                met = True
-                ts.append(t)
-                ts.append('||')
-                t = []
-                if level1:
-                    def_type = 'int'
-                    level1 = False
-            else:
-                t.append(token)
-        else:
-            t.append(token)
-    if not met:
-        return p_and(tokens)
-    else:
-        ts.append(t)
-        ts[0] = p_or(ts[0])
-        ts[-1] = p_or(ts[-1])
-        return ts
+            tmp = tokens[curr]
+            curr += 1
+            return p_atom(tmp)
 
 
 def p_expr(tokens):
@@ -341,41 +379,107 @@ def p_expr(tokens):
     :rtype: list
     :type tokens: list
     """
-    t = []
-    global curr
-    while curr < len(tokens) and tokens[curr].type != 'right-paren':
-        if tokens[curr].type == 'left-paren':
-            curr += 1
-            t.append(p_expr(tokens))
+
+    op_stack = []
+    rpn = []  # обратная польская нотация (постфиксная)
+
+    prec = {
+        'not': 7,
+        '-u': 7,
+        'mul': 6,
+        'div': 6,
+        'mod': 6,
+        'plus': 5,
+        'minus': 5,
+        '<': 4,
+        '>': 4,
+        '<=': 4,
+        '>=': 4,
+        '=': 3,
+        '!=': 3,
+        'and': 2,
+        'or': 1,
+        'left-paren': 0,
+        '': 99
+    }
+    right = {'-u', 'not'}
+    isdouble = False
+    global def_type
+
+    def getprec(op):
+        return prec.get(op, -1)
+
+    last = ''
+    for token in tokens:
+        assert isinstance(token, lexer.Token)
+
+        if not token:
+            continue
+
+        if token.type == 'minus' and getprec(last) >= 0:
+            token.type = '-u'
+        if token.type in {'int', 'double', 'ident'}:
+            if last in {'int', 'double', 'ident', 'right-paren'}:
+                raise Exception, "Отсутствует оператор между значениями"
+            if token.type == 'double' and not isdouble:
+                isdouble = True
+            rpn.append(token)
+        elif token.type == 'left-paren':
+            op_stack.append(token)
+        elif token.type == 'right-paren':
+            while op_stack[-1].type != 'left-paren':
+                tmp = op_stack.pop()
+                rpn.append(tmp)
+            if op_stack.pop().type != 'left-paren':
+                raise Exception, "Не хватает '('"
+        elif getprec(token.type) > 0:
+            prc = getprec(token.type)
+            if token.type in right:
+                while op_stack and prc < getprec(op_stack[-1].type):
+                    rpn.append(op_stack.pop())
+            else:
+                while op_stack and prc <= getprec(op_stack[-1].type):
+                    rpn.append(op_stack.pop())
+            op_stack.append(token)
         else:
-            t.append(tokens[curr])
-        curr += 1
-    return t
+            raise Exception, "Неизвестный токен: \"%s\"" % token.type
+        last = token.type
+    while op_stack:
+        rpn.append(op_stack.pop())
+    if rpn[-1].type in {'plus', 'minus', 'mul', 'div', 'mod'} and isdouble:
+        def_type = 'double'
+    else:
+        def_type = 'int'
+    rpn.reverse()
+
+    return rpn
 
 
 def p_def(term, t):
     assert isinstance(term, list)
-    global def_type
+    global def_type, curr
     if term[0].type == 'ident' and term[1].type == '=':
         nd = Node([t, ''], term[0].value)
         if nd.value not in symbol_table['names']:
             ndr = term[2:]
             if len(ndr) == 0:
-                raise NameError, "Отсутствует параметр"
+                raise Exception, "Отсутствует параметр"
             else:
                 if len(ndr) == 1:
                     par = p_atom(ndr[0])
+                    def_type = par.type
                 else:
-                    par = build_tree(p_or(p_expr(ndr)))
+                    par = build_tree(p_expr(ndr))
+                    curr = 0
                 symbol_table['names'][nd.value] = [par, t]
                 nd.setr(par)
                 nd.type[1] = def_type
                 def_type = ''
                 return nd
         else:
-            raise NameError, "Попытка определения уже определённой переменной"
+            raise Exception, "Попытка определения уже определённой переменной"
     else:
-        raise NameError, "Некорректное использование оператора " + t
+        raise Exception, "Некорректное использование оператора " + t
 
 
 def p_var(term):
