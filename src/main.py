@@ -5,7 +5,7 @@ var x = 5;
 """
 import translator
 
-source = open("J:\Nicolas\GitHub\Silver-PL\examples\\expressions.silver")
+source = open("J:\Nicolas\GitHub\Silver-PL\examples\\many_vars.silver")
 lines_of_code = []
 for line in source:
     lines_of_code.append(line)

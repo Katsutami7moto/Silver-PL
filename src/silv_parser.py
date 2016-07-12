@@ -19,13 +19,27 @@ class Node:
         assert isinstance(obj, Node)
         self.rchild = obj
 
+    def get_type(self):
+        if self.rchild and not self.lchild:
+            return self.rchild.get_type()
+        elif self.lchild and self.rchild:
+            if self.type in {'+', '-', '*', '/', '%'}:
+                if self.lchild.get_type() == 'double' or self.rchild.get_type() == 'double':
+                    return 'double'
+                elif self.lchild.get_type() == self.rchild.get_type():
+                    return self.rchild.get_type()
+            elif self.type in {'<', '>', '<=', '>=', '!=', '==', '!', '||', '&&'}:
+                return 'int'
+        else:
+            if self.type == 'ident':
+                return symbol_table['names'][self.value][0]
+            else:
+                return self.type
+
 
 nodes = []
-level1 = True
-math = False
-def_type = ''
-current = 0
-curr = 0
+instructions_current = 0
+expr_current = 0
 tokens_list = []
 sems = {
     "var",
@@ -66,41 +80,41 @@ def p_atom(token):
     return tmp
 
 
-def build_tree(tokens):
+def build_expr_tree(tokens):
     """
     :rtype: Node
     :type tokens: list
     """
     binary = {'mul': '*', 'div': '/', 'mod': '%', 'plus': '+', 'minus': '-', 'and': '&&', 'or': '||'}
     unary = {'not': '!', '-u': '-'}
-    global curr
-    while curr < len(tokens):
-        if tokens[curr].type in binary:
-            nd = Node(binary[tokens[curr].type])
-            curr += 1
-            nd.setr(build_tree(tokens))
-            nd.setl(build_tree(tokens))
+    global expr_current
+    while expr_current < len(tokens):
+        if tokens[expr_current].type in binary:
+            nd = Node(binary[tokens[expr_current].type])
+            expr_current += 1
+            nd.setr(build_expr_tree(tokens))
+            nd.setl(build_expr_tree(tokens))
             return nd
-        elif tokens[curr].type in {'<', '>', '<=', '>=', '!='}:
-            nd = Node(tokens[curr].type)
-            curr += 1
-            nd.setr(build_tree(tokens))
-            nd.setl(build_tree(tokens))
+        elif tokens[expr_current].type in {'<', '>', '<=', '>=', '!='}:
+            nd = Node(tokens[expr_current].type)
+            expr_current += 1
+            nd.setr(build_expr_tree(tokens))
+            nd.setl(build_expr_tree(tokens))
             return nd
-        elif tokens[curr].type == '=':
+        elif tokens[expr_current].type == '=':
             nd = Node('==')
-            curr += 1
-            nd.setr(build_tree(tokens))
-            nd.setl(build_tree(tokens))
+            expr_current += 1
+            nd.setr(build_expr_tree(tokens))
+            nd.setl(build_expr_tree(tokens))
             return nd
-        elif tokens[curr].type in unary:
-            nd = Node(unary[tokens[curr].type])
-            curr += 1
-            nd.setr(build_tree(tokens))
+        elif tokens[expr_current].type in unary:
+            nd = Node(unary[tokens[expr_current].type])
+            expr_current += 1
+            nd.setr(build_expr_tree(tokens))
             return nd
         else:
-            tmp = tokens[curr]
-            curr += 1
+            tmp = tokens[expr_current]
+            expr_current += 1
             return p_atom(tmp)
 
 
@@ -134,7 +148,6 @@ def p_expr(tokens):
     }
     right = {'-u', 'not'}
     isdouble = False
-    global def_type
 
     def getprec(op):
         return prec.get(op, -1)
@@ -176,10 +189,6 @@ def p_expr(tokens):
         last = token.type
     while op_stack:
         rpn.append(op_stack.pop())
-    if rpn[-1].type in {'plus', 'minus', 'mul', 'div', 'mod'} and isdouble:
-        def_type = 'double'
-    else:
-        def_type = 'int'
     rpn.reverse()
 
     return rpn
@@ -187,7 +196,7 @@ def p_expr(tokens):
 
 def p_def(term, t):
     assert isinstance(term, list)
-    global def_type, curr
+    global expr_current
     if term[0].type == 'ident' and term[1].type == '=':
         nd = Node([t, ''], term[0].value)
         if nd.value not in symbol_table['names']:
@@ -197,14 +206,12 @@ def p_def(term, t):
             else:
                 if len(ndr) == 1:
                     par = p_atom(ndr[0])
-                    def_type = par.type
                 else:
-                    par = build_tree(p_expr(ndr))
-                    curr = 0
-                symbol_table['names'][nd.value] = [par, t]
+                    par = build_expr_tree(p_expr(ndr))
+                    expr_current = 0
+                symbol_table['names'][nd.value] = [par.get_type(), t]
                 nd.setr(par)
-                nd.type[1] = def_type
-                def_type = ''
+                nd.type[1] = nd.get_type()
                 return nd
         else:
             raise Exception, "Попытка определения уже определённой переменной"
@@ -222,27 +229,27 @@ def p_const(term):
 
 def p_sem(kot):
     assert isinstance(kot, lexer.Token)
-    global current
+    global instructions_current
     if kot.type in sems:
         term = []
-        current += 1
-        while tokens_list[current].type != 'semicolon':
-            term.append(tokens_list[current])
-            current += 1
-        current += 1
+        instructions_current += 1
+        while tokens_list[instructions_current].type != 'semicolon':
+            term.append(tokens_list[instructions_current])
+            instructions_current += 1
+        instructions_current += 1
         func = 'p_' + kot.type + '(term)'
         nodes.append(eval(func))
 
 
 def p_instructions():
-    p_sem(tokens_list[current])
+    p_sem(tokens_list[instructions_current])
     # p_curl(tokens_list[current])
     # p_curl_sem(tokens_list[current])
     # p_curl_plus(tokens_list[current])
 
 
 def p_block():
-    while current < len(tokens_list) and tokens_list[current].type != 'right-curl':
+    while instructions_current < len(tokens_list) and tokens_list[instructions_current].type != 'right-curl':
         p_instructions()
 
 
