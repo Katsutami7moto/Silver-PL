@@ -9,7 +9,6 @@
 # Входной текст записывать в кавычках.
 
 
-TAB = '\t'
 # regexp = "((ac|bc)*ad+)#"
 # regexp = "((a(b|c))*c)#"
 # regexp = "(1+|1*01(11|01)+)#"
@@ -108,14 +107,46 @@ class Node:
         return self.data
 
 
+class BinaryNode(Node):
+    def setl(self, obj):
+        self.lchild = obj
+
+    def setr(self, obj):
+        self.rchild = obj
+
+    def postorderwalk_n(self):
+        if self:
+            self.lchild.postorderwalk_n()
+            self.rchild.postorderwalk_n()
+            self.nullable()
+
+    def postorderwalk_f(self):
+        if self:
+            self.lchild.postorderwalk_f()
+            self.rchild.postorderwalk_f()
+            self.firstpos()
+
+    def postorderwalk_l(self):
+        if self:
+            self.lchild.postorderwalk_l()
+            self.rchild.postorderwalk_l()
+            self.lastpos()
+
+    def postorderwalk_p(self):
+        if self:
+            self.lchild.postorderwalk_p()
+            self.rchild.postorderwalk_p()
+
+    def postorderwalk_w(self):
+        if self:
+            self.lchild.postorderwalk_w()
+            self.rchild.postorderwalk_w()
+            self.followpos()
+
+
 class UnaryNode(Node):
     def setc(self, obj):
         self.child = obj
-
-    def printtree(self, h):
-        print TAB * h + self.getdata()
-        if self.child:
-            self.child.printtree(h + 1)
 
     def postorderwalk_n(self):
         if self:
@@ -152,9 +183,6 @@ class Leaf(Node):
             anykeytable.add(self.position)
         curposnum += 1
 
-    def printtree(self, h):
-        print TAB * h + self.getdata()
-
     def postorderwalk_n(self):
         if self:
             self.nullable()
@@ -173,52 +201,6 @@ class Leaf(Node):
 
     def postorderwalk_w(self):
         if self:
-            self.followpos()
-
-
-class BinaryNode(Node):
-    def setl(self, obj):
-        self.lchild = obj
-
-    def setr(self, obj):
-        self.rchild = obj
-
-    def printtree(self, h):
-        if self.rchild:
-            self.rchild.printtree(h + 1)
-
-        print TAB * h + self.getdata()
-
-        if self.lchild:
-            self.lchild.printtree(h + 1)
-
-    def postorderwalk_n(self):
-        if self:
-            self.lchild.postorderwalk_n()
-            self.rchild.postorderwalk_n()
-            self.nullable()
-
-    def postorderwalk_f(self):
-        if self:
-            self.lchild.postorderwalk_f()
-            self.rchild.postorderwalk_f()
-            self.firstpos()
-
-    def postorderwalk_l(self):
-        if self:
-            self.lchild.postorderwalk_l()
-            self.rchild.postorderwalk_l()
-            self.lastpos()
-
-    def postorderwalk_p(self):
-        if self:
-            self.lchild.postorderwalk_p()
-            self.rchild.postorderwalk_p()
-
-    def postorderwalk_w(self):
-        if self:
-            self.lchild.postorderwalk_w()
-            self.rchild.postorderwalk_w()
             self.followpos()
 
 

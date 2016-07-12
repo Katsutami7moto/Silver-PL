@@ -155,10 +155,8 @@ def p_expr(tokens):
     last = ''
     for token in tokens:
         assert isinstance(token, lexer.Token)
-
         if not token:
             continue
-
         if token.type == 'minus' and getprec(last) >= 0:
             token.type = '-u'
         if token.type in {'int', 'double', 'ident'}:
@@ -171,8 +169,7 @@ def p_expr(tokens):
             op_stack.append(token)
         elif token.type == 'right-paren':
             while op_stack[-1].type != 'left-paren':
-                tmp = op_stack.pop()
-                rpn.append(tmp)
+                rpn.append(op_stack.pop())
             if op_stack.pop().type != 'left-paren':
                 raise Exception, "Не хватает '('"
         elif getprec(token.type) > 0:
@@ -190,33 +187,31 @@ def p_expr(tokens):
     while op_stack:
         rpn.append(op_stack.pop())
     rpn.reverse()
-
     return rpn
 
 
 def p_def(term, t):
     assert isinstance(term, list)
     global expr_current
-    if term[0].type == 'ident' and term[1].type == '=':
-        nd = Node([t, ''], term[0].value)
-        if nd.value not in symbol_table['names']:
-            ndr = term[2:]
-            if len(ndr) == 0:
-                raise Exception, "Отсутствует параметр"
-            else:
+    if len(term) > 2:
+        if term[0].type == 'ident' and term[1].type == '=':
+            if term[0].value not in symbol_table['names']:
+                ndr = term[2:]
                 if len(ndr) == 1:
                     par = p_atom(ndr[0])
                 else:
                     par = build_expr_tree(p_expr(ndr))
                     expr_current = 0
-                symbol_table['names'][nd.value] = [par.get_type(), t]
+                symbol_table['names'][term[0].value] = [par.get_type(), t]
+                nd = Node([t, par.get_type()], term[0].value)
                 nd.setr(par)
-                nd.type[1] = nd.get_type()
                 return nd
+            else:
+                raise Exception, "Попытка определения уже определённой переменной"
         else:
-            raise Exception, "Попытка определения уже определённой переменной"
+            raise Exception, "Некорректное использование оператора " + t
     else:
-        raise Exception, "Некорректное использование оператора " + t
+        raise Exception, "Отсутствует параметр"
 
 
 def p_var(term):
@@ -225,6 +220,20 @@ def p_var(term):
 
 def p_const(term):
     return p_def(term, 'const')
+
+
+def p_let(term):
+    assert isinstance(term, list)
+    if len(term) > 2:
+        if term[0].type == 'ident' and term[1].type == '=':
+            if term[0].value in symbol_table['names']:
+                pass
+            else:
+                raise Exception, "Попытка изменения значения не определявшейся переменной"
+        else:
+            raise Exception, "Некорректное использование оператора присваивания"
+    else:
+        raise Exception, "Отсутствует параметр"
 
 
 def p_sem(kot):
