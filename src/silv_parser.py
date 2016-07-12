@@ -291,12 +291,17 @@ def p_printline(term):
 
 def p_input(term):
     assert isinstance(term, list)
-    # TODO: сделать и для уже объявленных переменных!
     if len(term) == 2:
         if term[0].value in {'int', 'double'} and term[1].type == 'ident':
-            symbol_table['names'][term[1].value] = [term[0].type, 'var']
-            nd = Node(['input', term[0].value], term[1].value)
-            return nd
+            if term[1].value not in symbol_table['names']:
+                symbol_table['names'][term[1].value] = [term[0].value, 'var']
+                nd = Node(['input', term[0].value, 'new'], term[1].value)
+                return nd
+            else:
+                if symbol_table['names'][term[1].value][0] != term[0].value:
+                    raise Exception, "Неверно указан тип вводимого значения"
+                nd = Node(['input', term[0].value], term[1].value)
+                return nd
         else:
             raise Exception, "Некорректное использование оператора ввода"
     else:

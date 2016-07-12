@@ -25,3 +25,7 @@ printf("%d\n", (((((65+(6*487))-(98855/855.5669))+54)-(87%5456))>=984.226));
 int n;
 scanf("%d", &n);
 printf("%f\n", (arif/n));
+double mmm;
+scanf("%f", &mmm);
+scanf("%f", &y);
+printf("%d\n", ((mmm%9)==((arif/n)/y)));

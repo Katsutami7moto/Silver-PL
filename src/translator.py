@@ -50,9 +50,7 @@ def t_const(node):
 def t_let(node):
     assert isinstance(node, silv_parser.Node)
     s = ''
-    if node.type[1] == 'string':
-        pass  # TODO: изучить
-    else:
+    if node.type[1] != 'string':
         s += node.value
         s += ' = '
         s += walk_expr_tree(node.rchild)
@@ -102,17 +100,17 @@ def t_printline(node):
 
 def t_input(node):
     assert isinstance(node, silv_parser.Node)
-    # TODO: сделать и для уже объявленных переменных!
     s = ''
     mod = ''
     if node.type[1] == 'int':
         mod = '%d'
     elif node.type[1] == 'double':
         mod = '%f'
-    s += node.type[1]
-    s += ' '
-    s += node.value
-    s += ';\n'
+    if len(node.type) == 3:
+        s += node.type[1]
+        s += ' '
+        s += node.value
+        s += ';\n'
     s += 'scanf("'
     s += mod
     s += '", &'
