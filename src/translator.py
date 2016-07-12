@@ -20,7 +20,6 @@ def walk_expr_tree(node):
 
 def t_def(node, const=False):
     assert isinstance(node, silv_parser.Node)
-    assert isinstance(node.rchild, silv_parser.Node)
     s = ''
     if const:
         s += 'const '
@@ -50,7 +49,6 @@ def t_const(node):
 
 def t_let(node):
     assert isinstance(node, silv_parser.Node)
-    assert isinstance(node.rchild, silv_parser.Node)
     s = ''
     if node.type[1] == 'string':
         pass  # TODO: изучить
@@ -59,6 +57,46 @@ def t_let(node):
         s += ' = '
         s += walk_expr_tree(node.rchild)
         s += ';'
+    return s
+
+
+def t_print(node):
+    assert isinstance(node, silv_parser.Node)
+    s = ''
+    mod = ''
+    if node.type[1] == 'int':
+        mod = '%d'
+    elif node.type[1] == 'double':
+        mod = '%f'
+    elif node.type[1] == 'string':
+        mod = '%s'
+    s += 'printf("'
+    s += mod
+    s += '", '
+    s += walk_expr_tree(node.rchild)
+    s += ');'
+    return s
+
+
+def t_printline(node):
+    assert isinstance(node, silv_parser.Node)
+    s = ''
+    mod = ''
+    if node.type[1] == 'int':
+        mod = '%d\\n'
+    elif node.type[1] == 'double':
+        mod = '%f\\n'
+    elif node.type[1] == 'string':
+        mod = '%s\\n'
+    elif node.type[1] == 'line':
+        mod = '\\n'
+    s += 'printf("'
+    s += mod
+    s += '"'
+    if node.rchild:
+        s += ', '
+        s += walk_expr_tree(node.rchild)
+    s += ');'
     return s
 
 

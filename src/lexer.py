@@ -28,6 +28,7 @@ keywords = {
     "let",
     "del",
     "print",
+    "printline",
     "input",
     "type",
     "new",

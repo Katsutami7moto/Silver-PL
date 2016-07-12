@@ -47,6 +47,7 @@ sems = {
     "let",
     "del",
     "print",
+    "printline",
     "input",
     "return"
 }
@@ -253,6 +254,39 @@ def p_let(term):
             raise Exception, "Некорректное использование оператора присваивания"
     else:
         raise Exception, "Отсутствует параметр"
+
+
+def p_print(term):
+    assert isinstance(term, list)
+    global expr_current
+    if len(term) > 0:
+        if len(term) == 1:
+            par = p_atom(term[0])
+        else:
+            par = build_expr_tree(p_expr(term))
+            expr_current = 0
+        nd = Node(['print', par.get_type()])
+        nd.setr(par)
+        return nd
+    else:
+        raise Exception, "Отсутствует параметр"
+
+
+def p_printline(term):
+    assert isinstance(term, list)
+    global expr_current
+    if len(term) > 0:
+        if len(term) == 1:
+            par = p_atom(term[0])
+        else:
+            par = build_expr_tree(p_expr(term))
+            expr_current = 0
+        nd = Node(['printline', par.get_type()])
+        nd.setr(par)
+        return nd
+    else:
+        nd = Node(['printline', 'line'])
+        return nd
 
 
 def p_sem(kot):
