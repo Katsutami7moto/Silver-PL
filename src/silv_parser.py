@@ -74,7 +74,7 @@ def p_atom(token):
         if token.value in symbol_table['names']:
             tmp = Node(symbol_table['names'][token.value][0], token.value)
         else:
-            raise NameError, "Попытка определения через неопределённую переменную"
+            raise NameError, "Попытка обращения к неопределённой переменной"
     else:
         raise NameError, "Некорректный параметр"
     return tmp
@@ -224,10 +224,29 @@ def p_const(term):
 
 def p_let(term):
     assert isinstance(term, list)
+    global expr_current
     if len(term) > 2:
         if term[0].type == 'ident' and term[1].type == '=':
-            if term[0].value in symbol_table['names']:
-                pass
+            namae = term[0].value
+            if namae in symbol_table['names']:
+                if symbol_table['names'][namae][1] == 'var':
+                    ndr = term[2:]
+                    if len(ndr) == 1:
+                        par = p_atom(ndr[0])
+                    else:
+                        par = build_expr_tree(p_expr(ndr))
+                        expr_current = 0
+                    if par.get_type() == symbol_table['names'][namae][0]\
+                            or (par.get_type() == 'int' and symbol_table['names'][namae][0] == 'double'):
+                        nd = Node(['let', par.get_type()], namae)
+                        nd.setr(par)
+                        return nd
+                    else:
+                        raise Exception, "Попытка присвоения значения некорректного типа"
+                elif symbol_table['names'][namae][1] == 'const':
+                    raise Exception, "Попытка изменить значение константы"
+                else:
+                    raise Exception, "Error"
             else:
                 raise Exception, "Попытка изменения значения не определявшейся переменной"
         else:

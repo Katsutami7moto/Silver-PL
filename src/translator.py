@@ -3,14 +3,6 @@
 import silv_parser
 
 
-def t_var(node):
-    return t_def(node)
-
-
-def t_const(node):
-    return t_def(node, True)
-
-
 def walk_expr_tree(node):
     s = ''
     if node.value:
@@ -41,6 +33,28 @@ def t_def(node, const=False):
     else:
         s += node.type[1]
         s += ' '
+        s += node.value
+        s += ' = '
+        s += walk_expr_tree(node.rchild)
+        s += ';'
+    return s
+
+
+def t_var(node):
+    return t_def(node)
+
+
+def t_const(node):
+    return t_def(node, True)
+
+
+def t_let(node):
+    assert isinstance(node, silv_parser.Node)
+    assert isinstance(node.rchild, silv_parser.Node)
+    s = ''
+    if node.type[1] == 'string':
+        pass  # TODO: изучить
+    else:
         s += node.value
         s += ' = '
         s += walk_expr_tree(node.rchild)
