@@ -289,6 +289,20 @@ def p_printline(term):
         return nd
 
 
+def p_input(term):
+    assert isinstance(term, list)
+    # TODO: сделать и для уже объявленных переменных!
+    if len(term) == 2:
+        if term[0].value in {'int', 'double'} and term[1].type == 'ident':
+            symbol_table['names'][term[1].value] = [term[0].type, 'var']
+            nd = Node(['input', term[0].value], term[1].value)
+            return nd
+        else:
+            raise Exception, "Некорректное использование оператора ввода"
+    else:
+        raise Exception, "Некорректное использование оператора ввода"
+
+
 def p_sem(kot):
     assert isinstance(kot, lexer.Token)
     global instructions_current

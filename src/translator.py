@@ -100,6 +100,27 @@ def t_printline(node):
     return s
 
 
+def t_input(node):
+    assert isinstance(node, silv_parser.Node)
+    # TODO: сделать и для уже объявленных переменных!
+    s = ''
+    mod = ''
+    if node.type[1] == 'int':
+        mod = '%d'
+    elif node.type[1] == 'double':
+        mod = '%f'
+    s += node.type[1]
+    s += ' '
+    s += node.value
+    s += ';\n'
+    s += 'scanf("'
+    s += mod
+    s += '", &'
+    s += node.value
+    s += ');'
+    return s
+
+
 def translating(code):
     assert isinstance(code, list)
     nodes_list = silv_parser.parsing(code)
