@@ -25,7 +25,7 @@ while xxx > 980
         print xxx;
         printline;
         var i = 0;
-        while i < 9
+        until i >= 9
         {
             print y;
             let i = i + 1;

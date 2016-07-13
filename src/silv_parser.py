@@ -56,6 +56,7 @@ curls = {
 }
 d_curls = {
     "while",
+    "until",
     "if",
     "elif"
 }
@@ -367,6 +368,22 @@ def p_while(term):
             par = build_expr_tree(p_expr(term))
             expr_current = 0
         nd = Node(['while'])
+        nd.setl(par)
+        return nd
+    else:
+        raise Exception, "Отсутствует параметр"
+
+
+def p_until(term):
+    assert isinstance(term, list)
+    global expr_current
+    if len(term) > 0:
+        if len(term) == 1:
+            par = p_atom(term[0])
+        else:
+            par = build_expr_tree(p_expr(term))
+            expr_current = 0
+        nd = Node(['until'])
         nd.setl(par)
         return nd
     else:

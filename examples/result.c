@@ -22,7 +22,7 @@ while (1)
 printf("%d", xxx);
 printf("\n");
 int i = 0;
-while ((i<9))
+while (!(i>=9))
 {
 printf("%f", y);
 i = (i+1);

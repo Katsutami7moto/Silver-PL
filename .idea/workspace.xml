@@ -27,51 +27,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="example.silver" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/examples/example.silver">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="799">
-              <caret line="47" column="0" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="result.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/examples/result.c">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="748">
-              <caret line="44" column="0" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="translator.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="translator.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/translator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="795">
-              <caret line="143" column="0" selection-start-line="143" selection-start-column="0" selection-end-line="143" selection-end-column="0" />
+            <state relative-caret-position="523">
+              <caret line="156" column="0" selection-start-line="156" selection-start-column="0" selection-end-line="156" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="silv_parser.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="silv_parser.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/silv_parser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="374" column="0" selection-start-line="374" selection-start-column="0" selection-end-line="374" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="lexer.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/lexer.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="612">
-              <caret line="60" column="0" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
+            <state relative-caret-position="693">
+              <caret line="390" column="0" selection-start-line="390" selection-start-column="0" selection-end-line="390" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -106,9 +76,9 @@
         <option value="$PROJECT_DIR$/examples/many_vars.silver" />
         <option value="$PROJECT_DIR$/examples/result.c" />
         <option value="$PROJECT_DIR$/src/lexer.py" />
-        <option value="$PROJECT_DIR$/examples/example.silver" />
         <option value="$PROJECT_DIR$/src/silv_parser.py" />
         <option value="$PROJECT_DIR$/src/translator.py" />
+        <option value="$PROJECT_DIR$/examples/example.silver" />
       </list>
     </option>
   </component>
@@ -703,7 +673,14 @@
       <option name="project" value="LOCAL" />
       <updated>1468407329015</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="Stage 7.2: 'while' loop">
+      <created>1468408283843</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1468408283843</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -742,7 +719,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="lexer on work" />
     <MESSAGE value="first version of lexer is done" />
     <MESSAGE value="first version of parser is done" />
     <MESSAGE value="first version of translator is done" />
@@ -767,7 +743,8 @@
     <MESSAGE value="Stage 6: numbers input (only new)" />
     <MESSAGE value="Stage 6.5: numbers input (even defined)" />
     <MESSAGE value="Stage 7.1: first type of loops - 'loop' (eq. 'while (1)' ), also nested" />
-    <option name="LAST_COMMIT_MESSAGE" value="Stage 7.1: first type of loops - 'loop' (eq. 'while (1)' ), also nested" />
+    <MESSAGE value="Stage 7.2: 'while' loop" />
+    <option name="LAST_COMMIT_MESSAGE" value="Stage 7.2: 'while' loop" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1097,16 +1074,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/lexer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
+        <state relative-caret-position="1020">
           <caret line="60" column="0" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/result.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="748">
-          <caret line="44" column="0" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1119,18 +1088,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/silv_parser.py">
+    <entry file="file://$PROJECT_DIR$/examples/result.c">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
-          <caret line="374" column="0" selection-start-line="374" selection-start-column="0" selection-end-line="374" selection-end-column="0" />
+          <caret line="24" column="15" selection-start-line="24" selection-start-column="15" selection-end-line="24" selection-end-column="15" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/translator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="795">
-          <caret line="143" column="0" selection-start-line="143" selection-start-column="0" selection-end-line="143" selection-end-column="0" />
+        <state relative-caret-position="523">
+          <caret line="156" column="0" selection-start-line="156" selection-start-column="0" selection-end-line="156" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/silv_parser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="693">
+          <caret line="390" column="0" selection-start-line="390" selection-start-column="0" selection-end-line="390" selection-end-column="0" />
           <folding />
         </state>
       </provider>
