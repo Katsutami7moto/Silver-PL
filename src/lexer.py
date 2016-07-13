@@ -26,12 +26,12 @@ keywords = {
     "var",
     "const",
     "let",
-    "del",
     "print",
     "printline",
     "input",
     "type",
     "new",
+    "del",
     "while",
     "loop",
     "do",
@@ -54,7 +54,7 @@ r_ident = "(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z)" \
           "(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|0|1|2|3|4|5|6|7|8|9)*"
 r_int = "0|(1|2|3|4|5|6|7|8|9)(0|1|2|3|4|5|6|7|8|9)*"
 r_float = "0|(1|2|3|4|5|6|7|8|9)(0|1|2|3|4|5|6|7|8|9)*\\.(0|1|2|3|4|5|6|7|8|9)+"
-r_string = "\".+\""
+# r_string = "\".+\""
 eqp = ''
 eqplus = False
 
@@ -82,8 +82,6 @@ def check():
                 tokens.append(Token("int", other))
             elif regexp.returner(r_cover(r_float), other):
                 tokens.append(Token("double", other))
-            elif regexp.returner(r_cover(r_string), other):
-                tokens.append(Token("string", other))
             else:
                 raise Exception, "Некорректная лексема"
         other = ''
@@ -92,11 +90,10 @@ def check():
 def lexing(code):
     assert isinstance(code, list)
     global other, eqplus, eqp
-    in_string = False
     for line in code:
         assert isinstance(line, str)
         for sym in line:
-            if sym in symbols and not in_string:
+            if sym in symbols:
                 check()
                 if sym == '<' or sym == '>' or sym == '!':
                     eqplus = True
@@ -115,7 +112,7 @@ def lexing(code):
                         eqp = ''
                         eqplus = False
                     tokens.append(Token(symbols[sym]))
-            elif sym in ignore and not in_string:
+            elif sym in ignore:
                 check()
             else:
                 if eqplus:
@@ -123,9 +120,4 @@ def lexing(code):
                     eqp = ''
                     eqplus = False
                 other += sym
-                if sym == '"':
-                    if not in_string:
-                        in_string = True
-                    else:
-                        in_string = False
     return tokens

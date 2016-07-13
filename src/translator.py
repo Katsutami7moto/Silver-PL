@@ -4,6 +4,7 @@ import silv_parser
 
 
 def walk_expr_tree(node):
+    assert isinstance(node, silv_parser.Node)
     s = ''
     if node.value:
         s += node.value
@@ -11,7 +12,10 @@ def walk_expr_tree(node):
         s += '('
         if node.lchild:
             s += walk_expr_tree(node.lchild)
+            s += ' '
         s += node.type
+        if node.lchild:
+            s += ' '
         if node.rchild:
             s += walk_expr_tree(node.rchild)
         s += ')'
@@ -23,19 +27,12 @@ def t_def(node, const=False):
     s = ''
     if const:
         s += 'const '
-    if node.type[1] == 'string':
-        s += 'char '
-        s += node.value
-        s += '[] = '
-        s += walk_expr_tree(node.rchild)
-        s += ';'
-    else:
-        s += node.type[1]
-        s += ' '
-        s += node.value
-        s += ' = '
-        s += walk_expr_tree(node.rchild)
-        s += ';'
+    s += node.type[1]
+    s += ' '
+    s += node.value
+    s += ' = '
+    s += walk_expr_tree(node.rchild)
+    s += ';'
     return s
 
 
@@ -50,11 +47,10 @@ def t_const(node):
 def t_let(node):
     assert isinstance(node, silv_parser.Node)
     s = ''
-    if node.type[1] != 'string':
-        s += node.value
-        s += ' = '
-        s += walk_expr_tree(node.rchild)
-        s += ';'
+    s += node.value
+    s += ' = '
+    s += walk_expr_tree(node.rchild)
+    s += ';'
     return s
 
 
@@ -66,8 +62,6 @@ def t_print(node):
         mod = '%d'
     elif node.type[1] == 'double':
         mod = '%f'
-    elif node.type[1] == 'string':
-        mod = '%s'
     s += 'printf("'
     s += mod
     s += '", '
@@ -84,8 +78,6 @@ def t_printline(node):
         mod = '%d\\n'
     elif node.type[1] == 'double':
         mod = '%f\\n'
-    elif node.type[1] == 'string':
-        mod = '%s\\n'
     elif node.type[1] == 'line':
         mod = '\\n'
     s += 'printf("'

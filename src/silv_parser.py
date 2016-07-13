@@ -65,7 +65,6 @@ d_curls = {
 datas = {
     "int",
     "double",
-    "string",
     "ident"
 }
 symbol_table = dict(names=dict())

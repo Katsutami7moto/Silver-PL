@@ -1,7 +1,6 @@
 var xxx = 6;
 var y = 7.9;
 const a76 = xxx;
-const ssss3 = "Hello World!";
 const z = 34.54;
 var flag = False;
 const ff = True;
@@ -33,7 +32,6 @@ while xxx > 980
         print i;
         print bar;
         printline z;
-        print ssss3;
     }
     printline 65+6*487-98855/855.5669+54-87%5456 >= 984.226;
 
