@@ -357,13 +357,29 @@ def p_curl(kot):
             raise Exception, "Отсутствует открывающая фигурная скобка"
 
 
+def p_while(term):
+    assert isinstance(term, list)
+    global expr_current
+    if len(term) > 0:
+        if len(term) == 1:
+            par = p_atom(term[0])
+        else:
+            par = build_expr_tree(p_expr(term))
+            expr_current = 0
+        nd = Node(['while'])
+        nd.setl(par)
+        return nd
+    else:
+        raise Exception, "Отсутствует параметр"
+
+
 def p_d_curl(kot):
     assert isinstance(kot, lexer.Token)
     global instructions_current
     if kot.type in d_curls or kot.type == 'type':
         instructions_current += 1
         term = []
-        while tokens_list[instructions_current] != 'left-curl':
+        while tokens_list[instructions_current].type != 'left-curl':
             term.append(tokens_list[instructions_current])
             instructions_current += 1
 

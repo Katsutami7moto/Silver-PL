@@ -130,6 +130,19 @@ def t_loop(node):
     return s
 
 
+def t_while(node):
+    assert isinstance(node, silv_parser.Node)
+    s = 'while ('
+    s += walk_expr_tree(node.lchild)
+    s += ')\n{\n'
+    ltmp = nlist_walk(node.rchild)
+    for line in ltmp:
+        s += line
+        s += '\n'
+    s += '}'
+    return s
+
+
 def translating(code):
     assert isinstance(code, list)
     nodes_list = silv_parser.parsing(code)
