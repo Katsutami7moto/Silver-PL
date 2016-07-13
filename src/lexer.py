@@ -33,8 +33,11 @@ keywords = {
     "type",
     "new",
     "while",
+    "loop",
     "do",
     "until",
+    "break",
+    "continue",
     "if",
     "elif",
     "else",
@@ -110,7 +113,6 @@ def lexing(code):
                     tokens.append(Token(symbols[sym]))
             elif sym in ignore and not in_string:
                 check()
-                continue
             else:
                 if eqplus:
                     tokens.append(Token(eqp))

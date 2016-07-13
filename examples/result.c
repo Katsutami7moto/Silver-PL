@@ -4,7 +4,7 @@ const int a76 = xxx;
 const char ssss3[] = "Hello World!";
 const double z = 34.54;
 int flag = 0;
-const int fff = 1;
+const int ff = 1;
 double g4333 = z;
 const double arif = (((-1)+(2*3))-(g4333/5));
 int log = (((((-1)+(2*3))-(4.0/5))<6)||(((((-6)+(7*8))-9)>=60)&&(!((-arif)==7))));
@@ -20,8 +20,20 @@ printf("%f", y);
 printf("%d", bar);
 printf("%f\n", z);
 printf("%s", ssss3);
+while (1)
+{
 printf("%f\n", ((((65+(6*487))-(98855/855.5669))+54)-(87%5456)));
+while (1)
+{
+printf("%d", xxx);
+printf("\n");
+printf("%f", y);
+printf("%d", bar);
+printf("%f\n", z);
+printf("%s", ssss3);
+}
 printf("%d\n", (((((65+(6*487))-(98855/855.5669))+54)-(87%5456))>=984.226));
+}
 int n;
 scanf("%d", &n);
 printf("%f\n", (arif/n));

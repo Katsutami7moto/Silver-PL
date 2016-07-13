@@ -4,7 +4,7 @@ const a76 = xxx;
 const ssss3 = "Hello World!";
 const z = 34.54;
 var flag = False;
-const fff = True;
+const ff = True;
 var g4333 = z;
 
 const arif = -1+2*3-g4333/5;
@@ -24,8 +24,20 @@ print bar;
 printline z;
 print ssss3;
 
-printline 65+6*487-98855/855.5669+54-87%5456;
-printline 65+6*487-98855/855.5669+54-87%5456 >= 984.226;
+loop
+{
+    printline 65+6*487-98855/855.5669+54-87%5456;
+    loop
+    {
+        print xxx;
+        printline;
+        print y;
+        print bar;
+        printline z;
+        print ssss3;
+    }
+    printline 65+6*487-98855/855.5669+54-87%5456 >= 984.226;
+}
 
 input int n;
 printline arif/n;

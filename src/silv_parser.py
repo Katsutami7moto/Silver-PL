@@ -12,11 +12,9 @@ class Node:
         self.rchild = None
 
     def setl(self, obj):
-        assert isinstance(obj, Node)
         self.lchild = obj
 
     def setr(self, obj):
-        assert isinstance(obj, Node)
         self.rchild = obj
 
     def get_type(self):
@@ -50,6 +48,16 @@ sems = {
     "printline",
     "input",
     "return"
+}
+curls = {
+    "loop",
+    "do",
+    "else"
+}
+d_curls = {
+    "while",
+    "if",
+    "elif"
 }
 datas = {
     "int",
@@ -322,11 +330,65 @@ def p_sem(kot):
         nodes.append(eval(func))
 
 
+def p_loop():
+    return Node(['loop'])
+
+
+def p_curl(kot):
+    assert isinstance(kot, lexer.Token)
+    global instructions_current
+    if kot.type in curls:
+        instructions_current += 1
+        if tokens_list[instructions_current].type == 'left-curl':
+            instructions_current += 1
+            tmp = len(nodes)
+            p_block()
+            instructions_current += 1
+            ltmp = []
+            while len(nodes) != tmp:
+                ltmp.append(nodes.pop())
+            ltmp.reverse()
+
+            func = 'p_' + kot.type + '()'
+            nd = eval(func)
+            nd.setr(ltmp)
+            nodes.append(nd)
+        else:
+            raise Exception, "Отсутствует открывающая фигурная скобка"
+
+
+def p_d_curl(kot):
+    assert isinstance(kot, lexer.Token)
+    global instructions_current
+    if kot.type in d_curls or kot.type == 'type':
+        instructions_current += 1
+        term = []
+        while tokens_list[instructions_current] != 'left-curl':
+            term.append(tokens_list[instructions_current])
+            instructions_current += 1
+
+        instructions_current += 1
+        tmp = len(nodes)
+        p_block()
+        instructions_current += 1
+        ltmp = []
+        while len(nodes) != tmp:
+            ltmp.append(nodes.pop())
+        ltmp.reverse()
+
+        func = 'p_' + kot.type + '(term)'
+        nd = eval(func)
+        nd.setr(ltmp)
+        nodes.append(nd)
+
+
 def p_instructions():
-    p_sem(tokens_list[instructions_current])
-    # p_curl(tokens_list[current])
-    # p_curl_sem(tokens_list[current])
-    # p_curl_plus(tokens_list[current])
+    if tokens_list[instructions_current].type in sems:
+        p_sem(tokens_list[instructions_current])
+    elif tokens_list[instructions_current].type in curls:
+        p_curl(tokens_list[instructions_current])
+    elif tokens_list[instructions_current].type in d_curls or tokens_list[instructions_current].type == 'type':
+        p_d_curl(tokens_list[instructions_current])
 
 
 def p_block():
