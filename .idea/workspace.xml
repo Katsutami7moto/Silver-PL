@@ -3,10 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="9008df4e-1652-4c48-b5cc-600fd6786a2d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/example.silver" afterPath="$PROJECT_DIR$/examples/example.silver" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/result.c" afterPath="$PROJECT_DIR$/examples/result.c" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/silv_parser.py" afterPath="$PROJECT_DIR$/src/silv_parser.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/translator.py" afterPath="$PROJECT_DIR$/src/translator.py" />
     </list>
     <ignored path="Cool-PL.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -41,7 +38,7 @@
         <entry file="file://$PROJECT_DIR$/src/silv_parser.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="778">
-              <caret line="478" column="0" selection-start-line="478" selection-start-column="0" selection-end-line="478" selection-end-column="0" />
+              <caret line="475" column="0" selection-start-line="475" selection-start-column="0" selection-end-line="475" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -694,7 +691,14 @@
       <option name="project" value="LOCAL" />
       <updated>1468414050593</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="Stage 7.7: 'break' and 'continue'">
+      <created>1468417253578</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1468417253578</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -733,7 +737,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="first version of translator is done" />
     <MESSAGE value="1st stage complete: parsing int and double is correct" />
     <MESSAGE value="1.5 stage complete: added symbol table (in parser), supported &quot;var y = x;&quot;, supported strings" />
     <MESSAGE value="1.75 stage complete:&#10;you are stopped if you try to define defined variable:&#10;&quot;var x = 9; var x = 98;&quot;" />
@@ -758,7 +761,8 @@
     <MESSAGE value="Stage 7.2: 'while' loop" />
     <MESSAGE value="Stage 7.3: 'until' loop" />
     <MESSAGE value="Stage 7.5: loops 'do..while' and 'do..until'" />
-    <option name="LAST_COMMIT_MESSAGE" value="Stage 7.5: loops 'do..while' and 'do..until'" />
+    <MESSAGE value="Stage 7.7: 'break' and 'continue'" />
+    <option name="LAST_COMMIT_MESSAGE" value="Stage 7.7: 'break' and 'continue'" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1102,14 +1106,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/result.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="778">
-          <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/translator.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="778">
@@ -1118,10 +1114,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/examples/result.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="778">
+          <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/silv_parser.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="778">
-          <caret line="478" column="0" selection-start-line="478" selection-start-column="0" selection-end-line="478" selection-end-column="0" />
+          <caret line="475" column="0" selection-start-line="475" selection-start-column="0" selection-end-line="475" selection-end-column="0" />
           <folding />
         </state>
       </provider>

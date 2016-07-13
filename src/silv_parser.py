@@ -322,18 +322,17 @@ def p_input(term):
 def p_sem(kot):
     assert isinstance(kot, lexer.Token)
     global instructions_current
-    if kot.type in sems:
-        term = []
+    term = []
+    instructions_current += 1
+    while tokens_list[instructions_current].type != 'semicolon':
+        term.append(tokens_list[instructions_current])
         instructions_current += 1
-        while tokens_list[instructions_current].type != 'semicolon':
-            term.append(tokens_list[instructions_current])
-            instructions_current += 1
-        instructions_current += 1
-        if kot.type in {'break', 'continue'}:
-            nodes.append(Node([kot.type]))
-        else:
-            func = 'p_' + kot.type + '(term)'
-            nodes.append(eval(func))
+    instructions_current += 1
+    if kot.type in {'break', 'continue'}:
+        nodes.append(Node([kot.type]))
+    else:
+        func = 'p_' + kot.type + '(term)'
+        nodes.append(eval(func))
 
 
 def p_loop():
@@ -347,55 +346,54 @@ def p_do():
 def p_curl(kot):
     assert isinstance(kot, lexer.Token)
     global instructions_current, expr_current
-    if kot.type in curls:
+    instructions_current += 1
+    if tokens_list[instructions_current].type == 'left-curl':
+        term = []
         instructions_current += 1
-        if tokens_list[instructions_current].type == 'left-curl':
-            term = []
-            instructions_current += 1
-            tmp = len(nodes)
-            p_block()
-            instructions_current += 1
+        tmp = len(nodes)
+        p_block()
+        instructions_current += 1
 
-            if kot.type == 'do':
-                if tokens_list[instructions_current].type == 'while':
+        if kot.type == 'do':
+            if tokens_list[instructions_current].type == 'while':
+                instructions_current += 1
+                while tokens_list[instructions_current].type != 'semicolon':
+                    term.append(tokens_list[instructions_current])
                     instructions_current += 1
-                    while tokens_list[instructions_current].type != 'semicolon':
-                        term.append(tokens_list[instructions_current])
-                        instructions_current += 1
+                instructions_current += 1
+            elif tokens_list[instructions_current].type == 'until':
+                term.append(lexer.Token('not'))
+                term.append(lexer.Token('left-paren'))
+                instructions_current += 1
+                while tokens_list[instructions_current].type != 'semicolon':
+                    term.append(tokens_list[instructions_current])
                     instructions_current += 1
-                elif tokens_list[instructions_current].type == 'until':
-                    term.append(lexer.Token('not'))
-                    term.append(lexer.Token('left-paren'))
-                    instructions_current += 1
-                    while tokens_list[instructions_current].type != 'semicolon':
-                        term.append(tokens_list[instructions_current])
-                        instructions_current += 1
-                    term.append(lexer.Token('right-paren'))
-                    instructions_current += 1
+                term.append(lexer.Token('right-paren'))
+                instructions_current += 1
+            else:
+                raise Exception, "Некорректное использование оператора do (нет while или until)"
+
+        ltmp = []
+        while len(nodes) != tmp:
+            ltmp.append(nodes.pop())
+        ltmp.reverse()
+
+        func = 'p_' + kot.type + '()'
+        nd = eval(func)
+        if kot.type == 'do':
+            if len(term) > 0:
+                if len(term) == 1:
+                    par = p_atom(term[0])
                 else:
-                    raise Exception, "Некорректное использование оператора do (нет while или until)"
-
-            ltmp = []
-            while len(nodes) != tmp:
-                ltmp.append(nodes.pop())
-            ltmp.reverse()
-
-            func = 'p_' + kot.type + '()'
-            nd = eval(func)
-            if kot.type == 'do':
-                if len(term) > 0:
-                    if len(term) == 1:
-                        par = p_atom(term[0])
-                    else:
-                        par = build_expr_tree(p_expr(term))
-                        expr_current = 0
-                else:
-                    raise Exception, "Отсутствует параметр"
-                nd.setl(par)
-            nd.setr(ltmp)
-            nodes.append(nd)
-        else:
-            raise Exception, "Отсутствует открывающая фигурная скобка"
+                    par = build_expr_tree(p_expr(term))
+                    expr_current = 0
+            else:
+                raise Exception, "Отсутствует параметр"
+            nd.setl(par)
+        nd.setr(ltmp)
+        nodes.append(nd)
+    else:
+        raise Exception, "Отсутствует открывающая фигурная скобка"
 
 
 def p_while(term):
@@ -433,26 +431,25 @@ def p_until(term):
 def p_d_curl(kot):
     assert isinstance(kot, lexer.Token)
     global instructions_current
-    if kot.type in d_curls or kot.type == 'type':
+    instructions_current += 1
+    term = []
+    while tokens_list[instructions_current].type != 'left-curl':
+        term.append(tokens_list[instructions_current])
         instructions_current += 1
-        term = []
-        while tokens_list[instructions_current].type != 'left-curl':
-            term.append(tokens_list[instructions_current])
-            instructions_current += 1
 
-        instructions_current += 1
-        tmp = len(nodes)
-        p_block()
-        instructions_current += 1
-        ltmp = []
-        while len(nodes) != tmp:
-            ltmp.append(nodes.pop())
-        ltmp.reverse()
+    instructions_current += 1
+    tmp = len(nodes)
+    p_block()
+    instructions_current += 1
+    ltmp = []
+    while len(nodes) != tmp:
+        ltmp.append(nodes.pop())
+    ltmp.reverse()
 
-        func = 'p_' + kot.type + '(term)'
-        nd = eval(func)
-        nd.setr(ltmp)
-        nodes.append(nd)
+    func = 'p_' + kot.type + '(term)'
+    nd = eval(func)
+    nd.setr(ltmp)
+    nodes.append(nd)
 
 
 def p_instructions():
