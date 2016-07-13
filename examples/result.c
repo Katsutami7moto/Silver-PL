@@ -50,6 +50,8 @@ do
 {
 yyy = (ccc-1);
 printf("%d", yyy);
+break;
 } while (!(yyy==(-1)));
 ccc = (yyy-1);
+continue;
 } while (ccc<(-10));

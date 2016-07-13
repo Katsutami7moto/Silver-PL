@@ -169,6 +169,20 @@ def t_until(node):
     return s
 
 
+def t_break(node):
+    assert isinstance(node, silv_parser.Node)
+    s = node.type[0]
+    s += ';'
+    return s
+
+
+def t_continue(node):
+    assert isinstance(node, silv_parser.Node)
+    s = node.type[0]
+    s += ';'
+    return s
+
+
 def translating(code):
     assert isinstance(code, list)
     nodes_list = silv_parser.parsing(code)

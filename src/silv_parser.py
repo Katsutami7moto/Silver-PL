@@ -47,7 +47,9 @@ sems = {
     "print",
     "printline",
     "input",
-    "return"
+    "return",
+    "break",
+    "continue"
 }
 curls = {
     "loop",
@@ -327,8 +329,11 @@ def p_sem(kot):
             term.append(tokens_list[instructions_current])
             instructions_current += 1
         instructions_current += 1
-        func = 'p_' + kot.type + '(term)'
-        nodes.append(eval(func))
+        if kot.type in {'break', 'continue'}:
+            nodes.append(Node([kot.type]))
+        else:
+            func = 'p_' + kot.type + '(term)'
+            nodes.append(eval(func))
 
 
 def p_loop():

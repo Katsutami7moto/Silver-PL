@@ -46,7 +46,6 @@ input double mmm;
 input double y;
 printline mmm % 9 = arif/n/y;
 
-
 do
 {
     var yyy = 0;
@@ -55,6 +54,8 @@ do
     {
         let yyy = ccc - 1;
         print yyy;
+        break;
     } until yyy = -1;
     let ccc = yyy - 1;
+    continue;
 } while ccc < -10;
