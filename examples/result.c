@@ -7,14 +7,14 @@ int flag = 0;
 const int ff = 1;
 double g4333 = z;
 const double arif = (((-1)+(2*3))-(g4333/5));
-int log = (((((-1)+(2*3))-(4.0/5))<6)||(((((-6)+(7*8))-9)>=60)&&(!((-arif)==7))));
+int log = (((((-1)+(2*3))-(4.0/5))<(-6))||(((((-6)+(7*8))-9)>=60)&&(!((-arif)==7))));
 int foo = ((9.0>log)+(arif==((-4)-7)));
 xxx = 999;
 y = ((45+34.21)-z);
 g4333 = (56-98);
 int bar = 0;
 bar = (log%foo);
-while ((xxx>980))
+while (xxx>980)
 {
 printf("%f\n", ((((65+(6*487))-(98855/855.5669))+54)-(87%5456)));
 while (1)
@@ -42,3 +42,14 @@ double mmm;
 scanf("%f", &mmm);
 scanf("%f", &y);
 printf("%d\n", ((mmm%9)==((arif/n)/y)));
+do
+{
+int yyy = 0;
+int ccc = 10;
+do
+{
+yyy = (ccc-1);
+printf("%d", yyy);
+} while (!(yyy==(-1)));
+ccc = (yyy-1);
+} while (ccc<(-10));

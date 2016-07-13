@@ -130,11 +130,24 @@ def t_loop(node):
     return s
 
 
+def t_do(node):
+    assert isinstance(node, silv_parser.Node)
+    s = 'do\n{\n'
+    ltmp = nlist_walk(node.rchild)
+    for line in ltmp:
+        s += line
+        s += '\n'
+    s += '} while '
+    s += walk_expr_tree(node.lchild)
+    s += ';'
+    return s
+
+
 def t_while(node):
     assert isinstance(node, silv_parser.Node)
-    s = 'while ('
+    s = 'while '
     s += walk_expr_tree(node.lchild)
-    s += ')\n{\n'
+    s += '\n{\n'
     ltmp = nlist_walk(node.rchild)
     for line in ltmp:
         s += line

@@ -8,7 +8,7 @@ const ff = True;
 var g4333 = z;
 
 const arif = -1+2*3-g4333/5;
-var log = (-1+2*3-4.0/5 < 6) or (-6+7*8-9 >= 60) and not (-arif = 7);
+var log = (-1+2*3-4.0/5 < -6) or (-6+7*8-9 >= 60) and not (-arif = 7);
 var foo = (9.0 > log) + (arif = -4 - 7);
 
 let xxx = 999;
@@ -45,3 +45,16 @@ printline arif/n;
 input double mmm;
 input double y;
 printline mmm % 9 = arif/n/y;
+
+
+do
+{
+    var yyy = 0;
+    var ccc = 10;
+    do
+    {
+        let yyy = ccc - 1;
+        print yyy;
+    } until yyy = -1;
+    let ccc = yyy - 1;
+} while ccc < -10;

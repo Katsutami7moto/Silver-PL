@@ -110,6 +110,10 @@ def lexing(code):
                     else:
                         tokens.append(Token('='))
                 else:
+                    if eqplus:
+                        tokens.append(Token(eqp))
+                        eqp = ''
+                        eqplus = False
                     tokens.append(Token(symbols[sym]))
             elif sym in ignore and not in_string:
                 check()

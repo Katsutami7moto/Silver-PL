@@ -335,16 +335,41 @@ def p_loop():
     return Node(['loop'])
 
 
+def p_do():
+    return Node(['do'])
+
+
 def p_curl(kot):
     assert isinstance(kot, lexer.Token)
-    global instructions_current
+    global instructions_current, expr_current
     if kot.type in curls:
         instructions_current += 1
         if tokens_list[instructions_current].type == 'left-curl':
+            term = []
             instructions_current += 1
             tmp = len(nodes)
             p_block()
             instructions_current += 1
+
+            if kot.type == 'do':
+                if tokens_list[instructions_current].type == 'while':
+                    instructions_current += 1
+                    while tokens_list[instructions_current].type != 'semicolon':
+                        term.append(tokens_list[instructions_current])
+                        instructions_current += 1
+                    instructions_current += 1
+                elif tokens_list[instructions_current].type == 'until':
+                    term.append(lexer.Token('not'))
+                    term.append(lexer.Token('left-paren'))
+                    instructions_current += 1
+                    while tokens_list[instructions_current].type != 'semicolon':
+                        term.append(tokens_list[instructions_current])
+                        instructions_current += 1
+                    term.append(lexer.Token('right-paren'))
+                    instructions_current += 1
+                else:
+                    raise Exception, "Некорректное использование оператора do (нет while или until)"
+
             ltmp = []
             while len(nodes) != tmp:
                 ltmp.append(nodes.pop())
@@ -352,6 +377,16 @@ def p_curl(kot):
 
             func = 'p_' + kot.type + '()'
             nd = eval(func)
+            if kot.type == 'do':
+                if len(term) > 0:
+                    if len(term) == 1:
+                        par = p_atom(term[0])
+                    else:
+                        par = build_expr_tree(p_expr(term))
+                        expr_current = 0
+                else:
+                    raise Exception, "Отсутствует параметр"
+                nd.setl(par)
             nd.setr(ltmp)
             nodes.append(nd)
         else:
