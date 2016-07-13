@@ -41,10 +41,20 @@ while xxx > 980
 }
 
 input int n;
-printline arif/n;
-input double mmm;
-input double y;
-printline mmm % 9 = arif/n/y;
+if n < 0
+{
+    printline arif/n;
+}
+elif not (n > 15)
+{
+    input double mmm;
+    input double y;
+    printline mmm % 9 = arif/n/y;
+}
+else
+{
+    print n;
+}
 
 do
 {

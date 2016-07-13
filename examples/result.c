@@ -37,11 +37,21 @@ xxx = (xxx-2);
 }
 int n;
 scanf("%d", &n);
+if (n<0)
+{
 printf("%f\n", (arif/n));
+}
+else if (!(n>15))
+{
 double mmm;
 scanf("%f", &mmm);
 scanf("%f", &y);
 printf("%d\n", ((mmm%9)==((arif/n)/y)));
+}
+else
+{
+printf("%d", n);
+}
 do
 {
 int yyy = 0;

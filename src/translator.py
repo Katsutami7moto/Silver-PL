@@ -183,6 +183,43 @@ def t_continue(node):
     return s
 
 
+def t_if(node):
+    assert isinstance(node, silv_parser.Node)
+    s = 'if '
+    s += walk_expr_tree(node.lchild)
+    s += '\n{\n'
+    ltmp = nlist_walk(node.rchild)
+    for line in ltmp:
+        s += line
+        s += '\n'
+    s += '}'
+    return s
+
+
+def t_elif(node):
+    assert isinstance(node, silv_parser.Node)
+    s = 'else if '
+    s += walk_expr_tree(node.lchild)
+    s += '\n{\n'
+    ltmp = nlist_walk(node.rchild)
+    for line in ltmp:
+        s += line
+        s += '\n'
+    s += '}'
+    return s
+
+
+def t_else(node):
+    assert isinstance(node, silv_parser.Node)
+    s = 'else\n{\n'
+    ltmp = nlist_walk(node.rchild)
+    for line in ltmp:
+        s += line
+        s += '\n'
+    s += '}'
+    return s
+
+
 def translating(code):
     assert isinstance(code, list)
     nodes_list = silv_parser.parsing(code)

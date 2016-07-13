@@ -343,6 +343,10 @@ def p_do():
     return Node(['do'])
 
 
+def p_else():
+    return Node(['else'])
+
+
 def p_curl(kot):
     assert isinstance(kot, lexer.Token)
     global instructions_current, expr_current
@@ -422,6 +426,38 @@ def p_until(term):
             par = build_expr_tree(p_expr(term))
             expr_current = 0
         nd = Node(['until'])
+        nd.setl(par)
+        return nd
+    else:
+        raise Exception, "Отсутствует параметр"
+
+
+def p_if(term):
+    assert isinstance(term, list)
+    global expr_current
+    if len(term) > 0:
+        if len(term) == 1:
+            par = p_atom(term[0])
+        else:
+            par = build_expr_tree(p_expr(term))
+            expr_current = 0
+        nd = Node(['if'])
+        nd.setl(par)
+        return nd
+    else:
+        raise Exception, "Отсутствует параметр"
+
+
+def p_elif(term):
+    assert isinstance(term, list)
+    global expr_current
+    if len(term) > 0:
+        if len(term) == 1:
+            par = p_atom(term[0])
+        else:
+            par = build_expr_tree(p_expr(term))
+            expr_current = 0
+        nd = Node(['elif'])
         nd.setl(par)
         return nd
     else:
