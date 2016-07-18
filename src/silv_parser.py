@@ -62,10 +62,10 @@ d_curls = {
     "if",
     "elif"
 }
-datas = {
+types = {
     "int",
     "double",
-    "ident"
+    "void"
 }
 symbol_table = dict(names=dict())
 
@@ -75,7 +75,7 @@ def p_atom(token):
     :rtype: Node
     :type token: lexer.Token
     """
-    if token.type in datas:
+    if token.type in types:
         tmp = Node(token.type, token.value)
     elif token.type == "True":
         tmp = Node("int", "1")
@@ -247,7 +247,7 @@ def p_let(term):
                     else:
                         par = build_expr_tree(p_expr(ndr))
                         expr_current = 0
-                    if par.get_type() == symbol_table['names'][namae][0]\
+                    if par.get_type() == symbol_table['names'][namae][0] \
                             or (par.get_type() == 'int' and symbol_table['names'][namae][0] == 'double'):
                         nd = Node(['let', par.get_type()], namae)
                         nd.setr(par)
@@ -316,6 +316,22 @@ def p_input(term):
             raise Exception, "Некорректное использование оператора ввода"
     else:
         raise Exception, "Некорректное использование оператора ввода"
+
+
+def p_return(term):
+    assert isinstance(term, list)
+    global expr_current
+    if len(term) > 1:
+        if len(term) == 1:
+            par = p_atom(term[0])
+        else:
+            par = build_expr_tree(p_expr(term))
+            expr_current = 0
+        nd = Node(['return'])
+        nd.setr(par)
+        return nd
+    else:
+        raise Exception, "Отсутствует возвращаемое значение"
 
 
 def p_sem(kot):
@@ -487,13 +503,60 @@ def p_d_curl(kot):
     nodes.append(nd)
 
 
+def p_func(kot):
+    assert isinstance(kot, lexer.Token)
+    ftype = kot.value
+    term = []
+    global instructions_current
+    instructions_current += 1
+    if tokens_list[instructions_current].type == 'ident':
+        fname = tokens_list[instructions_current].value
+        instructions_current += 1
+        if tokens_list[instructions_current].type == 'left-paren':
+            instructions_current += 1
+            while tokens_list[instructions_current].type != 'right-paren':
+                if tokens_list[instructions_current].type == 'comma':
+                    term.append(',')
+                    instructions_current += 1
+                    continue
+                elif tokens_list[instructions_current].value in types and tokens_list[
+                            instructions_current + 1].type == 'ident':
+                    term.append(tokens_list[instructions_current].value)
+                    term.append(tokens_list[instructions_current + 1].value)
+                    instructions_current += 2
+                else:
+                    raise Exception, "Некорректный список формальных аргументов функции"
+            instructions_current += 1
+            if tokens_list[instructions_current].type == 'left-curl':
+                instructions_current += 1
+                tmp = len(nodes)
+                p_block()
+                instructions_current += 1
+                ltmp = []
+                while len(nodes) != tmp:
+                    ltmp.append(nodes.pop())
+                ltmp.reverse()
+            else:
+                raise Exception, "Отсутствует тело функции"
+            nd = Node(['func', ftype], fname)
+            nd.setl(term)
+            nd.setr(ltmp)
+            nodes.append(nd)
+        else:
+            raise Exception, "После имени функции должны быть круглые скобки"
+    else:
+        raise Exception, "Некорректное объявление функции"
+
+
 def p_instructions():
     if tokens_list[instructions_current].type in sems:
         p_sem(tokens_list[instructions_current])
     elif tokens_list[instructions_current].type in curls:
         p_curl(tokens_list[instructions_current])
-    elif tokens_list[instructions_current].type in d_curls or tokens_list[instructions_current].type == 'type':
+    elif tokens_list[instructions_current].type in d_curls:
         p_d_curl(tokens_list[instructions_current])
+    elif tokens_list[instructions_current].value in types:
+        p_func(tokens_list[instructions_current])
 
 
 def p_block():

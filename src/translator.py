@@ -212,6 +212,32 @@ def t_else(node):
     return s
 
 
+def t_func(node):
+    assert isinstance(node, silv_parser.Node)
+    s = node.type[1]
+    s += ' '
+    s += node.value
+    s += ' ('
+    for token in node.lchild:
+        s += token
+        s += ' '
+    s += ')\n{\n'
+    ltmp = nlist_walk(node.rchild)
+    for line in ltmp:
+        s += line
+        s += '\n'
+    s += '}'
+    return s
+
+
+def t_return(node):
+    assert isinstance(node, silv_parser.Node)
+    s = 'return '
+    s += walk_expr_tree(node.rchild)
+    s += ';'
+    return s
+
+
 def translating(code):
     assert isinstance(code, list)
     nodes_list = silv_parser.parsing(code)
