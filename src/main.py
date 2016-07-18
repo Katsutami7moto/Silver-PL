@@ -5,7 +5,7 @@ var x = 5;
 """
 import translator
 
-source = open("J:\Nicolas\GitHub\Silver-PL\examples\\fib.silver")
+source = open("J:\Nicolas\GitHub\Silver-PL\examples\\example.silver")
 lines_of_code = []
 for line in source:
     lines_of_code.append(line)

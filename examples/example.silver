@@ -1,4 +1,38 @@
+
 var xxx = 6;
+
+while xxx > 980
+{
+    printline 65+6*487-98855/855.5669+54-87%5456;
+    loop
+    {
+        printline;
+        var i = 0;
+        until i >= 9
+        {
+            print i;
+            let i = i + 1;
+        }
+        print i;
+    }
+    printline 65+6*487-98855/855.5669+54-87%5456 >= 984.226;
+}
+
+double sqr(double x)
+{
+    return x*x;
+}
+
+var bfg = sqr(9)-sqr(44/99-988*5+62)+sqr(9+100-95*1+65*88)/sqr(87-108);
+
+int fibonacci(int x)
+{
+    if x >= 0 and x < 2 { return x; }
+    else { return fibonacci(x-1) + fibonacci(x-2); }
+}
+
+let bfg = bfg - fibonacci(100);
+
 var y = 7.9;
 const a76 = xxx;
 const z = 34.54;
@@ -17,31 +51,7 @@ let g4333 = 56 - 98;
 var bar = 0;
 let bar = log1 % foo;
 
-int func1 (int x, double y)
-{
-    while xxx > 980
-    {
-        printline 65+6*487-98855/855.5669+54-87%5456;
-        loop
-        {
-            print xxx;
-            printline;
-            var i = 0;
-            until i >= 9
-            {
-                print y;
-                let i = i + 1;
-            }
-            print i;
-            print bar;
-            printline z;
-        }
-        printline 65+6*487-98855/855.5669+54-87%5456 >= 984.226;
 
-        let xxx = xxx - 2;
-    }
-    return 9 < 87;
-}
 
 input int n;
 if n < 0
@@ -59,6 +69,7 @@ else
     print n;
 }
 
+
 do
 {
     var yyy = 0;
@@ -72,3 +83,4 @@ do
     let ccc = yyy - 1;
     continue;
 } while ccc < -10;
+

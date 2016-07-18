@@ -1,6 +1,0 @@
-double sqr(double x)
-{
-    return x*x;
-}
-
-var y = sqr(9)-sqr(44/99-988*5+62)+sqr(9+100-95*1+65*88)/sqr(87-108);

@@ -19,7 +19,10 @@ class Node:
 
     def get_type(self):
         if self.rchild and not self.lchild:
-            return self.rchild.get_type()
+            if isinstance(self.type, list):
+                return self.type[1][0]
+            else:
+                return self.rchild.get_type()
         elif self.lchild and self.rchild:
             if self.type in {'+', '-', '*', '/', '%'}:
                 if self.lchild.get_type() == 'double' or self.rchild.get_type() == 'double':
@@ -28,8 +31,6 @@ class Node:
                     return self.rchild.get_type()
             elif self.type in {'<', '>', '<=', '>=', '!=', '==', '!', '||', '&&'}:
                 return 'int'
-        elif isinstance(self.type, list):
-            return self.type[0]
         else:
             if self.type == 'ident':
                 return symbol_table['names'][self.value][0]
@@ -419,8 +420,7 @@ def p_curl(kot):
             ltmp.append(nodes.pop())
         ltmp.reverse()
 
-        func = 'p_' + kot.type + '()'
-        nd = eval(func)
+        nd = Node([kot.type])
         if kot.type == 'do':
             if len(term) > 0:
                 if len(term) == 1:
@@ -530,11 +530,12 @@ def p_func(kot):
     ftype = kot.value
     term = []
     global instructions_current, symbol_table, in_function, current_scope
+    start = instructions_current
     instructions_current += 1
     if tokens_list[instructions_current].type == 'ident':
         fname = tokens_list[instructions_current].value
         if fname not in symbol_table['names']:
-            symbol_table['names'][fname] = [ftype, 'func', False]
+            symbol_table['names'][fname] = [ftype, 'func']
         instructions_current += 1
         if tokens_list[instructions_current].type == 'left-paren':
             instructions_current += 1
@@ -542,7 +543,6 @@ def p_func(kot):
                 if tokens_list[instructions_current].type == 'comma':
                     term.append(',')
                     instructions_current += 1
-                    continue
                 elif tokens_list[instructions_current].value in types and tokens_list[
                             instructions_current + 1].type == 'ident':
                     term.append(tokens_list[instructions_current].value)
@@ -561,21 +561,20 @@ def p_func(kot):
                 in_function = False
                 current_scope = dict()
                 instructions_current += 1
+                stop = instructions_current
                 ltmp = []
+                del tokens_list[start:stop]
                 while len(nodes) != tmp:
                     ltmp.append(nodes.pop())
                 ltmp.reverse()
             else:
                 raise Exception, "Отсутствует тело функции"
-            if not symbol_table['names'][fname][2]:
-                symbol_table['names'][fname][2] = True
-                nd = Node(['func', ftype], fname)
-                nd.setl(term)
-                nd.setr(ltmp)
-                nodes.append(nd)
+            nd = Node(['func', ftype], fname)
+            nd.setl(term)
+            nd.setr(ltmp)
+            nodes.append(nd)
         else:
-            if len(symbol_table['names'][fname]) == 3:
-                raise Exception, "После имени функции должны быть круглые скобки"
+            raise Exception, "После имени функции должны быть круглые скобки"
     else:
         raise Exception, "Некорректное объявление функции"
 
@@ -588,8 +587,6 @@ def p_instructions():
         p_curl(tokens_list[instructions_current])
     elif tokens_list[instructions_current].type in d_curls:
         p_d_curl(tokens_list[instructions_current])
-    elif tokens_list[instructions_current].value in types:
-            p_func(tokens_list[instructions_current])
 
 
 def p_block():
@@ -599,7 +596,7 @@ def p_block():
 
 def p_fdefs():
     global instructions_current
-    while instructions_current < len(tokens_list) and tokens_list[instructions_current].type != 'right-curl':
+    while instructions_current < len(tokens_list):
         if tokens_list[instructions_current].value in types and tokens_list[instructions_current-1].type != 'input':
             p_func(tokens_list[instructions_current])
         else:
