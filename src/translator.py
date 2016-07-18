@@ -8,6 +8,10 @@ def walk_expr_tree(node):
     s = ''
     if node.value:
         s += node.value
+        if node.type[0] == 'call':
+            s += '('
+            s += walk_expr_tree(node.rchild)
+            s += ')'
     else:
         s += '('
         if node.lchild:

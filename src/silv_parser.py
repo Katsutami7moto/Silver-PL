@@ -28,6 +28,8 @@ class Node:
                     return self.rchild.get_type()
             elif self.type in {'<', '>', '<=', '>=', '!=', '==', '!', '||', '&&'}:
                 return 'int'
+        elif isinstance(self.type, list):
+            return self.type[0]
         else:
             if self.type == 'ident':
                 return symbol_table['names'][self.value][0]
@@ -68,6 +70,8 @@ types = {
     "void"
 }
 symbol_table = dict(names=dict())
+in_function = False
+current_scope = dict()
 
 
 def p_atom(token):
@@ -82,10 +86,13 @@ def p_atom(token):
     elif token.type == "False":
         tmp = Node("int", "0")
     elif token.type == 'ident':
-        if token.value in symbol_table['names']:
-            tmp = Node(symbol_table['names'][token.value][0], token.value)
+        if in_function and token.value in current_scope:
+            tmp = Node(current_scope[token.value], token.value)
         else:
-            raise NameError, "Попытка обращения к неопределённой переменной"
+            if token.value in symbol_table['names']:
+                tmp = Node(symbol_table['names'][token.value][0], token.value)
+            else:
+                raise NameError, "Попытка обращения к неопределённой переменной"
     else:
         raise NameError, "Некорректный параметр"
     return tmp
@@ -100,7 +107,12 @@ def build_expr_tree(tokens):
     unary = {'not': '!', '-u': '-'}
     global expr_current
     while expr_current < len(tokens):
-        if tokens[expr_current].type in binary:
+        if tokens[expr_current].type[0] == 'call':
+            nd = Node(tokens[expr_current].type, tokens[expr_current].value)
+            expr_current += 1
+            nd.setr(build_expr_tree(tokens))
+            return nd
+        elif tokens[expr_current].type in binary:
             nd = Node(binary[tokens[expr_current].type])
             expr_current += 1
             nd.setr(build_expr_tree(tokens))
@@ -139,6 +151,7 @@ def p_expr(tokens):
     rpn = []  # обратная польская нотация (постфиксная)
 
     prec = {
+        'call': 8,
         'not': 7,
         '-u': 7,
         'mul': 6,
@@ -161,28 +174,37 @@ def p_expr(tokens):
     isdouble = False
 
     def getprec(op):
-        return prec.get(op, -1)
+        if isinstance(op, list):
+            return prec.get(op[0], -1)
+        else:
+            return prec.get(op, -1)
 
-    last = ''
+    last = lexer.Token('', '')
     for token in tokens:
         assert isinstance(token, lexer.Token)
         if not token:
             continue
-        if token.type == 'minus' and getprec(last) >= 0:
+        if token.type == 'minus' and getprec(last.type) >= 0:
             token.type = '-u'
         if token.type in {'int', 'double', 'ident'}:
-            if last in {'int', 'double', 'ident', 'right-paren'}:
+            if last.type in {'int', 'double', 'ident', 'right-paren'}:
                 raise Exception, "Отсутствует оператор между значениями"
             if token.type == 'double' and not isdouble:
                 isdouble = True
             rpn.append(token)
         elif token.type == 'left-paren':
+            if last.type == 'ident':
+                op_stack.append(lexer.Token(['call', symbol_table['names'][last.value]], last.value))
+                rpn.pop()
             op_stack.append(token)
         elif token.type == 'right-paren':
             while op_stack[-1].type != 'left-paren':
                 rpn.append(op_stack.pop())
-            if op_stack.pop().type != 'left-paren':
+            tmp = op_stack.pop()
+            if tmp.type != 'left-paren':
                 raise Exception, "Не хватает '('"
+            elif isinstance(tmp.type, list):
+                rpn.append(tmp)
         elif getprec(token.type) > 0:
             prc = getprec(token.type)
             if token.type in right:
@@ -194,7 +216,7 @@ def p_expr(tokens):
             op_stack.append(token)
         else:
             raise Exception, "Неизвестный токен: \"%s\"" % token.type
-        last = token.type
+        last = token
     while op_stack:
         rpn.append(op_stack.pop())
     rpn.reverse()
@@ -321,7 +343,7 @@ def p_input(term):
 def p_return(term):
     assert isinstance(term, list)
     global expr_current
-    if len(term) > 1:
+    if len(term) >= 1:
         if len(term) == 1:
             par = p_atom(term[0])
         else:
@@ -507,10 +529,12 @@ def p_func(kot):
     assert isinstance(kot, lexer.Token)
     ftype = kot.value
     term = []
-    global instructions_current
+    global instructions_current, symbol_table, in_function, current_scope
     instructions_current += 1
     if tokens_list[instructions_current].type == 'ident':
         fname = tokens_list[instructions_current].value
+        if fname not in symbol_table['names']:
+            symbol_table['names'][fname] = [ftype, 'func', False]
         instructions_current += 1
         if tokens_list[instructions_current].type == 'left-paren':
             instructions_current += 1
@@ -523,6 +547,8 @@ def p_func(kot):
                             instructions_current + 1].type == 'ident':
                     term.append(tokens_list[instructions_current].value)
                     term.append(tokens_list[instructions_current + 1].value)
+                    current_scope[tokens_list[instructions_current + 1].value] = tokens_list[
+                        instructions_current].value
                     instructions_current += 2
                 else:
                     raise Exception, "Некорректный список формальных аргументов функции"
@@ -530,7 +556,10 @@ def p_func(kot):
             if tokens_list[instructions_current].type == 'left-curl':
                 instructions_current += 1
                 tmp = len(nodes)
+                in_function = True
                 p_block()
+                in_function = False
+                current_scope = dict()
                 instructions_current += 1
                 ltmp = []
                 while len(nodes) != tmp:
@@ -538,17 +567,21 @@ def p_func(kot):
                 ltmp.reverse()
             else:
                 raise Exception, "Отсутствует тело функции"
-            nd = Node(['func', ftype], fname)
-            nd.setl(term)
-            nd.setr(ltmp)
-            nodes.append(nd)
+            if not symbol_table['names'][fname][2]:
+                symbol_table['names'][fname][2] = True
+                nd = Node(['func', ftype], fname)
+                nd.setl(term)
+                nd.setr(ltmp)
+                nodes.append(nd)
         else:
-            raise Exception, "После имени функции должны быть круглые скобки"
+            if len(symbol_table['names'][fname]) == 3:
+                raise Exception, "После имени функции должны быть круглые скобки"
     else:
         raise Exception, "Некорректное объявление функции"
 
 
 def p_instructions():
+    global instructions_current
     if tokens_list[instructions_current].type in sems:
         p_sem(tokens_list[instructions_current])
     elif tokens_list[instructions_current].type in curls:
@@ -556,7 +589,7 @@ def p_instructions():
     elif tokens_list[instructions_current].type in d_curls:
         p_d_curl(tokens_list[instructions_current])
     elif tokens_list[instructions_current].value in types:
-        p_func(tokens_list[instructions_current])
+            p_func(tokens_list[instructions_current])
 
 
 def p_block():
@@ -564,10 +597,21 @@ def p_block():
         p_instructions()
 
 
+def p_fdefs():
+    global instructions_current
+    while instructions_current < len(tokens_list) and tokens_list[instructions_current].type != 'right-curl':
+        if tokens_list[instructions_current].value in types and tokens_list[instructions_current-1].type != 'input':
+            p_func(tokens_list[instructions_current])
+        else:
+            instructions_current += 1
+    instructions_current = 0
+
+
 def parsing(code):
     assert isinstance(code, list)
     global tokens_list
     tokens_list = lexer.lexing(code)
     if tokens_list:
+        p_fdefs()
         p_block()
     return nodes

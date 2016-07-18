@@ -1,3 +1,10 @@
+int fibonacci(int x)
+{
+    if x >= 0 and x < 2 { return x; }
+    else { return fibonacci(x-1) + fibonacci(x-2); }
+}
+
+
 input int n;
 var x = 1;
 var y = 0;

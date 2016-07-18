@@ -7,14 +7,15 @@ const ff = True;
 var g4333 = z;
 
 const arif = -1+2*3-g4333/5;
-var log = (-1+2*3-4.0/5 < -6) or (-6+7*8-9 >= 60) and not (-arif = 7);
-var foo = (9.0 > log) + (arif = -4 - 7);
+var log1 = (-1+2*3-4.0/5 < -6) or (-6+7*8-9 >= 60) and not (-arif = 7);
+var log2 = -1+2*3-4.0/5 < -6 or -6+7*8-9 >= 60 and not (-arif = 7);
+var foo = (9.0 > log1) + (arif = -4 - 7);
 
 let xxx = 999;
 let y = 45 + 34.21 - z;
 let g4333 = 56 - 98;
 var bar = 0;
-let bar = log % foo;
+let bar = log1 % foo;
 
 int func1 (int x, double y)
 {
