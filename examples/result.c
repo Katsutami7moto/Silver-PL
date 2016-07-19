@@ -20,7 +20,7 @@ return (fibonacci((x - 1)) + fibonacci((x - 2)));
 int xxx = 6;
 while (xxx > 980)
 {
-printf("%f\n", ((((((-xxx) - 65) + (6 * 487)) - (98855 / 855.5669)) + 54) - (87 % 5456)));
+printf("%f", ((((((-xxx) - 65) + (6 * 487)) - (98855 / 855.5669)) + 54) - (87 % 5456)));
 while (1)
 {
 printf("\n");
@@ -54,6 +54,8 @@ int bar = 0;
 bar = (log1 % foo);
 int n;
 scanf("%d", &n);
+double dddd;
+scanf("%f", &dddd);
 if (n < 0)
 {
 printf("%f\n", (arif / n));
