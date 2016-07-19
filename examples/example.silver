@@ -3,7 +3,7 @@ var xxx = 6;
 
 while xxx > 980
 {
-    printline 65+6*487-98855/855.5669+54-87%5456;
+    printline -xxx-65+6*487-98855/855.5669+54-87%5456;
     loop
     {
         printline;
@@ -22,6 +22,13 @@ double sqr(double x)
 {
     return x*x;
 }
+
+double mul(double x, double y)
+{
+    return x*y;
+}
+
+var nnn = mul(8, 7);
 
 var bfg = sqr(9)-sqr(44/99-988*5+62)+sqr(9+100-95*1+65*88)/sqr(87-108);
 

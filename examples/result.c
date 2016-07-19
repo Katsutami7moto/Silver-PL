@@ -2,6 +2,10 @@ double sqr (double x )
 {
 return (x * x);
 }
+double mul (double x , double y )
+{
+return (x * y);
+}
 int fibonacci (int x )
 {
 if ((x >= 0) && (x < 2))
@@ -16,7 +20,7 @@ return (fibonacci((x - 1)) + fibonacci((x - 2)));
 int xxx = 6;
 while (xxx > 980)
 {
-printf("%f\n", ((((65 + (6 * 487)) - (98855 / 855.5669)) + 54) - (87 % 5456)));
+printf("%f\n", ((((((-xxx) - 65) + (6 * 487)) - (98855 / 855.5669)) + 54) - (87 % 5456)));
 while (1)
 {
 printf("\n");
@@ -30,6 +34,7 @@ printf("%d", i);
 }
 printf("%d\n", (((((65 + (6 * 487)) - (98855 / 855.5669)) + 54) - (87 % 5456)) >= 984.226));
 }
+double nnn = mul(8 , 7);
 double bfg = ((sqr(9) - sqr((((44 / 99) - (988 * 5)) + 62))) + (sqr((((9 + 100) - (95 * 1)) + (65 * 88))) / sqr((87 - 108))));
 bfg = (bfg - fibonacci(100));
 double y = 7.9;

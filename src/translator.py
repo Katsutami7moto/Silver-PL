@@ -13,7 +13,8 @@ def walk_expr_tree(node):
             s += walk_expr_tree(node.rchild)
             s += ')'
     else:
-        s += '('
+        if node.type != ',':
+            s += '('
         if node.lchild:
             s += walk_expr_tree(node.lchild)
             s += ' '
@@ -22,7 +23,8 @@ def walk_expr_tree(node):
             s += ' '
         if node.rchild:
             s += walk_expr_tree(node.rchild)
-        s += ')'
+        if node.type != ',':
+            s += ')'
     return s
 
 

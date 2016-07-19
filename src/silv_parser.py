@@ -104,7 +104,7 @@ def build_expr_tree(tokens):
     :rtype: Node
     :type tokens: list
     """
-    binary = {'mul': '*', 'div': '/', 'mod': '%', 'plus': '+', 'minus': '-', 'and': '&&', 'or': '||'}
+    binary = {'mul': '*', 'div': '/', 'mod': '%', 'plus': '+', 'minus': '-', 'and': '&&', 'or': '||', 'comma': ','}
     unary = {'not': '!', '-u': '-'}
     global expr_current
     while expr_current < len(tokens):
@@ -152,27 +152,27 @@ def p_expr(tokens):
     rpn = []  # обратная польская нотация (постфиксная)
 
     prec = {
-        'call': 8,
-        'not': 7,
-        '-u': 7,
-        'mul': 6,
-        'div': 6,
-        'mod': 6,
-        'plus': 5,
-        'minus': 5,
-        '<': 4,
-        '>': 4,
-        '<=': 4,
-        '>=': 4,
-        '=': 3,
-        '!=': 3,
-        'and': 2,
-        'or': 1,
+        'call': 9,
+        'not': 8,
+        '-u': 8,
+        'mul': 7,
+        'div': 7,
+        'mod': 7,
+        'plus': 6,
+        'minus': 6,
+        '<': 5,
+        '>': 5,
+        '<=': 5,
+        '>=': 5,
+        '=': 4,
+        '!=': 4,
+        'and': 3,
+        'or': 2,
+        'comma': 1,
         'left-paren': 0,
         '': 99
     }
     right = {'-u', 'not'}
-    isdouble = False
 
     def getprec(op):
         if isinstance(op, list):
@@ -180,7 +180,7 @@ def p_expr(tokens):
         else:
             return prec.get(op, -1)
 
-    last = lexer.Token('', '')
+    last = lexer.Token('', 0, 0, '')
     for token in tokens:
         assert isinstance(token, lexer.Token)
         if not token:
@@ -190,12 +190,11 @@ def p_expr(tokens):
         if token.type in {'int', 'double', 'ident'}:
             if last.type in {'int', 'double', 'ident', 'right-paren'}:
                 raise Exception, "Отсутствует оператор между значениями"
-            if token.type == 'double' and not isdouble:
-                isdouble = True
             rpn.append(token)
         elif token.type == 'left-paren':
             if last.type == 'ident':
-                op_stack.append(lexer.Token(['call', symbol_table['names'][last.value]], last.value))
+                op_stack.append(
+                    lexer.Token(['call', symbol_table['names'][last.value]], last.line, last.symbol, last.value))
                 rpn.pop()
             op_stack.append(token)
         elif token.type == 'right-paren':
@@ -404,13 +403,13 @@ def p_curl(kot):
                     instructions_current += 1
                 instructions_current += 1
             elif tokens_list[instructions_current].type == 'until':
-                term.append(lexer.Token('not'))
-                term.append(lexer.Token('left-paren'))
+                term.append(lexer.Token('not', 0, 0))
+                term.append(lexer.Token('left-paren', 0, 0))
                 instructions_current += 1
                 while tokens_list[instructions_current].type != 'semicolon':
                     term.append(tokens_list[instructions_current])
                     instructions_current += 1
-                term.append(lexer.Token('right-paren'))
+                term.append(lexer.Token('right-paren', 0, 0))
                 instructions_current += 1
             else:
                 raise Exception, "Некорректное использование оператора do (нет while или until)"
@@ -562,6 +561,7 @@ def p_func(kot):
                 current_scope = dict()
                 instructions_current += 1
                 stop = instructions_current
+                instructions_current = start
                 ltmp = []
                 del tokens_list[start:stop]
                 while len(nodes) != tmp:
@@ -597,7 +597,7 @@ def p_block():
 def p_fdefs():
     global instructions_current
     while instructions_current < len(tokens_list):
-        if tokens_list[instructions_current].value in types and tokens_list[instructions_current-1].type != 'input':
+        if tokens_list[instructions_current].value in types and tokens_list[instructions_current - 1].type != 'input':
             p_func(tokens_list[instructions_current])
         else:
             instructions_current += 1
