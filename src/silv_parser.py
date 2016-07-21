@@ -605,7 +605,7 @@ def p_fdefs():
 
 
 def parsing(code):
-    assert isinstance(code, list)
+    # type: (list) -> list
     global tokens_list
     tokens_list = lexer.lexing(code)
     if tokens_list:
