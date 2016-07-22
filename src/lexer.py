@@ -77,13 +77,16 @@ class Token:
 
 def check():
     global other
-    if len(other) != 0:
-        if other in keywords:
-            tokens.append(Token(other, LINE, SYMBOL))
-        else:
-            if regexp.returner('id', other):
+    if len(other) > 0:
+        if other[0] not in {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'}:
+            if other in keywords:
+                tokens.append(Token(other, LINE, SYMBOL))
+            elif regexp.returner('id', other):
                 tokens.append(Token("ident", LINE, SYMBOL, other))
-            elif regexp.returner('i', other):
+            else:
+                raise Exception, "Некорректная лексема"
+        else:
+            if regexp.returner('i', other):
                 tokens.append(Token("int", LINE, SYMBOL, other))
             elif regexp.returner('f', other):
                 tokens.append(Token("double", LINE, SYMBOL, other))

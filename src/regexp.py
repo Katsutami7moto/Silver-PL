@@ -9,6 +9,9 @@
 # Входной текст записывать в кавычках.
 # ? - 0 или 1, * - 0 или много, + - 1 или много
 # . - любой символ (можно итерировать), \\ - экранирование
+#
+# Работает с ограниченным набором регулярок (специально для транслятора) !!!
+
 
 r_ident = "((a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z)" \
           "(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|0|1|2|3|4|5|6|7|8|9|\\_)*)#"
@@ -122,33 +125,28 @@ class BinaryNode(Node):
         self.rchild = obj
 
     def postorderwalk_n(self):
-        if self:
-            self.lchild.postorderwalk_n()
-            self.rchild.postorderwalk_n()
-            self.nullable()
+        self.lchild.postorderwalk_n()
+        self.rchild.postorderwalk_n()
+        self.nullable()
 
     def postorderwalk_f(self):
-        if self:
-            self.lchild.postorderwalk_f()
-            self.rchild.postorderwalk_f()
-            self.firstpos()
+        self.lchild.postorderwalk_f()
+        self.rchild.postorderwalk_f()
+        self.firstpos()
 
     def postorderwalk_l(self):
-        if self:
-            self.lchild.postorderwalk_l()
-            self.rchild.postorderwalk_l()
-            self.lastpos()
+        self.lchild.postorderwalk_l()
+        self.rchild.postorderwalk_l()
+        self.lastpos()
 
     def postorderwalk_p(self):
-        if self:
-            self.lchild.postorderwalk_p()
-            self.rchild.postorderwalk_p()
+        self.lchild.postorderwalk_p()
+        self.rchild.postorderwalk_p()
 
     def postorderwalk_w(self):
-        if self:
-            self.lchild.postorderwalk_w()
-            self.rchild.postorderwalk_w()
-            self.followpos()
+        self.lchild.postorderwalk_w()
+        self.rchild.postorderwalk_w()
+        self.followpos()
 
 
 class UnaryNode(Node):
@@ -156,28 +154,23 @@ class UnaryNode(Node):
         self.child = obj
 
     def postorderwalk_n(self):
-        if self:
-            self.child.postorderwalk_n()
-            self.nullable()
+        self.child.postorderwalk_n()
+        self.nullable()
 
     def postorderwalk_f(self):
-        if self:
-            self.child.postorderwalk_f()
-            self.firstpos()
+        self.child.postorderwalk_f()
+        self.firstpos()
 
     def postorderwalk_l(self):
-        if self:
-            self.child.postorderwalk_l()
-            self.lastpos()
+        self.child.postorderwalk_l()
+        self.lastpos()
 
     def postorderwalk_p(self):
-        if self:
-            self.child.postorderwalk_p()
+        self.child.postorderwalk_p()
 
     def postorderwalk_w(self):
-        if self:
-            self.child.postorderwalk_w()
-            self.followpos()
+        self.child.postorderwalk_w()
+        self.followpos()
 
 
 class Leaf(Node):
@@ -191,24 +184,26 @@ class Leaf(Node):
         curposnum += 1
 
     def postorderwalk_n(self):
-        if self:
-            self.nullable()
+        self.nullable()
 
     def postorderwalk_f(self):
-        if self:
-            self.firstpos()
+        self.firstpos()
 
     def postorderwalk_l(self):
-        if self:
-            self.lastpos()
+        self.lastpos()
 
     def postorderwalk_p(self):
-        if self:
-            self.setp()
+        self.setp()
 
     def postorderwalk_w(self):
-        if self:
-            self.followpos()
+        self.followpos()
+
+
+def createbinode(symbol, leftnode, rightnode):
+    nd = BinaryNode(symbol)
+    nd.setl(leftnode)
+    nd.setr(rightnode)
+    return nd
 
 
 def createunode(symbol, node):
@@ -218,15 +213,7 @@ def createunode(symbol, node):
 
 
 def createleaf(symbol, scrnd, ak):
-    nd = Leaf(symbol, scrnd, ak)
-    return nd
-
-
-def createbinode(symbol, leftnode, rightnode):
-    nd = BinaryNode(symbol)
-    nd.setl(leftnode)
-    nd.setr(rightnode)
-    return nd
+    return Leaf(symbol, scrnd, ak)
 
 
 def makeor(terms):
@@ -260,7 +247,7 @@ def parse(regular):
             current += 1
             term.append(createleaf(regular[current], True, False))
         elif regular[current] == '.':
-            term.append(createleaf("<@>", False, True))
+            term.append(createleaf('', False, True))
         else:
             term.append(createleaf(regular[current], False, False))
         current += 1
@@ -283,27 +270,24 @@ def dfabuild(posset):
     if posset not in dfa:
         dfa[posset] = dict()
     for one in posset:
-        symbol = followpostable[one][0]
         if one != hashposnum:
+            symbol = followpostable[one][0]
             symstate = set().union(followpostable[one][1])
-            if symbol not in dfa[posset] and symbol != '<@>':
+            if symbol not in dfa[posset] and symstate:
                 dfa[posset][symbol] = symstate
-            elif symbol == '<@>':
-                temp = anykeytable & posset  # intersection
-                if any(temp):
+            elif not symstate:
+                temp1 = anykeytable & posset  # intersection
+                if any(temp1):
                     dfa[posset][1] = symstate
+                del temp1
             else:
                 dfa[posset][symbol].update(symstate)
-    if hashposnum in posset:
-        dfa[posset][0] = True
-    else:
-        dfa[posset][0] = False
     for one in dfa[posset]:
         if one != 0:
             if dfa[posset][one]:
-                temp = frozenset().union(dfa[posset][one])
-                if temp not in dfa:
-                    dfabuild(temp)
+                temp2 = frozenset().union(dfa[posset][one])
+                if temp2 not in dfa:
+                    dfabuild(temp2)
 
 
 def dfareturner(stt, state, word):
@@ -315,10 +299,7 @@ def dfareturner(stt, state, word):
             state = frozenset().union(stt[state][1])
         else:
             return False
-    if stt[state][0]:
-        return True
-    else:
-        return False
+    return True
 
 
 id_tree = parse(r_ident)
@@ -356,7 +337,6 @@ closing()
 
 
 def returner(regular, word):
-
     if regular == 'id':
         result = dfareturner(id_dfa, id_state, word)
     elif regular == 'i':
