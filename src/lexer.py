@@ -5,9 +5,9 @@ import regexp
 symbols = {
     '+': 'plus',
     '-': 'minus',
-    '*': 'mul',
-    '/': 'div',
-    '%': 'mod',
+    '*': 'asterisk',
+    '/': 'slash',
+    '%': 'percent',
     '=': 'equal',
     '<': 'left-chev',
     '>': 'right-chev',
@@ -84,14 +84,14 @@ def check():
             elif regexp.returner('id', other):
                 tokens.append(Token("ident", LINE, SYMBOL, other))
             else:
-                raise Exception, "Некорректная лексема"
+                raise Exception, "Некорректная лексема %d:%d" % (LINE, SYMBOL)
         else:
             if regexp.returner('i', other):
                 tokens.append(Token("int", LINE, SYMBOL, other))
             elif regexp.returner('f', other):
                 tokens.append(Token("double", LINE, SYMBOL, other))
             else:
-                raise Exception, "Некорректная лексема"
+                raise Exception, "Некорректная лексема %d:%d" % (LINE, SYMBOL)
         other = ''
 
 
