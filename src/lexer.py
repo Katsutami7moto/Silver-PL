@@ -70,7 +70,7 @@ class Token:
 
 
 def r_cover(reg):
-    assert isinstance(reg, str)
+    # type: (str) -> str
     return "(" + reg + ")#"
 
 
@@ -92,7 +92,7 @@ def check():
 
 
 def lexing(code):
-    assert isinstance(code, list)
+    # type: (list) -> list
     global other, eqplus, eqp, LINE, SYMBOL
     for line in code:
         assert isinstance(line, str)

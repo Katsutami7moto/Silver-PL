@@ -4,7 +4,7 @@ import silv_parser
 
 
 def walk_expr_tree(node):
-    assert isinstance(node, silv_parser.Node)
+    # type: (silv_parser.Node) -> str
     s = ''
     if node.value:
         s += node.value
@@ -29,7 +29,7 @@ def walk_expr_tree(node):
 
 
 def t_def(node, const=False):
-    assert isinstance(node, silv_parser.Node)
+    # type: (silv_parser.Node) -> str
     s = ''
     if const:
         s += 'const '
@@ -43,15 +43,17 @@ def t_def(node, const=False):
 
 
 def t_var(node):
+    # type: (silv_parser.Node) -> str
     return t_def(node)
 
 
 def t_const(node):
+    # type: (silv_parser.Node) -> str
     return t_def(node, True)
 
 
 def t_let(node):
-    assert isinstance(node, silv_parser.Node)
+    # type: (silv_parser.Node) -> str
     s = ''
     s += node.value
     s += ' = '
@@ -61,7 +63,7 @@ def t_let(node):
 
 
 def t_print(node):
-    assert isinstance(node, silv_parser.Node)
+    # type: (silv_parser.Node) -> str
     s = ''
     mod = ''
     if node.type[1] == 'int':
@@ -77,7 +79,7 @@ def t_print(node):
 
 
 def t_printline(node):
-    assert isinstance(node, silv_parser.Node)
+    # type: (silv_parser.Node) -> str
     s = ''
     mod = ''
     if node.type[1] == 'int':
@@ -97,7 +99,7 @@ def t_printline(node):
 
 
 def t_input(node):
-    assert isinstance(node, silv_parser.Node)
+    # type: (silv_parser.Node) -> str
     s = ''
     mod = ''
     if node.type[1] == 'int':
@@ -118,7 +120,7 @@ def t_input(node):
 
 
 def t_loop(node):
-    assert isinstance(node, silv_parser.Node)
+    # type: (silv_parser.Node) -> str
     s = 'while (1)\n{\n'
     ltmp = nlist_walk(node.rchild)
     for line in ltmp:
@@ -129,7 +131,7 @@ def t_loop(node):
 
 
 def t_do(node):
-    assert isinstance(node, silv_parser.Node)
+    # type: (silv_parser.Node) -> str
     s = 'do\n{\n'
     ltmp = nlist_walk(node.rchild)
     for line in ltmp:
@@ -142,7 +144,7 @@ def t_do(node):
 
 
 def t_while(node):
-    assert isinstance(node, silv_parser.Node)
+    # type: (silv_parser.Node) -> str
     s = 'while '
     s += walk_expr_tree(node.lchild)
     s += '\n{\n'
@@ -155,7 +157,7 @@ def t_while(node):
 
 
 def t_until(node):
-    assert isinstance(node, silv_parser.Node)
+    # type: (silv_parser.Node) -> str
     s = 'while (!'
     s += walk_expr_tree(node.lchild)
     s += ')\n{\n'
@@ -168,21 +170,21 @@ def t_until(node):
 
 
 def t_break(node):
-    assert isinstance(node, silv_parser.Node)
+    # type: (silv_parser.Node) -> str
     s = node.type[0]
     s += ';'
     return s
 
 
 def t_continue(node):
-    assert isinstance(node, silv_parser.Node)
+    # type: (silv_parser.Node) -> str
     s = node.type[0]
     s += ';'
     return s
 
 
 def t_if(node):
-    assert isinstance(node, silv_parser.Node)
+    # type: (silv_parser.Node) -> str
     s = 'if '
     s += walk_expr_tree(node.lchild)
     s += '\n{\n'
@@ -195,7 +197,7 @@ def t_if(node):
 
 
 def t_elif(node):
-    assert isinstance(node, silv_parser.Node)
+    # type: (silv_parser.Node) -> str
     s = 'else if '
     s += walk_expr_tree(node.lchild)
     s += '\n{\n'
@@ -208,7 +210,7 @@ def t_elif(node):
 
 
 def t_else(node):
-    assert isinstance(node, silv_parser.Node)
+    # type: (silv_parser.Node) -> str
     s = 'else\n{\n'
     ltmp = nlist_walk(node.rchild)
     for line in ltmp:
@@ -219,7 +221,7 @@ def t_else(node):
 
 
 def t_func(node):
-    assert isinstance(node, silv_parser.Node)
+    # type: (silv_parser.Node) -> str
     s = node.type[1]
     s += ' '
     s += node.value
@@ -237,7 +239,7 @@ def t_func(node):
 
 
 def t_return(node):
-    assert isinstance(node, silv_parser.Node)
+    # type: (silv_parser.Node) -> str
     s = 'return '
     s += walk_expr_tree(node.rchild)
     s += ';'
@@ -245,12 +247,13 @@ def t_return(node):
 
 
 def translating(code):
-    assert isinstance(code, list)
+    # type: (list) -> list
     nodes_list = silv_parser.parsing(code)
     return nlist_walk(nodes_list)
 
 
 def nlist_walk(nlist):
+    # type: (list) -> list
     slist = []
     for node in nlist:
         assert isinstance(node, silv_parser.Node)

@@ -76,10 +76,7 @@ current_scope = dict()
 
 
 def p_atom(token):
-    """
-    :rtype: Node
-    :type token: lexer.Token
-    """
+    # type: (lexer.Token) -> Node
     if token.type in types:
         tmp = Node(token.type, token.value)
     elif token.type == "True":
@@ -100,10 +97,7 @@ def p_atom(token):
 
 
 def build_expr_tree(tokens):
-    """
-    :rtype: Node
-    :type tokens: list
-    """
+    # type: (list) -> Node
     binary = {'mul': '*', 'div': '/', 'mod': '%', 'plus': '+', 'minus': '-', 'and': '&&', 'or': '||', 'comma': ','}
     unary = {'not': '!', '-u': '-'}
     global expr_current
@@ -143,11 +137,7 @@ def build_expr_tree(tokens):
 
 
 def p_expr(tokens):
-    """
-    :rtype: list
-    :type tokens: list
-    """
-
+    # type: (list) -> list
     op_stack = []
     rpn = []  # обратная польская нотация (постфиксная)
 
@@ -224,7 +214,7 @@ def p_expr(tokens):
 
 
 def p_def(term, t):
-    assert isinstance(term, list)
+    # type: (list) -> Node
     global expr_current
     if len(term) > 2:
         if term[0].type == 'ident' and term[1].type == '=':
@@ -248,15 +238,17 @@ def p_def(term, t):
 
 
 def p_var(term):
+    # type: (list) -> Node
     return p_def(term, 'var')
 
 
 def p_const(term):
+    # type: (list) -> Node
     return p_def(term, 'const')
 
 
 def p_let(term):
-    assert isinstance(term, list)
+    # type: (list) -> Node
     global expr_current
     if len(term) > 2:
         if term[0].type == 'ident' and term[1].type == '=':
@@ -289,7 +281,7 @@ def p_let(term):
 
 
 def p_print(term):
-    assert isinstance(term, list)
+    # type: (list) -> Node
     global expr_current
     if len(term) > 0:
         if len(term) == 1:
@@ -305,7 +297,7 @@ def p_print(term):
 
 
 def p_printline(term):
-    assert isinstance(term, list)
+    # type: (list) -> Node
     global expr_current
     if len(term) > 0:
         if len(term) == 1:
@@ -322,7 +314,7 @@ def p_printline(term):
 
 
 def p_input(term):
-    assert isinstance(term, list)
+    # type: (list) -> Node
     if len(term) == 2:
         if term[0].value in {'int', 'double'} and term[1].type == 'ident':
             if term[1].value not in symbol_table['names']:
@@ -341,7 +333,7 @@ def p_input(term):
 
 
 def p_return(term):
-    assert isinstance(term, list)
+    # type: (list) -> Node
     global expr_current
     if len(term) >= 1:
         if len(term) == 1:
@@ -370,18 +362,6 @@ def p_sem(kot):
     else:
         func = 'p_' + kot.type + '(term)'
         nodes.append(eval(func))
-
-
-def p_loop():
-    return Node(['loop'])
-
-
-def p_do():
-    return Node(['do'])
-
-
-def p_else():
-    return Node(['else'])
 
 
 def p_curl(kot):
@@ -437,7 +417,7 @@ def p_curl(kot):
 
 
 def p_while(term):
-    assert isinstance(term, list)
+    # type: (list) -> Node
     global expr_current
     if len(term) > 0:
         if len(term) == 1:
@@ -453,7 +433,7 @@ def p_while(term):
 
 
 def p_until(term):
-    assert isinstance(term, list)
+    # type: (list) -> Node
     global expr_current
     if len(term) > 0:
         if len(term) == 1:
@@ -469,7 +449,7 @@ def p_until(term):
 
 
 def p_if(term):
-    assert isinstance(term, list)
+    # type: (list) -> Node
     global expr_current
     if len(term) > 0:
         if len(term) == 1:
@@ -485,7 +465,7 @@ def p_if(term):
 
 
 def p_elif(term):
-    assert isinstance(term, list)
+    # type: (list) -> Node
     global expr_current
     if len(term) > 0:
         if len(term) == 1:
