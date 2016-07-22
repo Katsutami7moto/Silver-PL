@@ -17,9 +17,19 @@ symbols = {
     ']': 'right-brack',
     '{': 'left-curl',
     '}': 'right-curl',
+    ':': 'colon',
     ';': 'semicolon',
     ',': 'comma',
     '!': 'exclam'
+}
+composites = {
+    '<=': 'less-equal',
+    '>=': 'more-equal',
+    '==': 'is-equal',
+    '!=': 'not-equal',
+    '//': 'floor-div',
+    '=>': 'arrow',
+    '|>': 'pipe'
 }
 ignore = {'\n', '\t', ' '}
 keywords = {

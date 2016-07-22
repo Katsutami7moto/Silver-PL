@@ -3,11 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="9008df4e-1652-4c48-b5cc-600fd6786a2d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/result.c" afterPath="$PROJECT_DIR$/examples/result.c" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lexer.py" afterPath="$PROJECT_DIR$/src/lexer.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main.py" afterPath="$PROJECT_DIR$/src/main.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/silv_parser.py" afterPath="$PROJECT_DIR$/src/silv_parser.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/translator.py" afterPath="$PROJECT_DIR$/src/translator.py" />
     </list>
     <ignored path="Cool-PL.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -30,24 +26,24 @@
       <file leaf-file-name="silv_parser.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/silv_parser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="594" column="0" selection-start-line="594" selection-start-column="0" selection-end-line="594" selection-end-column="0" />
+            <state relative-caret-position="323">
+              <caret line="96" column="0" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="lexer.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="lexer.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/lexer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="131" column="0" selection-start-line="131" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
+            <state relative-caret-position="51">
+              <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="regexp.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="regexp.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/regexp.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="504">
@@ -90,10 +86,10 @@
         <option value="$PROJECT_DIR$/examples/two.silver" />
         <option value="$PROJECT_DIR$/examples/example.silver" />
         <option value="$PROJECT_DIR$/src/regexp.py" />
-        <option value="$PROJECT_DIR$/src/lexer.py" />
-        <option value="$PROJECT_DIR$/src/silv_parser.py" />
         <option value="$PROJECT_DIR$/src/translator.py" />
         <option value="$PROJECT_DIR$/src/main.py" />
+        <option value="$PROJECT_DIR$/src/silv_parser.py" />
+        <option value="$PROJECT_DIR$/src/lexer.py" />
       </list>
     </option>
   </component>
@@ -421,13 +417,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1467362169396</updated>
-    </task>
-    <task id="LOCAL-00002" summary="1st stage draft">
-      <created>1467366765667</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1467366765667</updated>
     </task>
     <task id="LOCAL-00003" summary="2nd stage draft">
       <created>1467366828226</created>
@@ -765,7 +754,14 @@
       <option name="project" value="LOCAL" />
       <updated>1469095363201</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="Stage 9.90: refactoring">
+      <created>1469202012717</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1469202012718</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -804,7 +800,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Stage 2.01: 'bool' support" />
     <MESSAGE value="Stage 2.51: cooler parser, ready to support expressions parsing" />
     <MESSAGE value="Stage 2.77: maybe ready to expressions parsing (not yet translating)" />
     <MESSAGE value="Stage 2.88: not yet working with parentheses" />
@@ -829,7 +824,8 @@
     <MESSAGE value="Stage 9.5: parsing function calls in expressions; and also - recursive function calls!" />
     <MESSAGE value="Stage 9.7: more fixing on functions, improved type inference for functions" />
     <MESSAGE value="Stage 9.87: fixing functions definition, using function with several arguments, tokens now have their line and symbol numbers" />
-    <option name="LAST_COMMIT_MESSAGE" value="Stage 9.87: fixing functions definition, using function with several arguments, tokens now have their line and symbol numbers" />
+    <MESSAGE value="Stage 9.90: refactoring" />
+    <option name="LAST_COMMIT_MESSAGE" value="Stage 9.90: refactoring" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1064,22 +1060,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/result.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="114" column="0" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lexer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="131" column="0" selection-start-line="131" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
@@ -1096,14 +1076,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/silv_parser.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="594" column="0" selection-start-line="594" selection-start-column="0" selection-end-line="594" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/regexp.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="504">
@@ -1111,6 +1083,30 @@
           <folding>
             <element signature="e#9537#9554#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/silv_parser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="96" column="0" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/result.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lexer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
