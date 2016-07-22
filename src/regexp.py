@@ -288,6 +288,7 @@ def dfabuild(posset):
                 temp2 = frozenset().union(dfa[posset][one])
                 if temp2 not in dfa:
                     dfabuild(temp2)
+                del temp2
 
 
 def dfareturner(stt, state, word):

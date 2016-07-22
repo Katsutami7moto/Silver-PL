@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="9008df4e-1652-4c48-b5cc-600fd6786a2d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lexer.py" afterPath="$PROJECT_DIR$/src/lexer.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/regexp.py" afterPath="$PROJECT_DIR$/src/regexp.py" />
     </list>
     <ignored path="Cool-PL.iws" />
@@ -27,28 +26,18 @@
       <file leaf-file-name="silv_parser.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/silv_parser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="96" column="0" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
+            <state relative-caret-position="5414">
+              <caret line="401" column="16" selection-start-line="401" selection-start-column="16" selection-end-line="401" selection-end-column="16" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="lexer.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="lexer.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/lexer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="135" column="0" selection-start-line="135" selection-start-column="0" selection-end-line="135" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="regexp.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/regexp.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="351" column="0" selection-start-line="351" selection-start-column="0" selection-end-line="351" selection-end-column="0" />
+            <state relative-caret-position="187">
+              <caret line="11" column="15" selection-start-line="11" selection-start-column="15" selection-end-line="11" selection-end-column="15" />
               <folding />
             </state>
           </provider>
@@ -86,11 +75,11 @@
         <option value="$PROJECT_DIR$/src/translator.py" />
         <option value="$PROJECT_DIR$/src/main.py" />
         <option value="$PROJECT_DIR$/src/silv_parser.py" />
-        <option value="$PROJECT_DIR$/src/regexp.py" />
         <option value="$PROJECT_DIR$/src/regexp-test.py" />
         <option value="$PROJECT_DIR$/examples/example.silver" />
         <option value="$PROJECT_DIR$/src/regexp_test.py" />
         <option value="$PROJECT_DIR$/src/lexer.py" />
+        <option value="$PROJECT_DIR$/src/regexp.py" />
       </list>
     </option>
   </component>
@@ -418,13 +407,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1467362169396</updated>
-    </task>
-    <task id="LOCAL-00005" summary="structure draft">
-      <created>1467370655742</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1467370655742</updated>
     </task>
     <task id="LOCAL-00006" summary="structure draft">
       <created>1467373589166</created>
@@ -762,7 +744,14 @@
       <option name="project" value="LOCAL" />
       <updated>1469215131654</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="version 0.11: issue #5 closed - whole 'regexp' module refactored and optimized">
+      <created>1469222095466</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1469222095466</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -801,7 +790,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Stage 2.77: maybe ready to expressions parsing (not yet translating)" />
     <MESSAGE value="Stage 2.88: not yet working with parentheses" />
     <MESSAGE value="Stage 2.89: new expression parsing, works no properly" />
     <MESSAGE value="Stage 2.899: expression parsing doesn't work" />
@@ -826,7 +814,8 @@
     <MESSAGE value="Stage 9.87: fixing functions definition, using function with several arguments, tokens now have their line and symbol numbers" />
     <MESSAGE value="Stage 9.90: refactoring" />
     <MESSAGE value="version 0.10: issue #3 closed - regexp.returner() is working good" />
-    <option name="LAST_COMMIT_MESSAGE" value="version 0.10: issue #3 closed - regexp.returner() is working good" />
+    <MESSAGE value="version 0.11: issue #5 closed - whole 'regexp' module refactored and optimized" />
+    <option name="LAST_COMMIT_MESSAGE" value="version 0.11: issue #5 closed - whole 'regexp' module refactored and optimized" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1062,14 +1051,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/silv_parser.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="96" column="0" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/examples/result.c">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -1094,18 +1075,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lexer.py">
+    <entry file="file://$PROJECT_DIR$/src/regexp.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="504">
-          <caret line="135" column="0" selection-start-line="135" selection-start-column="0" selection-end-line="135" selection-end-column="0" />
+          <caret line="352" column="0" selection-start-line="352" selection-start-column="0" selection-end-line="352" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/regexp.py">
+    <entry file="file://$PROJECT_DIR$/src/silv_parser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="351" column="0" selection-start-line="351" selection-start-column="0" selection-end-line="351" selection-end-column="0" />
+        <state relative-caret-position="5414">
+          <caret line="401" column="16" selection-start-line="401" selection-start-column="16" selection-end-line="401" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lexer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="15" selection-start-line="11" selection-start-column="15" selection-end-line="11" selection-end-column="15" />
           <folding />
         </state>
       </provider>
