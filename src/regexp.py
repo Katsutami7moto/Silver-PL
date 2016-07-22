@@ -7,18 +7,15 @@
 # - по получившемуся ДКА парсит входной текст
 # Регэксп записывать в виде: "(регэксп)#", как в примерах ниже.
 # Входной текст записывать в кавычках.
+# ? - 0 или 1, * - 0 или много, + - 1 или много
+# . - любой символ (можно итерировать), \\ - экранирование
 
+r_ident = "((a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z)" \
+          "(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|0|1|2|3|4|5|6|7|8|9|\\_)*)#"
+r_int = "(0|(1|2|3|4|5|6|7|8|9)(0|1|2|3|4|5|6|7|8|9)*)#"
+r_float = "(0|(1|2|3|4|5|6|7|8|9)(0|1|2|3|4|5|6|7|8|9)*\\.(0|1|2|3|4|5|6|7|8|9)+)#"
+r_string = "(\".+\")#"
 
-# regexp = "((ac|bc)*ad+)#"
-# regexp = "((a(b|c))*c)#"
-# regexp = "(1+|1*01(11|01)+)#"
-# regexp = "((a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z)" \
-#           "(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|0|1|2|3|4|5|6|7|8|9)*)#"
-# regexp = "(a*b|b*(ab+|bc))#"
-# regexp = "((1?1?0)*1?)#"  # Лаба 1, задание 2
-# regexp = "(2\\*2\\=1\\+1\\+1\\+1)#"
-# regexp = "(\".+\")#"
-# regexp = "(n..b)#"
 current = 0
 curposnum = 1
 hashposnum = 0
@@ -35,6 +32,16 @@ def relaunch():
     followpostable = {}
     anykeytable = set()
     dfa = {}
+
+
+def closing():
+    global current, curposnum, hashposnum, followpostable, anykeytable, dfa
+    del current
+    del curposnum
+    del hashposnum
+    del followpostable
+    del anykeytable
+    del dfa
 
 
 class Node:
@@ -299,26 +306,8 @@ def dfabuild(posset):
                     dfabuild(temp)
 
 
-def dfareader(stt, state, word):
-    assert isinstance(word, str)
-    for symbol in word:
-        if symbol in stt[state]:
-            state = frozenset().union(stt[state][symbol])
-        elif 1 in stt[state] and stt[state][1]:
-            state = frozenset().union(stt[state][1])
-        else:
-            print "Invalid word/expression!"
-            return
-    if stt[state][0]:
-        print "The word fits."
-        return
-    else:
-        print "Last terminal isn't finite!"
-        return
-
-
 def dfareturner(stt, state, word):
-    assert isinstance(word, str)
+    # type: (dict, set, str) -> bool
     for symbol in word:
         if symbol in stt[state]:
             state = frozenset().union(stt[state][symbol])
@@ -332,37 +321,51 @@ def dfareturner(stt, state, word):
         return False
 
 
-def returner(regular, word):
-    global dfa
-    tree = parse(regular)
-    calc(tree)
-    begin_state = frozenset().union(tree.f)
-    dfabuild(begin_state)
-    result = dfareturner(dfa, begin_state, word)
-    relaunch()
-    return result
+id_tree = parse(r_ident)
+calc(id_tree)
+id_state = frozenset().union(id_tree.f)
+del id_tree
+dfabuild(id_state)
+id_dfa = dfa
+relaunch()
 
-# def unittest():
-#     test = parse(regexp)
-#     calc(test)
-#     test.printtree(0)
-#     print "Hash is at position ", hashposnum
-#     print followpostable
-#
-#     global dfa
-#     ffs = frozenset().union(test.f)
-#     dfabuild(ffs)
-#
-#     print "========================"
-#     print dfa.keys()
-#     for one in dfa:
-#         print "========================"
-#         print dfa[one]
-#
-#     print "========================"
-#     print
-#     w = input("Enter a word: ")
-#     dfareader(dfa, ffs, w)
-#
-#
-# unittest()
+int_tree = parse(r_int)
+calc(int_tree)
+int_state = frozenset().union(int_tree.f)
+del int_tree
+dfabuild(int_state)
+int_dfa = dfa
+relaunch()
+
+float_tree = parse(r_float)
+calc(float_tree)
+float_state = frozenset().union(float_tree.f)
+del float_tree
+dfabuild(float_state)
+float_dfa = dfa
+relaunch()
+
+string_tree = parse(r_string)
+calc(string_tree)
+string_state = frozenset().union(string_tree.f)
+del string_tree
+dfabuild(string_state)
+string_dfa = dfa
+
+closing()
+
+
+def returner(regular, word):
+
+    if regular == 'id':
+        result = dfareturner(id_dfa, id_state, word)
+    elif regular == 'i':
+        result = dfareturner(int_dfa, int_state, word)
+    elif regular == 'f':
+        result = dfareturner(float_dfa, float_state, word)
+    elif regular == 's':
+        result = dfareturner(string_dfa, string_state, word)
+    else:
+        raise Exception, "Некорректный тип регулярного выражения"
+
+    return result

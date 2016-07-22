@@ -27,6 +27,7 @@ composites = {
     '>=': 'more-equal',
     '==': 'is-equal',
     '!=': 'not-equal',
+    '**': 'exponentiation',
     '//': 'floor-div',
     '=>': 'arrow',
     '|>': 'pipe'
@@ -60,11 +61,6 @@ keywords = {
 }
 other = ""
 tokens = []
-r_ident = "(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z)" \
-          "(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|0|1|2|3|4|5|6|7|8|9|\\_)*"
-r_int = "0|(1|2|3|4|5|6|7|8|9)(0|1|2|3|4|5|6|7|8|9)*"
-r_float = "0|(1|2|3|4|5|6|7|8|9)(0|1|2|3|4|5|6|7|8|9)*\\.(0|1|2|3|4|5|6|7|8|9)+"
-# r_string = "\".+\""
 eqp = ''
 eqplus = False
 LINE = 0
@@ -79,22 +75,17 @@ class Token:
         self.symbol = sm
 
 
-def r_cover(reg):
-    # type: (str) -> str
-    return "(" + reg + ")#"
-
-
 def check():
     global other
     if len(other) != 0:
         if other in keywords:
             tokens.append(Token(other, LINE, SYMBOL))
         else:
-            if regexp.returner(r_cover(r_ident), other):
+            if regexp.returner('id', other):
                 tokens.append(Token("ident", LINE, SYMBOL, other))
-            elif regexp.returner(r_cover(r_int), other):
+            elif regexp.returner('i', other):
                 tokens.append(Token("int", LINE, SYMBOL, other))
-            elif regexp.returner(r_cover(r_float), other):
+            elif regexp.returner('f', other):
                 tokens.append(Token("double", LINE, SYMBOL, other))
             else:
                 raise Exception, "Некорректная лексема"
