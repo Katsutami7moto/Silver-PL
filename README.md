@@ -1,2 +1,2 @@
 # Silver-PL
-Development of my own programming language.
+Development of Silver programming language.
