@@ -38,7 +38,7 @@ sqr : M<Number>
 fib : M<Number>
 (n) => if n == 0 or n == 1: n
        elif n > 1: fib(n-1) + fib(n-2)
-       else: (-1)**(-n+1) * fib(-n);
+       else: (-1)**(1-n) * fib(-n);
 ```
 
 ## Features / TODO
