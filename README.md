@@ -3,7 +3,7 @@ Silver is general-purpose programming language, which goal is to collect many us
 
 ## Concepts
 
-- Functional programming features: anonymous functions, first-class functions, partial application, orientation on programminng w/out variables
+- Functional programming features: anonymous functions, first-class functions, closures, currying, partial application, orientation on programminng w/out variables
 - Compound types and extension functions will make code more familiar to OOP-users
 - No automatical/implicit type conversion, static strong type system
 - No low-level looking basic types like `uint32`, this is unnecessary
@@ -12,27 +12,33 @@ Silver is general-purpose programming language, which goal is to collect many us
 ## Code example (draft)
 
 ```
-var x : Number = fibonacci(8);
-
+var x : Number = fib(8);
+var xx : Number = 8 / 9;
 var y = 5;
 
+let s : String = concat("Hello, ", "World!");
+let zz : Bool = 3 - 4 >= 9 % 7 + 2;
 let z = 9.8;
 
-let mul = fun ! (x : Number) => fun : Number -> Number (y) => x * y;
 # typedef M<T> = T -> T;
-let mul = fun : Number! (x) => fun : M<Number> (y) => x * y;
+let mul = fun : Number!  # "!" marks a function with closure
+(x) => fun : M<Number>
+(y) => x * y;
 
 mul : Number, Number -> Number
 (x, y) => x * y;
 
-mul : Number
-(x : Number, y : Number) => x * y;
-
 # syntax
-funcname or "fun" : signature (arglist) => expr;
-funcname or "fun" [: signature] ([arglist]) { ... };
+# funcname or "fun" : signature (arglist) => expr;
+# funcname or "fun" [: signature] ([arglist]) { ... };
 
-sqr : M<Numbers> (x) => x * x;
+sqr : M<Number>
+(x) => x * x;
+
+fib : M<Number>
+(n) => if n == 0 or n == 1: n
+       elif n > 1: fib(n-1) + fib(n-2)
+       else: (-1)**(-n+1) * fib(-n);
 ```
 
 ## Features / TODO
@@ -64,7 +70,7 @@ sqr : M<Numbers> (x) => x * x;
   - [ ] Pattern matching (stmnt)
 - Types
   - [ ] Basic types
-    - [x] Boolean (`True` and `False`)
+    - [x] Bool (`True` and `False`)
     - [ ] `None`
     - [ ] Number (one for int and float, with ext-functions, flags NoSign, NoFloat, NoComplex and so on..)
     - [ ] ComplexNumber
