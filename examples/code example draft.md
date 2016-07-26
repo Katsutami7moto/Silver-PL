@@ -1,4 +1,4 @@
-## Variables declaration
+## Variables/constants declaration
 
 ```
 var x : Number = fib(8);
@@ -30,7 +30,7 @@ sqr : M<Number>
 (x) => x * x;
 
 fib : M<Number>
-(n) => if n == 0 or n == 1: n
-       elif n > 1: fib(n-1) + fib(n-2)
-       else: (-1)**(1-n) * fib(-n);
+(n) =>  if n == 0 or n == 1: n
+        elif n > 1: fib(n-1) + fib(n-2)
+        else: (-1)**(1-n) * fib(-n);
 ```
