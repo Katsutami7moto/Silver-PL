@@ -9,38 +9,6 @@ Silver is general-purpose programming language, which goal is to collect many us
 - No low-level looking basic types like `uint32`, this is unnecessary
 - Silver compiler translates code to C language (C89 standart) for good portabilty and performance
 
-## Code example (draft)
-
-```
-var x : Number = fib(8);
-var xx : Number = 8 / 9;
-var y = 5;
-
-let s : String = concat("Hello, ", "World!");
-let zz : Bool = 3 - 4 >= 9 % 7 + 2;
-let z = 9.8;
-
-# typedef M<T> = T -> T;
-let mul = fun : Number!  # "!" marks a function with closure
-(x) => fun : M<Number>
-(y) => x * y;
-
-mul : Number, Number -> Number
-(x, y) => x * y;
-
-# syntax
-# funcname or "fun" : signature (arglist) => expr;
-# funcname or "fun" [: signature] ([arglist]) { ... };
-
-sqr : M<Number>
-(x) => x * x;
-
-fib : M<Number>
-(n) => if n == 0 or n == 1: n
-       elif n > 1: fib(n-1) + fib(n-2)
-       else: (-1)**(1-n) * fib(-n);
-```
-
 ## Features / TODO
 
 - Literals
