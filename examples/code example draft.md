@@ -8,18 +8,23 @@ var y = 5;
 let s : String = concat("Hello, ", "World!");
 let zz : Bool = 3 - 4 >= 9 % 7 + 2;
 let z = 9.8;
+```
 
-# typedef M<T> = T -> T;
-let mul = fun : Number!  # "!" marks a function with closure
+## Expression-functions
+
+```
+// typedef M<T> = T -> T;
+// "!" marks a function with closure
+let mul = fun : Number!  
 (x) => fun : M<Number>
 (y) => x * y;
 
 mul : Number, Number -> Number
 (x, y) => x * y;
 
-# syntax
-# funcname or "fun" : signature (arglist) => expr;
-# funcname or "fun" [: signature] ([arglist]) { ... };
+// syntax
+// funcname or "fun" : signature (arglist) => expr;
+// funcname or "fun" [: signature] ([arglist]) { ... };
 
 sqr : M<Number>
 (x) => x * x;
