@@ -28,10 +28,10 @@ Silver is general-purpose programming language, which goal is to collect many us
   - [ ] Pipe operator (`|>`)
   - [ ] Pattern matching (expr)
 - Statements
-  - [x] Variables/constants definitions (*no declaration w/out definition with a value!*)
-    - [x] with type inference, if defined through value/constructor
-    - [x] with explicit type declaration, if defined through expression or function call
-  - [x] Variables assignment
+  - [x] Variables/constants definitions (**no declaration w/out definition with a value!**)
+    - [x] with type inference, if defined through value/constructor `var/let x = ...;`
+    - [x] with explicit type declaration, if defined through expression or function call `var/let x : Type = ...;`
+  - [x] Variables assignment (also augmented) `mod x = ...;`
   - [x] Loops
     - [x] Conditional loops: infinite, while, until, do..while, do..until
     - [ ] Container loop: `for x in container doSomething();` or `for x in container { ... }`
@@ -66,7 +66,7 @@ Silver is general-purpose programming language, which goal is to collect many us
   - [ ] Multiple function parameters (like in Python)
   - [ ] Function parameters with default values
   - [ ] Expression-returning functoins (`def sum(x: int, y: int): int => x + y;`)
-  - [ ] Extension functions (`extend Type: func() { ... }`; also bunch of functions `extend T { ... def func() { ... } ... }`)
+  - [ ] Extension functions (`extend Type: func() { ... }`; also bunch of functions `extend Type { def func() { ... } ... }`)
   - [ ] Modules/namespaces (?)
   - [ ] Bindings with C functions/libraries (not only C?)
 - Other
