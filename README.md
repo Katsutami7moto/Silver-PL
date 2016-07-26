@@ -1,5 +1,5 @@
 # Silver
-Silver is general-purpose programming language, which goal is to collect many useful features from other languages, but not to collect their design and work errors.
+Silver is general-purpose programming language, which goal is to collect many useful features from other languages, but avoid their design and working errors.
 
 ## Concepts
 
