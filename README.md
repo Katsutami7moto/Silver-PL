@@ -42,6 +42,7 @@ Silver is general-purpose programming language, which goal is to collect many us
     - [x] Bool (`True` and `False` -> `0` and `1` in C)
     - [x] int
     - [x] double
+    - [ ] char (Unicode)
     - [ ] Сontainers with generics `<T>`
       - [ ] List
       - [ ] Set
@@ -59,14 +60,15 @@ Silver is general-purpose programming language, which goal is to collect many us
     - [ ] Variant types (sum/union) (x | y)
     - [ ] Option type (x | None)
     - [ ] Intersection types (x & y) (at first, only for product types)
-  - [ ] Type aliases
+  - [ ] Type aliases (`typedef`)
+    - [ ] With generics `<T>`
   - [ ] Loading types from C
 - Definitions
   - [x] Functions
-  - [ ] Multiple function parameters (like in Python)
-  - [ ] Function parameters with default values
   - [ ] Expression-returning functoins (`def sum(x: int, y: int): int => x + y;`)
   - [ ] Extension functions (`extend Type: func() { ... }`; also bunch of functions `extend Type { def func() { ... } ... }`)
+  - [ ] Multiple function parameters (like in Python)
+  - [ ] Function parameters with default values
   - [ ] Modules/namespaces (?)
   - [ ] Bindings with C functions/libraries (not only C?)
 - Other
@@ -91,5 +93,7 @@ Silver is general-purpose programming language, which goal is to collect many us
 - [ ] Conditions `in`/`not in`, using in `if` and loops
 - [ ] List comprehensions
 - [ ] String literals
-- [ ] `String` type and all its functions/behavior
+- [ ] `char` type
+- [ ] `typedef`
+- [ ] `String` type (`typedef String = List<char>;` or like that)
 - [ ] ...
