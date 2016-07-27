@@ -67,8 +67,7 @@ d_curls = {
 }
 types = {
     "int",
-    "double",
-    "void"
+    "double"
 }
 symbol_table = dict(names=dict())
 in_function = False
@@ -99,7 +98,8 @@ def p_atom(token):
 def build_expr_tree(tokens):
     # type: (list) -> Node
     binary = {'asterisk': '*', 'slash': '/', 'percent': '%', 'plus': '+', 'minus': '-', 'and': '&&', 'or': '||',
-              'comma': ','}
+              'comma': ',', 'left-chev': '<', 'right-chev': '>', 'less-equal': '<=', 'more-equal': '>=',
+              'is-equal': '==', 'not-equal': '!=', }
     unary = {'not': '!', '-u': '-'}
     global expr_current
     while expr_current < len(tokens):
@@ -110,18 +110,6 @@ def build_expr_tree(tokens):
             return nd
         elif tokens[expr_current].type in binary:
             nd = Node(binary[tokens[expr_current].type])
-            expr_current += 1
-            nd.setr(build_expr_tree(tokens))
-            nd.setl(build_expr_tree(tokens))
-            return nd
-        elif tokens[expr_current].type in {'<', '>', '<=', '>=', '!='}:
-            nd = Node(tokens[expr_current].type)
-            expr_current += 1
-            nd.setr(build_expr_tree(tokens))
-            nd.setl(build_expr_tree(tokens))
-            return nd
-        elif tokens[expr_current].type == '=':
-            nd = Node('==')
             expr_current += 1
             nd.setr(build_expr_tree(tokens))
             nd.setl(build_expr_tree(tokens))
@@ -151,12 +139,12 @@ def p_expr(tokens):
         'percent': 7,
         'plus': 6,
         'minus': 6,
-        '<': 5,
-        '>': 5,
-        '<=': 5,
-        '>=': 5,
-        '=': 4,
-        '!=': 4,
+        'left-chev': 5,
+        'right-chev': 5,
+        'less-equal': 5,
+        'more-equal': 5,
+        'is-equal': 4,
+        'not-equal': 4,
         'and': 3,
         'or': 2,
         'comma': 1,
@@ -218,7 +206,7 @@ def p_def(term, t):
     # type: (list) -> Node
     global expr_current
     if len(term) > 2:
-        if term[0].type == 'ident' and term[1].type == '=':
+        if term[0].type == 'ident' and term[1].type == 'equal':
             if term[0].value not in symbol_table['names']:
                 ndr = term[2:]
                 if len(ndr) == 1:
@@ -253,7 +241,7 @@ def p_let(term):
     # type: (list) -> Node
     global expr_current
     if len(term) > 2:
-        if term[0].type == 'ident' and term[1].type == '=':
+        if term[0].type == 'ident' and term[1].type == 'equal':
             namae = term[0].value
             if namae in symbol_table['names']:
                 if symbol_table['names'][namae][1] == 'var':

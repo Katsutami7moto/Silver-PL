@@ -27,8 +27,15 @@ composites = {
     '>=': 'more-equal',
     '==': 'is-equal',
     '!=': 'not-equal',
-    '**': 'exponentiation',
+    '**': 'exponent',
     '//': 'floor-div',
+    '+=': 'self-inc',
+    '-=': 'self-dec',
+    '*=': 'self-mul',
+    '/=': 'self-div',
+    '%=': 'self-mod',
+    '**=': 'self-exp',
+    '//=': 'self-floor',
     '=>': 'arrow',
     '|>': 'pipe'
 }
@@ -55,14 +62,15 @@ keywords = {
     "return",
     "True",
     "False",
+    "None",
     "and",
     "or",
-    "not"
+    "not",
+    "in"
 }
 other = ""
+sign = ""
 tokens = []
-eqp = ''
-eqplus = False
 LINE = 0
 SYMBOL = 0
 
@@ -75,7 +83,11 @@ class Token:
         self.symbol = sm
 
 
-def check():
+def lexer_error():
+    raise Exception, "Некорректная лексема %d:%d" % (LINE, SYMBOL)
+
+
+def word_check():
     global other
     if len(other) > 0:
         if other[0] not in {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'}:
@@ -84,51 +96,56 @@ def check():
             elif regexp.returner('id', other):
                 tokens.append(Token("ident", LINE, SYMBOL, other))
             else:
-                raise Exception, "Некорректная лексема %d:%d" % (LINE, SYMBOL)
+                lexer_error()
         else:
             if regexp.returner('i', other):
                 tokens.append(Token("int", LINE, SYMBOL, other))
             elif regexp.returner('f', other):
                 tokens.append(Token("double", LINE, SYMBOL, other))
             else:
-                raise Exception, "Некорректная лексема %d:%d" % (LINE, SYMBOL)
+                lexer_error()
         other = ''
+
+
+def sign_check():
+    global sign
+    if len(sign) > 0:
+        if sign in symbols:
+            tokens.append(Token(symbols[sign], LINE, SYMBOL))
+        elif sign in composites:
+            tokens.append(Token(composites[sign], LINE, SYMBOL))
+        else:
+            lexer_error()
+        sign = ''
+
+
+def paren_check():
+    global sign
+    if len(sign) > 0:
+        if sign == '(' or sign == ')':
+            tokens.append(Token(symbols[sign], LINE, SYMBOL))
+            sign = ''
 
 
 def lexing(code):
     # type: (list) -> list
-    global other, eqplus, eqp, LINE, SYMBOL
+    global other, sign, LINE, SYMBOL
     for line in code:
         assert isinstance(line, str)
         LINE += 1
         for sym in line:
             SYMBOL += 1
             if sym in symbols:
-                check()
-                if sym == '<' or sym == '>' or sym == '!':
-                    eqplus = True
-                    eqp = sym
-                elif sym == '=':
-                    if eqplus:
-                        eqp += '='
-                        tokens.append(Token(eqp, LINE, SYMBOL))
-                        eqp = ''
-                        eqplus = False
-                    else:
-                        tokens.append(Token('=', LINE, SYMBOL))
-                else:
-                    if eqplus:
-                        tokens.append(Token(eqp, LINE, SYMBOL))
-                        eqp = ''
-                        eqplus = False
-                    tokens.append(Token(symbols[sym], LINE, SYMBOL))
+                word_check()
+                paren_check()
+                sign += sym
             elif sym in ignore:
-                check()
+                paren_check()
+                sign_check()
+                word_check()
             else:
-                if eqplus:
-                    tokens.append(Token(eqp, LINE, SYMBOL))
-                    eqp = ''
-                    eqplus = False
+                paren_check()
+                sign_check()
                 other += sym
         SYMBOL = 0
     LINE = 0

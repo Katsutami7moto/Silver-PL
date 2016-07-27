@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9008df4e-1652-4c48-b5cc-600fd6786a2d" name="Default" comment="todo in separate file">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/TODO.md" />
+    <list default="true" id="9008df4e-1652-4c48-b5cc-600fd6786a2d" name="Default" comment="version 0.13: issue #4 closed - now">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TODO.md" afterPath="$PROJECT_DIR$/TODO.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/example.silver" afterPath="$PROJECT_DIR$/examples/example.silver" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lexer.py" afterPath="$PROJECT_DIR$/src/lexer.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/silv_parser.py" afterPath="$PROJECT_DIR$/src/silv_parser.py" />
     </list>
     <ignored path="Cool-PL.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,28 +30,28 @@
         <entry file="file://$PROJECT_DIR$/src/silv_parser.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="504">
-              <caret line="599" column="0" selection-start-line="599" selection-start-column="0" selection-end-line="599" selection-end-column="0" />
+              <caret line="587" column="0" selection-start-line="587" selection-start-column="0" selection-end-line="587" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="lexer.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="lexer.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/lexer.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="504">
-              <caret line="135" column="0" selection-start-line="135" selection-start-column="0" selection-end-line="135" selection-end-column="0" />
+              <caret line="152" column="0" selection-start-line="152" selection-start-column="0" selection-end-line="152" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/README.md">
+      <file leaf-file-name="TODO.md" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TODO.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
             <state split_layout="FIRST">
-              <first_editor relative-caret-position="435">
-                <caret line="80" column="0" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
+              <first_editor relative-caret-position="306">
+                <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
                 <folding />
               </first_editor>
               <second_editor />
@@ -60,12 +62,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TODO.md" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TODO.md">
+      <file leaf-file-name="code examples draft.md" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/code examples draft.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
             <state split_layout="FIRST">
-              <first_editor relative-caret-position="306">
-                <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+              <first_editor relative-caret-position="391">
+                <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
                 <folding />
               </first_editor>
               <second_editor />
@@ -110,11 +112,11 @@
         <option value="$PROJECT_DIR$/src/regexp-test.py" />
         <option value="$PROJECT_DIR$/src/regexp_test.py" />
         <option value="$PROJECT_DIR$/src/regexp.py" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/src/silv_parser.py" />
         <option value="$PROJECT_DIR$/examples/example.silver" />
         <option value="$PROJECT_DIR$/src/lexer.py" />
-        <option value="$PROJECT_DIR$/src/silv_parser.py" />
         <option value="$PROJECT_DIR$/TODO.md" />
-        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -442,13 +444,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1467362169396</updated>
-    </task>
-    <task id="LOCAL-00009" summary="regular expressions for Silver lexems">
-      <created>1467660113653</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1467660113653</updated>
     </task>
     <task id="LOCAL-00010" summary="lexer on work">
       <created>1467711444265</created>
@@ -786,7 +781,14 @@
       <option name="project" value="LOCAL" />
       <updated>1469612307303</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="todo in separate file">
+      <created>1469612979165</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1469612979166</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -825,7 +827,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Stage 2.899: expression parsing doesn't work" />
     <MESSAGE value="Stage 2.8999: expression parsing doesn't work" />
     <MESSAGE value="Stage 3: expression parsing via postfix notation works properly (for variables/constants definition)" />
     <MESSAGE value="Stage 3.5: refactoring, new expression's type checking system" />
@@ -850,7 +851,8 @@
     <MESSAGE value="version 0.11: issue #5 closed - whole 'regexp' module refactored and optimized" />
     <MESSAGE value="version 0.12: issue #7 closed - line and symbol numbers are now in error messages" />
     <MESSAGE value="small edit of readme" />
-    <option name="LAST_COMMIT_MESSAGE" value="small edit of readme" />
+    <MESSAGE value="todo in separate file" />
+    <option name="LAST_COMMIT_MESSAGE" value="todo in separate file" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1049,20 +1051,6 @@
     <entry file="file://$PROJECT_DIR$/examples/fib.silver" />
     <entry file="file://$PROJECT_DIR$/examples/func.silver" />
     <entry file="file://$PROJECT_DIR$/examples/two.silver" />
-    <entry file="file://$PROJECT_DIR$/src/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/result.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/regexp.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -1077,48 +1065,69 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/example.silver">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/translator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4385">
-          <caret line="262" column="0" selection-start-line="262" selection-start-column="0" selection-end-line="262" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/silv_parser.py">
-      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="504">
-          <caret line="599" column="0" selection-start-line="599" selection-start-column="0" selection-end-line="599" selection-end-column="0" />
+          <caret line="262" column="0" selection-start-line="262" selection-start-column="0" selection-end-line="262" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/code examples draft.md">
-      <provider editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
+    <entry file="file://$PROJECT_DIR$/src/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/result.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1632">
+          <caret line="96" column="4" selection-start-line="96" selection-start-column="4" selection-end-line="96" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/example.silver">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="12" selection-start-line="1" selection-start-column="12" selection-end-line="1" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider editor-type-id="MarkdownFxPreviewEditor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="221">
-            <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+          <first_editor relative-caret-position="68">
+            <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
             <folding />
           </first_editor>
           <second_editor />
         </state>
       </provider>
-      <provider selected="true" editor-type-id="MarkdownFxPreviewEditor">
-        <state />
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lexer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="135" column="0" selection-start-line="135" selection-start-column="0" selection-end-line="135" selection-end-column="0" />
-          <folding />
+    <entry file="file://$PROJECT_DIR$/examples/code examples draft.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="391">
+            <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+            <folding />
+          </first_editor>
+          <second_editor />
         </state>
+      </provider>
+      <provider editor-type-id="MarkdownFxPreviewEditor">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/TODO.md">
@@ -1135,22 +1144,19 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider editor-type-id="MarkdownFxPreviewEditor">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
-        <state split_layout="FIRST">
-          <first_editor relative-caret-position="435">
-            <caret line="80" column="0" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
-            <folding />
-          </first_editor>
-          <second_editor />
+    <entry file="file://$PROJECT_DIR$/src/silv_parser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="504">
+          <caret line="587" column="0" selection-start-line="587" selection-start-column="0" selection-end-line="587" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lexer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="504">
+          <caret line="152" column="0" selection-start-line="152" selection-start-column="0" selection-end-line="152" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

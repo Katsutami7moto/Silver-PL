@@ -1,6 +1,6 @@
 ## TODO
 
-- [ ] Fix issue #4
+- [x] Fix issue #4
 - [ ] Fix issue #2
 - [ ] Fix issue #1
 - [ ] Product types, their constructors and destructors (`del` statement)
