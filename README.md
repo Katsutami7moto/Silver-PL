@@ -10,7 +10,7 @@ Silver is general-purpose programming language, which goal is to collect many us
 - No low-level looking basic types like `uint32` (only `int` and `double` for trivial tasks)
 - Silver compiler translates code to C language (C89 standart) for good portabilty and performance
 
-## Features / TODO
+## Features
 
 - Literals
     - [x] Integer literals
@@ -78,22 +78,3 @@ Silver is general-purpose programming language, which goal is to collect many us
     - [ ] Multi-threading programming support
     - [ ] Coroutines and generators (?)
     - [ ] Monads (?)
-
-## Actual TODO
-
-- [ ] Fix issue #4
-- [ ] Fix issue #2
-- [ ] Fix issue #1
-- [ ] Product types, their constructors and destructors (`del` statement)
-- [ ] Extension functions
-- [ ] Product types with generics `<T>`
-- [ ] List literals
-- [ ] List type, basic fucntions and behavior (`[x..y..z], list[i], list[a:b]`; List.append and others..)
-- [ ] `for` loop
-- [ ] Conditions `in`/`not in`, using in `if` and loops
-- [ ] List comprehensions
-- [ ] String literals
-- [ ] `char` type
-- [ ] `typedef`
-- [ ] `String` type (`typedef String = List<char>;` or like that)
-- [ ] ...
