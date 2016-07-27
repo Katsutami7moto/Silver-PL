@@ -1,3 +1,5 @@
+# Code examples
+
 ## Variables/constants declaration
 
 ```
