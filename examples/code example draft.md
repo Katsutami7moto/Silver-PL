@@ -16,4 +16,6 @@ let z = 9.8;
 def sum(x: int, y: int): int => x + y;
 
 let sum = fun (x: int)! => fun (y: int): int => x + y;
+
+def fib(n: int): int => if n == 0 or n == 1: n elif n > 1: fib(n-1) + fib(n-2) else: (-1)**(1-n) * fib(-n);
 ```
