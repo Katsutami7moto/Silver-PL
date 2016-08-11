@@ -28,7 +28,7 @@ def walk_expr_tree(node):
     return s
 
 
-def t_def(node, const=False):
+def t_name(node, const=False):
     # type: (silv_parser.Node) -> str
     s = ''
     if const:
@@ -44,19 +44,21 @@ def t_def(node, const=False):
 
 def t_var(node):
     # type: (silv_parser.Node) -> str
-    return t_def(node)
-
-
-def t_const(node):
-    # type: (silv_parser.Node) -> str
-    return t_def(node, True)
+    return t_name(node)
 
 
 def t_let(node):
     # type: (silv_parser.Node) -> str
+    return t_name(node, True)
+
+
+def t_mod(node):
+    # type: (silv_parser.Node) -> str
     s = ''
     s += node.value
-    s += ' = '
+    s += ' '
+    s += node.type[1]
+    s += ' '
     s += walk_expr_tree(node.rchild)
     s += ';'
     return s
@@ -248,8 +250,7 @@ def t_return(node):
 
 def translating(code):
     # type: (list) -> list
-    nodes_list = silv_parser.parsing(code)
-    return nlist_walk(nodes_list)
+    return nlist_walk(silv_parser.parsing(code))
 
 
 def nlist_walk(nlist):

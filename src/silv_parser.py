@@ -38,6 +38,15 @@ class Node:
                 return self.type
 
 
+class Module:
+    def __init__(self, n, i, decls, defs):
+        # type: (str, list, list, list) -> object
+        self.name = n
+        self.imports = i
+        self.declarations = decls
+        self.definitions = defs
+
+
 nodes = []
 instructions_current = 0
 expr_current = 0
@@ -70,8 +79,39 @@ types = {
     "double"
 }
 symbol_table = dict(names=dict())
-in_function = False
-current_scope = dict()
+in_function = False  # TODO: уточнить работу и переименовать в 'in_block'
+current_scope = dict()  # TODO: уточнить работу
+
+
+def cur_tok(inc=0):
+    """
+    :rtype: lexer.Token
+    :type inc: int
+    """
+    return tokens_list[instructions_current + inc]
+
+
+def cur_tok_is(typename):
+    """
+    :rtype: bool
+    :type typename: str
+    """
+    return cur_tok().type == typename
+
+
+def cur_tok_not(typename):
+    """
+    :rtype: bool
+    :type typename: str
+    """
+    return cur_tok().type != typename
+
+
+def error(msg):
+    """
+    :type msg: str
+    """
+    raise Exception, msg + " %d:%d" % (cur_tok().line, cur_tok().symbol)
 
 
 def p_atom(token):
@@ -99,7 +139,7 @@ def build_expr_tree(tokens):
     # type: (list) -> Node
     binary = {'asterisk': '*', 'slash': '/', 'percent': '%', 'plus': '+', 'minus': '-', 'and': '&&', 'or': '||',
               'comma': ',', 'left-chev': '<', 'right-chev': '>', 'less-equal': '<=', 'more-equal': '>=',
-              'is-equal': '==', 'not-equal': '!=', }
+              'is-equal': '==', 'not-equal': '!='}
     unary = {'not': '!', '-u': '-'}
     global expr_current
     while expr_current < len(tokens):
@@ -202,46 +242,91 @@ def p_expr(tokens):
     return rpn
 
 
-def p_def(term, t):
-    # type: (list) -> Node
+# def p_name(term, t):
+#     # type: (list) -> Node
+#     global expr_current
+#     if len(term) > 2:
+#         if term[0].type == 'ident' and term[1].type == 'equal':
+#             if term[0].value not in symbol_table['names']:
+#                 ndr = term[2:]
+#                 if len(ndr) == 1:
+#                     par = p_atom(ndr[0])
+#                 else:
+#                     par = build_expr_tree(p_expr(ndr))
+#                     expr_current = 0
+#                 symbol_table['names'][term[0].value] = [par.get_type(), t]
+#                 nd = Node([t, par.get_type()], term[0].value)
+#                 nd.setr(par)
+#                 return nd
+#             else:
+#                 raise Exception, "Попытка определения уже определённой переменной %d:%d" % (
+#                     term[0].line, term[0].symbol)
+#         else:
+#             raise Exception, "Некорректное использование оператора %s %d:%d" % (t, term[0].line, term[0].symbol)
+#     else:
+#         raise Exception, "Отсутствует параметр %d:%d" % (term[0].line, term[0].symbol)
+
+
+def p_name(term, t):
     global expr_current
     if len(term) > 2:
-        if term[0].type == 'ident' and term[1].type == 'equal':
+        if term[0].type == 'ident':
             if term[0].value not in symbol_table['names']:
-                ndr = term[2:]
-                if len(ndr) == 1:
-                    par = p_atom(ndr[0])
+                if term[1].type == 'equal':
+                    if len(term) == 3 and term[2].type in types:
+                        par = p_atom(term[2])
+                        symbol_table['names'][term[0].value] = [par.get_type(), t]
+                        nd = Node([t, par.get_type()], term[0].value)
+                        nd.setr(par)
+                        return nd
+                    else:
+                        pass  # место для 'new' (заменить на elif)
+                elif term[1].type == 'colon':
+                    if term[2].type == 'ident':
+                        if term[3].type == 'equal':
+                            ndr = term[4:]
+                            par = build_expr_tree(p_expr(ndr))
+                            expr_current = 0
+                            if par.get_type() == term[2].value:
+                                symbol_table['names'][term[0].value] = [par.get_type(), t]
+                                nd = Node([t, par.get_type()], term[0].value)
+                                nd.setr(par)
+                                return nd
+                            else:
+                                raise Exception, "Несоответствие типа параметра заявленному %d:%d" % (
+                                    term[0].line, term[0].symbol)
+                        else:
+                            raise Exception, "Некорректное использование оператора %s %d:%d" % (
+                                t, term[0].line, term[0].symbol)
+                    else:
+                        raise Exception, "Отсутствует имя типа %d:%d" % (term[0].line, term[0].symbol)
                 else:
-                    par = build_expr_tree(p_expr(ndr))
-                    expr_current = 0
-                symbol_table['names'][term[0].value] = [par.get_type(), t]
-                nd = Node([t, par.get_type()], term[0].value)
-                nd.setr(par)
-                return nd
+                    raise Exception, "Некорректное использование оператора %s %d:%d" % (t, term[0].line, term[0].symbol)
             else:
                 raise Exception, "Попытка определения уже определённой переменной %d:%d" % (
                     term[0].line, term[0].symbol)
         else:
-            raise Exception, "Некорректное использование оператора %s %d:%d" % (t, term[0].line, term[0].symbol)
+            raise Exception, "Отсутствует идентификатор %d:%d" % (term[0].line, term[0].symbol)
     else:
         raise Exception, "Отсутствует параметр %d:%d" % (term[0].line, term[0].symbol)
 
 
 def p_var(term):
     # type: (list) -> Node
-    return p_def(term, 'var')
-
-
-def p_const(term):
-    # type: (list) -> Node
-    return p_def(term, 'const')
+    return p_name(term, 'var')
 
 
 def p_let(term):
     # type: (list) -> Node
+    return p_name(term, 'let')
+
+
+def p_mod(term):
+    # type: (list) -> Node
     global expr_current
     if len(term) > 2:
-        if term[0].type == 'ident' and term[1].type == 'equal':
+        if term[0].type == 'ident' and term[1].type in {'equal', 'self-inc', 'self-dec', 'self-mul', 'self-div',
+                                                        'self-mod'}:
             namae = term[0].value
             if namae in symbol_table['names']:
                 if symbol_table['names'][namae][1] == 'var':
@@ -253,16 +338,14 @@ def p_let(term):
                         expr_current = 0
                     if par.get_type() == symbol_table['names'][namae][0] \
                             or (par.get_type() == 'int' and symbol_table['names'][namae][0] == 'double'):
-                        nd = Node(['let', par.get_type()], namae)
+                        nd = Node(['mod', term[1].type], namae)
                         nd.setr(par)
                         return nd
                     else:
                         raise Exception, "Попытка присвоения значения некорректного типа %d:%d" % (
                             term[0].line, term[0].symbol)
-                elif symbol_table['names'][namae][1] == 'const':
-                    raise Exception, "Попытка изменить значение константы %d:%d" % (term[0].line, term[0].symbol)
                 else:
-                    raise Exception, "Error %d:%d" % (term[0].line, term[0].symbol)
+                    raise Exception, "Обращение не к переменной %d:%d" % (term[0].line, term[0].symbol)
             else:
                 raise Exception, "Попытка изменения значения не определявшейся переменной %d:%d" % (
                     term[0].line, term[0].symbol)
@@ -345,8 +428,8 @@ def p_sem(kot):
     global instructions_current
     term = []
     instructions_current += 1
-    while tokens_list[instructions_current].type != 'semicolon':
-        term.append(tokens_list[instructions_current])
+    while cur_tok_not('semicolon'):
+        term.append(cur_tok())
         instructions_current += 1
     instructions_current += 1
     if kot.type in {'break', 'continue'}:
@@ -360,7 +443,7 @@ def p_curl(kot):
     assert isinstance(kot, lexer.Token)
     global instructions_current, expr_current
     instructions_current += 1
-    if tokens_list[instructions_current].type == 'left-curl':
+    if cur_tok_is('left-curl'):
         term = []
         instructions_current += 1
         tmp = len(nodes)
@@ -368,18 +451,18 @@ def p_curl(kot):
         instructions_current += 1
 
         if kot.type == 'do':
-            if tokens_list[instructions_current].type == 'while':
+            if cur_tok_is('while'):
                 instructions_current += 1
-                while tokens_list[instructions_current].type != 'semicolon':
-                    term.append(tokens_list[instructions_current])
+                while cur_tok_not('semicolon'):
+                    term.append(cur_tok())
                     instructions_current += 1
                 instructions_current += 1
-            elif tokens_list[instructions_current].type == 'until':
+            elif cur_tok_is('until'):
                 term.append(lexer.Token('not', 0, 0))
                 term.append(lexer.Token('left-paren', 0, 0))
                 instructions_current += 1
-                while tokens_list[instructions_current].type != 'semicolon':
-                    term.append(tokens_list[instructions_current])
+                while cur_tok_not('semicolon'):
+                    term.append(cur_tok())
                     instructions_current += 1
                 term.append(lexer.Token('right-paren', 0, 0))
                 instructions_current += 1
@@ -478,8 +561,8 @@ def p_d_curl(kot):
     global instructions_current
     instructions_current += 1
     term = []
-    while tokens_list[instructions_current].type != 'left-curl':
-        term.append(tokens_list[instructions_current])
+    while cur_tok_not('left-curl'):
+        term.append(cur_tok())
         instructions_current += 1
 
     instructions_current += 1
@@ -504,28 +587,27 @@ def p_func(kot):
     global instructions_current, symbol_table, in_function, current_scope
     start = instructions_current
     instructions_current += 1
-    if tokens_list[instructions_current].type == 'ident':
-        fname = tokens_list[instructions_current].value
+    if cur_tok_is('ident'):
+        fname = cur_tok().value
         if fname not in symbol_table['names']:
             symbol_table['names'][fname] = [ftype, 'func']
         instructions_current += 1
-        if tokens_list[instructions_current].type == 'left-paren':
+        if cur_tok_is('left-paren'):
             instructions_current += 1
-            while tokens_list[instructions_current].type != 'right-paren':
-                if tokens_list[instructions_current].type == 'comma':
+            ltmp = []
+            while cur_tok_not('right-paren'):
+                if cur_tok_is('comma'):
                     term.append(',')
                     instructions_current += 1
-                elif tokens_list[instructions_current].value in types and tokens_list[
-                            instructions_current + 1].type == 'ident':
-                    term.append(tokens_list[instructions_current].value)
-                    term.append(tokens_list[instructions_current + 1].value)
-                    current_scope[tokens_list[instructions_current + 1].value] = tokens_list[
-                        instructions_current].value
+                elif cur_tok().value in types and cur_tok(1).type == 'ident':
+                    term.append(cur_tok().value)
+                    term.append(cur_tok(1).value)
+                    current_scope[cur_tok(1).value] = cur_tok().value
                     instructions_current += 2
                 else:
-                    raise Exception, "Некорректный список формальных аргументов функции %d:%d" % (kot.line, kot.symbol)
+                    error("Некорректный список формальных аргументов функции")
             instructions_current += 1
-            if tokens_list[instructions_current].type == 'left-curl':
+            if cur_tok_is('left-curl'):
                 instructions_current += 1
                 tmp = len(nodes)
                 in_function = True
@@ -535,46 +617,96 @@ def p_func(kot):
                 instructions_current += 1
                 stop = instructions_current
                 instructions_current = start
-                ltmp = []
                 del tokens_list[start:stop]
                 while len(nodes) != tmp:
                     ltmp.append(nodes.pop())
                 ltmp.reverse()
             else:
-                raise Exception, "Отсутствует тело функции %d:%d" % (kot.line, kot.symbol)
+                error("Отсутствует тело функции")
             nd = Node(['func', ftype], fname)
             nd.setl(term)
             nd.setr(ltmp)
             nodes.append(nd)
         else:
-            raise Exception, "После имени функции должны быть круглые скобки %d:%d" % (kot.line, kot.symbol)
+            error("После имени функции должны быть круглые скобки")
     else:
-        raise Exception, "Некорректное объявление функции %d:%d" % (kot.line, kot.symbol)
+        error("Некорректное объявление функции")
 
 
 def p_instructions():
+    if cur_tok().type in sems:
+        p_sem(cur_tok())
+    elif cur_tok().type in curls:
+        p_curl(cur_tok())
+    elif cur_tok().type in d_curls:
+        p_d_curl(cur_tok())
+    elif cur_tok().type == 'def':
+        pass
+
+
+# def p_block():
+#     while instructions_current < len(tokens_list) and tokens_list[instructions_current].type != 'right-curl':
+#         p_instructions()
+#
+#
+# def p_fdefs():
+#     global instructions_current
+#     while instructions_current < len(tokens_list):
+#         if tokens_list[instructions_current].value in types and tokens_list[instructions_current - 1].type != 'input':
+#             p_func(tokens_list[instructions_current])
+#         else:
+#             instructions_current += 1
+#     instructions_current = 0
+
+
+def p_definitions():
+    """
+    :rtype: list
+    """
+    pass
+
+
+def p_declarations():
+    """
+    :rtype: list
+    """
+    pass
+
+
+def p_imports():
+    """
+    :rtype: list
+    """
+    pass
+
+
+def p_module():
     global instructions_current
-    if tokens_list[instructions_current].type in sems:
-        p_sem(tokens_list[instructions_current])
-    elif tokens_list[instructions_current].type in curls:
-        p_curl(tokens_list[instructions_current])
-    elif tokens_list[instructions_current].type in d_curls:
-        p_d_curl(tokens_list[instructions_current])
-
-
-def p_block():
-    while instructions_current < len(tokens_list) and tokens_list[instructions_current].type != 'right-curl':
-        p_instructions()
-
-
-def p_fdefs():
-    global instructions_current
-    while instructions_current < len(tokens_list):
-        if tokens_list[instructions_current].value in types and tokens_list[instructions_current - 1].type != 'input':
-            p_func(tokens_list[instructions_current])
-        else:
+    instructions_current += 1
+    if cur_tok_is('ident'):
+        name = cur_tok().value
+        instructions_current += 1
+        if cur_tok_is('left-curl'):
             instructions_current += 1
-    instructions_current = 0
+            mstart = instructions_current
+            imps = p_imports()
+            declars = p_declarations()
+            instructions_current = mstart
+            defins = p_definitions()
+            return Module(name, imps, declars, defins)
+
+
+def p_start():
+    modules = []
+    while instructions_current < len(tokens_list):
+        if cur_tok_is('module'):
+            modules.append(p_module())
+    return modules
+
+
+def m_rearrange(mods):
+    # type: (list) -> list
+    pass
 
 
 def parsing(code):
@@ -582,6 +714,4 @@ def parsing(code):
     global tokens_list
     tokens_list = lexer.lexing(code)
     if tokens_list:
-        p_fdefs()
-        p_block()
-    return nodes
+        return m_rearrange(p_start())

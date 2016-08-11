@@ -41,13 +41,18 @@ composites = {
 }
 ignore = {'\n', '\t', ' '}
 keywords = {
+    "module",
+    "use",
+    "import",
     "var",
-    "const",
     "let",
+    "mod",  # TODO: точно ли такое слово ?
+    "def",
     "print",
     "printline",
     "input",
     "type",
+    "typedef",
     "new",
     "del",
     "while",

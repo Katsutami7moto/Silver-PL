@@ -9,6 +9,7 @@ Silver is general-purpose programming language, which goal is to collect many us
 - Statement-based language, not expression-based
 - No low-level looking basic types like `uint32` (only `int` and `double` for trivial tasks)
 - Silver compiler translates code to C language (C89 standart) for good portabilty and performance
+- The core of Silver will be preserved after the end of its development - none of next updates will break compatibility!!!
 
 ## Features
 
@@ -43,33 +44,34 @@ Silver is general-purpose programming language, which goal is to collect many us
         - [x] int
         - [x] double
         - [ ] char (Unicode)
-        - [ ] Сontainers with generics `<T>`
-            - [ ] List
-            - [ ] Set
-            - [ ] Dict
-            - [ ] Tuple
+        - [ ] Сontainers with generics
+            - [ ] `List<T>` (double-linked list, indexed, with all elements of type T)
+            - [ ] `Set<T>` (unordered set, with all elements (no duplicates) of type T)
+            - [ ] `Dict<K, T>` (associative array, with all keys (no duplicates) of type K and all elements of type T)
             - [ ] ...
-        - [ ] String (based on list of Unicode characters)
+        - [ ] String (based on List of Unicode characters)
         - [ ] Functional type (in C turns to function pointer) (`T -> R` or `R(T)` ??)
-        - [ ] RealNum (list based, one for int and float, with ext-functions, flags NoSign, NoFloat, NoComplex and so on..)
+        - [ ] BigNum (list based, one for int and float, with ext-functions, flags NoSign, NoFloat, NoComplex and so on..)
         - [ ] ComplexNum
         - [ ] `None`
     - [ ] Compound types
-        - [ ] Product types (namedtuple/struct) (x * y)
+        - [ ] Product types (namedtuple/struct) (x * y * ...) (made of any types)
             - [ ] With generics `<T>`
-        - [ ] Variant types (sum/union) (x | y)
-        - [ ] Option type (x | None)
-        - [ ] Intersection types (x & y) (at first, only for product types)
+        - [ ] Intersection types (x & y & ...) (made of product types without equal-named fields) (rename it into 'conjunction type' or smth??)
+            - [ ] With generics `<T>`
+        - [ ] Variant types (sum/union) (x | y | ...) (made of any types)
+            - [ ] With generics `<T>`
+            - [ ] `type Option<T> = T | None;`
     - [ ] Type aliases (`typedef`)
     - [ ] With generics `<T>`
     - [ ] Loading types from C
 - Definitions
     - [x] Functions
+    - [ ] Modules (to group functions and some external variables/constants for them)
     - [ ] Expression-returning functoins (`def sum(x: int, y: int): int => x + y;`)
     - [ ] Extension functions (`extend Type: func() { ... }`; also bunch of functions `extend Type { def func() { ... } ... }`)
-    - [ ] Multiple function parameters (like in Python)
-    - [ ] Function parameters with default values
-    - [ ] Modules/namespaces (?)
+    - [ ] Multiple and keyword function parameters (like in Python)
+    - [ ] Function parameters with default values (like in Python)
     - [ ] Bindings with C functions/libraries (not only C?)
 - Other
     - [ ] IO standart functions
