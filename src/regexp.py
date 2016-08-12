@@ -1,6 +1,3 @@
-# coding=utf-8
-
-
 # Данная программа:
 # - парсит регэксп в дерево
 # - строит по дереву ДКА без построения НКА
@@ -347,6 +344,6 @@ def returner(regular, word):
     elif regular == 's':
         result = dfareturner(string_dfa, string_state, word)
     else:
-        raise Exception, "Некорректный тип регулярного выражения"
+        raise Exception("Некорректный тип регулярного выражения")
 
     return result

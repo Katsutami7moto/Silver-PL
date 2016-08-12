@@ -1,6 +1,4 @@
-# coding=utf-8
-
-import regexp
+from src import regexp
 
 symbols = {
     '+': 'plus',
@@ -89,7 +87,7 @@ class Token:
 
 
 def lexer_error():
-    raise Exception, "Некорректная лексема %d:%d" % (LINE, SYMBOL)
+    raise Exception("Некорректная лексема %d:%d" % (LINE, SYMBOL))
 
 
 def word_check():

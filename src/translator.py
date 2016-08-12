@@ -1,6 +1,4 @@
-# coding=utf-8
-
-import silv_parser
+from src import silv_parser
 
 
 def walk_expr_tree(node):

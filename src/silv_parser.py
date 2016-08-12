@@ -1,6 +1,4 @@
-# coding=utf-8
-
-import lexer
+from src import lexer
 
 
 class Node:
@@ -111,7 +109,7 @@ def error(msg):
     """
     :type msg: str
     """
-    raise Exception, msg + " %d:%d" % (cur_tok().line, cur_tok().symbol)
+    raise Exception(msg + " %d:%d" % (cur_tok().line, cur_tok().symbol))
 
 
 def p_atom(token):
@@ -129,9 +127,9 @@ def p_atom(token):
             if token.value in symbol_table['names']:
                 tmp = Node(symbol_table['names'][token.value][0], token.value)
             else:
-                raise NameError, "Попытка обращения к неопределённой переменной %d:%d" % (token.line, token.symbol)
+                raise NameError("Попытка обращения к неопределённой переменной %d:%d" % (token.line, token.symbol))
     else:
-        raise NameError, "Некорректный параметр %d:%d" % (token.line, token.symbol)
+        raise NameError("Некорректный параметр %d:%d" % (token.line, token.symbol))
     return tmp
 
 
@@ -208,7 +206,7 @@ def p_expr(tokens):
             token.type = '-u'
         if token.type in {'int', 'double', 'ident'}:
             if last.type in {'int', 'double', 'ident', 'right-paren'}:
-                raise Exception, "Отсутствует оператор между значениями %d:%d" % (token.line, token.symbol)
+                raise Exception("Отсутствует оператор между значениями %d:%d" % (token.line, token.symbol))
             rpn.append(token)
         elif token.type == 'left-paren':
             if last.type == 'ident':
@@ -221,7 +219,7 @@ def p_expr(tokens):
                 rpn.append(op_stack.pop())
             tmp = op_stack.pop()
             if tmp.type != 'left-paren':
-                raise Exception, "Не хватает '(' %d:%d" % (token.line, token.symbol)
+                raise Exception("Не хватает '(' %d:%d" % (token.line, token.symbol))
             elif isinstance(tmp.type, list):
                 rpn.append(tmp)
         elif getprec(token.type) > 0:
@@ -234,7 +232,7 @@ def p_expr(tokens):
                     rpn.append(op_stack.pop())
             op_stack.append(token)
         else:
-            raise Exception, "Неизвестный токен: \"%s\" %d:%d" % (token.type, token.line, token.symbol)
+            raise Exception("Неизвестный токен: \"%s\" %d:%d" % (token.type, token.line, token.symbol))
         last = token
     while op_stack:
         rpn.append(op_stack.pop())
@@ -293,22 +291,22 @@ def p_name(term, t):
                                 nd.setr(par)
                                 return nd
                             else:
-                                raise Exception, "Несоответствие типа параметра заявленному %d:%d" % (
-                                    term[0].line, term[0].symbol)
+                                raise Exception("Несоответствие типа параметра заявленному %d:%d" % (
+                                    term[0].line, term[0].symbol))
                         else:
-                            raise Exception, "Некорректное использование оператора %s %d:%d" % (
-                                t, term[0].line, term[0].symbol)
+                            raise Exception("Некорректное использование оператора %s %d:%d" % (
+                                t, term[0].line, term[0].symbol))
                     else:
-                        raise Exception, "Отсутствует имя типа %d:%d" % (term[0].line, term[0].symbol)
+                        raise Exception("Отсутствует имя типа %d:%d" % (term[0].line, term[0].symbol))
                 else:
-                    raise Exception, "Некорректное использование оператора %s %d:%d" % (t, term[0].line, term[0].symbol)
+                    raise Exception("Некорректное использование оператора %s %d:%d" % (t, term[0].line, term[0].symbol))
             else:
-                raise Exception, "Попытка определения уже определённой переменной %d:%d" % (
-                    term[0].line, term[0].symbol)
+                raise Exception("Попытка определения уже определённой переменной %d:%d" % (
+                    term[0].line, term[0].symbol))
         else:
-            raise Exception, "Отсутствует идентификатор %d:%d" % (term[0].line, term[0].symbol)
+            raise Exception("Отсутствует идентификатор %d:%d" % (term[0].line, term[0].symbol))
     else:
-        raise Exception, "Отсутствует параметр %d:%d" % (term[0].line, term[0].symbol)
+        raise Exception("Отсутствует параметр %d:%d" % (term[0].line, term[0].symbol))
 
 
 def p_var(term):
@@ -342,17 +340,17 @@ def p_mod(term):
                         nd.setr(par)
                         return nd
                     else:
-                        raise Exception, "Попытка присвоения значения некорректного типа %d:%d" % (
-                            term[0].line, term[0].symbol)
+                        raise Exception("Попытка присвоения значения некорректного типа %d:%d" % (
+                            term[0].line, term[0].symbol))
                 else:
-                    raise Exception, "Обращение не к переменной %d:%d" % (term[0].line, term[0].symbol)
+                    raise Exception("Обращение не к переменной %d:%d" % (term[0].line, term[0].symbol))
             else:
-                raise Exception, "Попытка изменения значения не определявшейся переменной %d:%d" % (
-                    term[0].line, term[0].symbol)
+                raise Exception("Попытка изменения значения не определявшейся переменной %d:%d" % (
+                    term[0].line, term[0].symbol))
         else:
-            raise Exception, "Некорректное использование оператора присваивания %d:%d" % (term[0].line, term[0].symbol)
+            raise Exception("Некорректное использование оператора присваивания %d:%d" % (term[0].line, term[0].symbol))
     else:
-        raise Exception, "Отсутствует параметр %d:%d" % (term[0].line, term[0].symbol)
+        raise Exception("Отсутствует параметр %d:%d" % (term[0].line, term[0].symbol))
 
 
 def p_print(term):
@@ -368,7 +366,7 @@ def p_print(term):
         nd.setr(par)
         return nd
     else:
-        raise Exception, "Отсутствует параметр %d:%d" % (term[0].line, term[0].symbol)
+        raise Exception("Отсутствует параметр %d:%d" % (term[0].line, term[0].symbol))
 
 
 def p_printline(term):
@@ -398,13 +396,13 @@ def p_input(term):
                 return nd
             else:
                 if symbol_table['names'][term[1].value][0] != term[0].value:
-                    raise Exception, "Неверно указан тип вводимого значения %d:%d" % (term[0].line, term[0].symbol)
+                    raise Exception("Неверно указан тип вводимого значения %d:%d" % (term[0].line, term[0].symbol))
                 nd = Node(['input', term[0].value], term[1].value)
                 return nd
         else:
-            raise Exception, "Некорректное использование оператора ввода %d:%d" % (term[0].line, term[0].symbol)
+            raise Exception("Некорректное использование оператора ввода %d:%d" % (term[0].line, term[0].symbol))
     else:
-        raise Exception, "Некорректное использование оператора ввода %d:%d" % (term[0].line, term[0].symbol)
+        raise Exception("Некорректное использование оператора ввода %d:%d" % (term[0].line, term[0].symbol))
 
 
 def p_return(term):
@@ -420,7 +418,7 @@ def p_return(term):
         nd.setr(par)
         return nd
     else:
-        raise Exception, "Отсутствует возвращаемое значение %d:%d" % (term[0].line, term[0].symbol)
+        raise Exception("Отсутствует возвращаемое значение %d:%d" % (term[0].line, term[0].symbol))
 
 
 def p_sem(kot):
@@ -467,8 +465,8 @@ def p_curl(kot):
                 term.append(lexer.Token('right-paren', 0, 0))
                 instructions_current += 1
             else:
-                raise Exception, "Некорректное использование оператора do (нет while или until) %d:%d" % (
-                    kot.line, kot.symbol)
+                raise Exception("Некорректное использование оператора do (нет while или until) %d:%d" % (
+                    kot.line, kot.symbol))
 
         ltmp = []
         while len(nodes) != tmp:
@@ -484,12 +482,12 @@ def p_curl(kot):
                     par = build_expr_tree(p_expr(term))
                     expr_current = 0
             else:
-                raise Exception, "Отсутствует параметр %d:%d" % (kot.line, kot.symbol)
+                raise Exception("Отсутствует параметр %d:%d" % (kot.line, kot.symbol))
             nd.setl(par)
         nd.setr(ltmp)
         nodes.append(nd)
     else:
-        raise Exception, "Отсутствует открывающая фигурная скобка %d:%d" % (kot.line, kot.symbol)
+        raise Exception("Отсутствует открывающая фигурная скобка %d:%d" % (kot.line, kot.symbol))
 
 
 def p_while(term):
@@ -505,7 +503,7 @@ def p_while(term):
         nd.setl(par)
         return nd
     else:
-        raise Exception, "Отсутствует параметр %d:%d" % (term[0].line, term[0].symbol)
+        raise Exception("Отсутствует параметр %d:%d" % (term[0].line, term[0].symbol))
 
 
 def p_until(term):
@@ -521,7 +519,7 @@ def p_until(term):
         nd.setl(par)
         return nd
     else:
-        raise Exception, "Отсутствует параметр %d:%d" % (term[0].line, term[0].symbol)
+        raise Exception("Отсутствует параметр %d:%d" % (term[0].line, term[0].symbol))
 
 
 def p_if(term):
@@ -537,7 +535,7 @@ def p_if(term):
         nd.setl(par)
         return nd
     else:
-        raise Exception, "Отсутствует параметр %d:%d" % (term[0].line, term[0].symbol)
+        raise Exception("Отсутствует параметр %d:%d" % (term[0].line, term[0].symbol))
 
 
 def p_elif(term):
@@ -553,7 +551,7 @@ def p_elif(term):
         nd.setl(par)
         return nd
     else:
-        raise Exception, "Отсутствует параметр %d:%d" % (term[0].line, term[0].symbol)
+        raise Exception("Отсутствует параметр %d:%d" % (term[0].line, term[0].symbol))
 
 
 def p_d_curl(kot):

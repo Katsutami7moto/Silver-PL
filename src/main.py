@@ -1,7 +1,4 @@
-# coding=utf-8
-
-
-import translator
+from src import translator
 
 source = open("C:\\Users\\napan\\Documents\\github\\Silver-PL\\examples\\example.silver")
 lines_of_code = []
