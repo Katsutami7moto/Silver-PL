@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9008df4e-1652-4c48-b5cc-600fd6786a2d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/Silver-PL.iml" afterPath="$PROJECT_DIR$/.idea/Silver-PL.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lexer.py" afterPath="$PROJECT_DIR$/src/lexer.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main.py" afterPath="$PROJECT_DIR$/src/main.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/regexp.py" afterPath="$PROJECT_DIR$/src/regexp.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/silv_parser.py" afterPath="$PROJECT_DIR$/src/silv_parser.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/translator.py" afterPath="$PROJECT_DIR$/src/translator.py" />
     </list>
     <ignored path="Cool-PL.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -49,20 +43,18 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="silv_parser.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="silv_parser.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/silv_parser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="385">
-              <caret line="708" column="0" selection-start-line="708" selection-start-column="0" selection-end-line="708" selection-end-column="0" />
+            <state relative-caret-position="370">
+              <caret line="106" column="0" selection-start-line="106" selection-start-column="0" selection-end-line="106" selection-end-column="0" />
               <folding>
-                <element signature="e#1872#1926#1" expanded="false" />
-                <element signature="e#2010#2062#1" expanded="false" />
-                <element signature="e#2134#2186#1" expanded="false" />
-                <element signature="e#2247#2277#1" expanded="false" />
-                <element signature="e#20968#20984#0" expanded="false" />
-                <element signature="e#21523#21551#1" expanded="false" />
-                <element signature="e#21589#21617#1" expanded="false" />
-                <element signature="e#21650#21678#1" expanded="false" />
+                <element signature="e#1973#2025#1" expanded="false" />
+                <element signature="e#2097#2149#1" expanded="false" />
+                <element signature="e#19803#19819#0" expanded="false" />
+                <element signature="e#20358#20386#1" expanded="false" />
+                <element signature="e#20424#20452#1" expanded="false" />
+                <element signature="e#20485#20513#1" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -78,7 +70,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="regexp.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="regexp.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/regexp.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="504">
@@ -126,9 +118,10 @@
         <option value="$PROJECT_DIR$/examples/code examples draft.md" />
         <option value="$PROJECT_DIR$/src/main.py" />
         <option value="$PROJECT_DIR$/src/translator.py" />
-        <option value="$PROJECT_DIR$/src/silv_parser.py" />
         <option value="$PROJECT_DIR$/src/lexer.py" />
         <option value="$PROJECT_DIR$/src/regexp.py" />
+        <option value="$PROJECT_DIR$/src/test.py" />
+        <option value="$PROJECT_DIR$/src/silv_parser.py" />
       </list>
     </option>
   </component>
@@ -225,7 +218,7 @@
       <recent name="C:\Users\Nicolas Flamme\Documents\GitHub\Cool-PL\src" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager" selected="Python.test">
     <configuration default="false" name="regexp" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -290,6 +283,23 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="Silver-PL" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/shunting-yard.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="test" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Silver-PL" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -428,18 +438,20 @@
       <option name="USE_KEYWORD" value="false" />
       <method />
     </configuration>
-    <list size="4">
+    <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python.regexp" />
       <item index="1" class="java.lang.String" itemvalue="Python.lexer" />
       <item index="2" class="java.lang.String" itemvalue="Python.main" />
       <item index="3" class="java.lang.String" itemvalue="Python.shunting-yard" />
+      <item index="4" class="java.lang.String" itemvalue="Python.test" />
     </list>
     <recent_temporary>
-      <list size="4">
-        <item index="0" class="java.lang.String" itemvalue="Python.main" />
-        <item index="1" class="java.lang.String" itemvalue="Python.shunting-yard" />
-        <item index="2" class="java.lang.String" itemvalue="Python.lexer" />
-        <item index="3" class="java.lang.String" itemvalue="Python.regexp" />
+      <list size="5">
+        <item index="0" class="java.lang.String" itemvalue="Python.test" />
+        <item index="1" class="java.lang.String" itemvalue="Python.main" />
+        <item index="2" class="java.lang.String" itemvalue="Python.shunting-yard" />
+        <item index="3" class="java.lang.String" itemvalue="Python.lexer" />
+        <item index="4" class="java.lang.String" itemvalue="Python.regexp" />
       </list>
     </recent_temporary>
   </component>
@@ -456,13 +468,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1467362169396</updated>
-    </task>
-    <task id="LOCAL-00012" summary="lexer on work">
-      <created>1467712172593</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1467712172593</updated>
     </task>
     <task id="LOCAL-00013" summary="first version of lexer is done">
       <created>1467718656906</created>
@@ -800,7 +805,14 @@
       <option name="project" value="LOCAL" />
       <updated>1470949083166</updated>
     </task>
-    <option name="localTasksCounter" value="61" />
+    <task id="LOCAL-00061" summary="WIP: turned to Python 3.4">
+      <created>1470963832258</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1470963832258</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -810,6 +822,7 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18081991" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3280757" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3280757" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329653" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44952682" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37223974" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -822,7 +835,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32814237" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -839,7 +851,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Stage 3.5: refactoring, new expression's type checking system" />
     <MESSAGE value="Stage 3.6: refactoring, p_def() looks better" />
     <MESSAGE value="Stage 4: variables assignation for numbers" />
     <MESSAGE value="Stage 5: strings and numbers output, with or without new line" />
@@ -864,7 +875,8 @@
     <MESSAGE value="todo in separate file" />
     <MESSAGE value="version 0.14: issue #4 closed - now composite operators parse good; also &quot;==&quot; is back" />
     <MESSAGE value="WIP: implementing modules" />
-    <option name="LAST_COMMIT_MESSAGE" value="WIP: implementing modules" />
+    <MESSAGE value="WIP: turned to Python 3.4" />
+    <option name="LAST_COMMIT_MESSAGE" value="WIP: turned to Python 3.4" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -880,7 +892,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../study/pl_compiler/stage one.py" />
     <entry file="file://$PROJECT_DIR$/src/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
@@ -900,14 +911,12 @@
         <state relative-caret-position="153">
           <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
           <folding>
-            <element signature="e#1872#1926#1" expanded="false" />
-            <element signature="e#2010#2062#1" expanded="false" />
-            <element signature="e#2134#2186#1" expanded="false" />
-            <element signature="e#2247#2277#1" expanded="false" />
-            <element signature="e#20968#20984#0" expanded="false" />
-            <element signature="e#21523#21551#1" expanded="false" />
-            <element signature="e#21589#21617#1" expanded="false" />
-            <element signature="e#21650#21678#1" expanded="false" />
+            <element signature="e#1973#2025#1" expanded="false" />
+            <element signature="e#2097#2149#1" expanded="false" />
+            <element signature="e#19803#19819#0" expanded="false" />
+            <element signature="e#20358#20386#1" expanded="false" />
+            <element signature="e#20424#20452#1" expanded="false" />
+            <element signature="e#20485#20513#1" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -939,14 +948,12 @@
         <state relative-caret-position="153">
           <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
           <folding>
-            <element signature="e#1872#1926#1" expanded="false" />
-            <element signature="e#2010#2062#1" expanded="false" />
-            <element signature="e#2134#2186#1" expanded="false" />
-            <element signature="e#2247#2277#1" expanded="false" />
-            <element signature="e#20968#20984#0" expanded="false" />
-            <element signature="e#21523#21551#1" expanded="false" />
-            <element signature="e#21589#21617#1" expanded="false" />
-            <element signature="e#21650#21678#1" expanded="false" />
+            <element signature="e#1973#2025#1" expanded="false" />
+            <element signature="e#2097#2149#1" expanded="false" />
+            <element signature="e#19803#19819#0" expanded="false" />
+            <element signature="e#20358#20386#1" expanded="false" />
+            <element signature="e#20424#20452#1" expanded="false" />
+            <element signature="e#20485#20513#1" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -978,14 +985,12 @@
         <state relative-caret-position="136">
           <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
           <folding>
-            <element signature="e#1872#1926#1" expanded="false" />
-            <element signature="e#2010#2062#1" expanded="false" />
-            <element signature="e#2134#2186#1" expanded="false" />
-            <element signature="e#2247#2277#1" expanded="false" />
-            <element signature="e#20968#20984#0" expanded="false" />
-            <element signature="e#21523#21551#1" expanded="false" />
-            <element signature="e#21589#21617#1" expanded="false" />
-            <element signature="e#21650#21678#1" expanded="false" />
+            <element signature="e#1973#2025#1" expanded="false" />
+            <element signature="e#2097#2149#1" expanded="false" />
+            <element signature="e#19803#19819#0" expanded="false" />
+            <element signature="e#20358#20386#1" expanded="false" />
+            <element signature="e#20424#20452#1" expanded="false" />
+            <element signature="e#20485#20513#1" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1024,14 +1029,12 @@
         <state relative-caret-position="136">
           <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
           <folding>
-            <element signature="e#1872#1926#1" expanded="false" />
-            <element signature="e#2010#2062#1" expanded="false" />
-            <element signature="e#2134#2186#1" expanded="false" />
-            <element signature="e#2247#2277#1" expanded="false" />
-            <element signature="e#20968#20984#0" expanded="false" />
-            <element signature="e#21523#21551#1" expanded="false" />
-            <element signature="e#21589#21617#1" expanded="false" />
-            <element signature="e#21650#21678#1" expanded="false" />
+            <element signature="e#1973#2025#1" expanded="false" />
+            <element signature="e#2097#2149#1" expanded="false" />
+            <element signature="e#19803#19819#0" expanded="false" />
+            <element signature="e#20358#20386#1" expanded="false" />
+            <element signature="e#20424#20452#1" expanded="false" />
+            <element signature="e#20485#20513#1" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1139,23 +1142,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/silv_parser.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="385">
-          <caret line="708" column="0" selection-start-line="708" selection-start-column="0" selection-end-line="708" selection-end-column="0" />
-          <folding>
-            <element signature="e#1872#1926#1" expanded="false" />
-            <element signature="e#2010#2062#1" expanded="false" />
-            <element signature="e#2134#2186#1" expanded="false" />
-            <element signature="e#2247#2277#1" expanded="false" />
-            <element signature="e#20968#20984#0" expanded="false" />
-            <element signature="e#21523#21551#1" expanded="false" />
-            <element signature="e#21589#21617#1" expanded="false" />
-            <element signature="e#21650#21678#1" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/lexer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="504">
@@ -1169,6 +1155,29 @@
         <state relative-caret-position="504">
           <caret line="349" column="0" selection-start-line="349" selection-start-column="0" selection-end-line="349" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/silv_parser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="370">
+          <caret line="106" column="0" selection-start-line="106" selection-start-column="0" selection-end-line="106" selection-end-column="0" />
+          <folding>
+            <element signature="e#1973#2025#1" expanded="false" />
+            <element signature="e#2097#2149#1" expanded="false" />
+            <element signature="e#19803#19819#0" expanded="false" />
+            <element signature="e#20358#20386#1" expanded="false" />
+            <element signature="e#20424#20452#1" expanded="false" />
+            <element signature="e#20485#20513#1" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

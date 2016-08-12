@@ -81,11 +81,7 @@ in_function = False  # TODO: уточнить работу и переимено
 current_scope = dict()  # TODO: уточнить работу
 
 
-def cur_tok(inc=0):
-    """
-    :rtype: lexer.Token
-    :type inc: int
-    """
+def cur_tok(inc: int = 0) -> lexer.Token:
     return tokens_list[instructions_current + inc]
 
 
@@ -105,15 +101,13 @@ def cur_tok_not(typename):
     return cur_tok().type != typename
 
 
-def error(msg):
-    """
-    :type msg: str
-    """
-    raise Exception(msg + " %d:%d" % (cur_tok().line, cur_tok().symbol))
+def token_error(msg: str, token: lexer.Token = cur_tok()):
+    raise Exception(msg + " %d:%d" % (token.line, token.symbol))
 
 
 def p_atom(token):
     # type: (lexer.Token) -> Node
+    tmp = None
     if token.type in types:
         tmp = Node(token.type, token.value)
     elif token.type == "True":
@@ -127,9 +121,9 @@ def p_atom(token):
             if token.value in symbol_table['names']:
                 tmp = Node(symbol_table['names'][token.value][0], token.value)
             else:
-                raise NameError("Попытка обращения к неопределённой переменной %d:%d" % (token.line, token.symbol))
+                token_error("Попытка обращения к неопределённой переменной", token)
     else:
-        raise NameError("Некорректный параметр %d:%d" % (token.line, token.symbol))
+        token_error("Некорректный параметр", token)
     return tmp
 
 
@@ -206,7 +200,7 @@ def p_expr(tokens):
             token.type = '-u'
         if token.type in {'int', 'double', 'ident'}:
             if last.type in {'int', 'double', 'ident', 'right-paren'}:
-                raise Exception("Отсутствует оператор между значениями %d:%d" % (token.line, token.symbol))
+                token_error("Отсутствует оператор между значениями", token)
             rpn.append(token)
         elif token.type == 'left-paren':
             if last.type == 'ident':
@@ -219,7 +213,7 @@ def p_expr(tokens):
                 rpn.append(op_stack.pop())
             tmp = op_stack.pop()
             if tmp.type != 'left-paren':
-                raise Exception("Не хватает '(' %d:%d" % (token.line, token.symbol))
+                token_error("Не хватает '('", token)
             elif isinstance(tmp.type, list):
                 rpn.append(tmp)
         elif getprec(token.type) > 0:
@@ -232,7 +226,7 @@ def p_expr(tokens):
                     rpn.append(op_stack.pop())
             op_stack.append(token)
         else:
-            raise Exception("Неизвестный токен: \"%s\" %d:%d" % (token.type, token.line, token.symbol))
+            token_error("Неизвестный токен", token)
         last = token
     while op_stack:
         rpn.append(op_stack.pop())
@@ -291,22 +285,19 @@ def p_name(term, t):
                                 nd.setr(par)
                                 return nd
                             else:
-                                raise Exception("Несоответствие типа параметра заявленному %d:%d" % (
-                                    term[0].line, term[0].symbol))
+                                token_error("Несоответствие типа параметра заявленному", term[0])
                         else:
-                            raise Exception("Некорректное использование оператора %s %d:%d" % (
-                                t, term[0].line, term[0].symbol))
+                            token_error("Отсутствует знак '='", term[0])
                     else:
-                        raise Exception("Отсутствует имя типа %d:%d" % (term[0].line, term[0].symbol))
+                        token_error("Отсутствует имя типа", term[0])
                 else:
-                    raise Exception("Некорректное использование оператора %s %d:%d" % (t, term[0].line, term[0].symbol))
+                    token_error("Отсутствует знак '='", term[0])
             else:
-                raise Exception("Попытка определения уже определённой переменной %d:%d" % (
-                    term[0].line, term[0].symbol))
+                token_error("Попытка определения уже определённой переменной", term[0])
         else:
-            raise Exception("Отсутствует идентификатор %d:%d" % (term[0].line, term[0].symbol))
+            token_error("Отсутствует идентификатор", term[0])
     else:
-        raise Exception("Отсутствует параметр %d:%d" % (term[0].line, term[0].symbol))
+        token_error("Отсутствует параметр", term[0])
 
 
 def p_var(term):
@@ -340,17 +331,15 @@ def p_mod(term):
                         nd.setr(par)
                         return nd
                     else:
-                        raise Exception("Попытка присвоения значения некорректного типа %d:%d" % (
-                            term[0].line, term[0].symbol))
+                        token_error("Попытка присвоения значения некорректного типа", term[0])
                 else:
-                    raise Exception("Обращение не к переменной %d:%d" % (term[0].line, term[0].symbol))
+                    token_error("Обращение не к переменной", term[0])
             else:
-                raise Exception("Попытка изменения значения не определявшейся переменной %d:%d" % (
-                    term[0].line, term[0].symbol))
+                token_error("Попытка изменения значения не определявшейся переменной", term[0])
         else:
-            raise Exception("Некорректное использование оператора присваивания %d:%d" % (term[0].line, term[0].symbol))
+            token_error("Некорректное использование оператора присваивания", term[0])
     else:
-        raise Exception("Отсутствует параметр %d:%d" % (term[0].line, term[0].symbol))
+        token_error("Отсутствует параметр", term[0])
 
 
 def p_print(term):
@@ -366,7 +355,7 @@ def p_print(term):
         nd.setr(par)
         return nd
     else:
-        raise Exception("Отсутствует параметр %d:%d" % (term[0].line, term[0].symbol))
+        token_error("Отсутствует параметр", term[0])
 
 
 def p_printline(term):
@@ -396,13 +385,13 @@ def p_input(term):
                 return nd
             else:
                 if symbol_table['names'][term[1].value][0] != term[0].value:
-                    raise Exception("Неверно указан тип вводимого значения %d:%d" % (term[0].line, term[0].symbol))
+                    token_error("Неверно указан тип вводимого значения", term[0])
                 nd = Node(['input', term[0].value], term[1].value)
                 return nd
         else:
-            raise Exception("Некорректное использование оператора ввода %d:%d" % (term[0].line, term[0].symbol))
+            token_error("Некорректное использование оператора ввода", term[0])
     else:
-        raise Exception("Некорректное использование оператора ввода %d:%d" % (term[0].line, term[0].symbol))
+        token_error("Некорректное использование оператора ввода", term[0])
 
 
 def p_return(term):
@@ -418,7 +407,7 @@ def p_return(term):
         nd.setr(par)
         return nd
     else:
-        raise Exception("Отсутствует возвращаемое значение %d:%d" % (term[0].line, term[0].symbol))
+        token_error("Отсутствует возвращаемое значение", term[0])
 
 
 def p_sem(kot):
@@ -465,8 +454,7 @@ def p_curl(kot):
                 term.append(lexer.Token('right-paren', 0, 0))
                 instructions_current += 1
             else:
-                raise Exception("Некорректное использование оператора do (нет while или until) %d:%d" % (
-                    kot.line, kot.symbol))
+                token_error("Некорректное использование оператора do (нет while или until)", kot)
 
         ltmp = []
         while len(nodes) != tmp:
@@ -475,6 +463,7 @@ def p_curl(kot):
 
         nd = Node([kot.type])
         if kot.type == 'do':
+            par = None
             if len(term) > 0:
                 if len(term) == 1:
                     par = p_atom(term[0])
@@ -482,12 +471,12 @@ def p_curl(kot):
                     par = build_expr_tree(p_expr(term))
                     expr_current = 0
             else:
-                raise Exception("Отсутствует параметр %d:%d" % (kot.line, kot.symbol))
+                token_error("Отсутствует параметр", kot)
             nd.setl(par)
         nd.setr(ltmp)
         nodes.append(nd)
     else:
-        raise Exception("Отсутствует открывающая фигурная скобка %d:%d" % (kot.line, kot.symbol))
+        token_error("Отсутствует открывающая фигурная скобка", kot)
 
 
 def p_while(term):
@@ -503,7 +492,7 @@ def p_while(term):
         nd.setl(par)
         return nd
     else:
-        raise Exception("Отсутствует параметр %d:%d" % (term[0].line, term[0].symbol))
+        token_error("Отсутствует параметр", term[0])
 
 
 def p_until(term):
@@ -519,7 +508,7 @@ def p_until(term):
         nd.setl(par)
         return nd
     else:
-        raise Exception("Отсутствует параметр %d:%d" % (term[0].line, term[0].symbol))
+        token_error("Отсутствует параметр", term[0])
 
 
 def p_if(term):
@@ -535,7 +524,7 @@ def p_if(term):
         nd.setl(par)
         return nd
     else:
-        raise Exception("Отсутствует параметр %d:%d" % (term[0].line, term[0].symbol))
+        token_error("Отсутствует параметр", term[0])
 
 
 def p_elif(term):
@@ -551,7 +540,7 @@ def p_elif(term):
         nd.setl(par)
         return nd
     else:
-        raise Exception("Отсутствует параметр %d:%d" % (term[0].line, term[0].symbol))
+        token_error("Отсутствует параметр", term[0])
 
 
 def p_d_curl(kot):
@@ -603,7 +592,7 @@ def p_func(kot):
                     current_scope[cur_tok(1).value] = cur_tok().value
                     instructions_current += 2
                 else:
-                    error("Некорректный список формальных аргументов функции")
+                    token_error("Некорректный список формальных аргументов функции")
             instructions_current += 1
             if cur_tok_is('left-curl'):
                 instructions_current += 1
@@ -620,15 +609,15 @@ def p_func(kot):
                     ltmp.append(nodes.pop())
                 ltmp.reverse()
             else:
-                error("Отсутствует тело функции")
+                token_error("Отсутствует тело функции")
             nd = Node(['func', ftype], fname)
             nd.setl(term)
             nd.setr(ltmp)
             nodes.append(nd)
         else:
-            error("После имени функции должны быть круглые скобки")
+            token_error("После имени функции должны быть круглые скобки")
     else:
-        error("Некорректное объявление функции")
+        token_error("Некорректное объявление функции")
 
 
 def p_instructions():
