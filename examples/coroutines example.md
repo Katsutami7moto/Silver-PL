@@ -47,7 +47,7 @@ module crtn
 
 module main
 {
-    use crtn;
+    import crtn;
     def main()
     {
         calc(1, 2);
@@ -83,7 +83,7 @@ module crtn
 
 module main
 {
-    use crtn;
+    import crtn;
     def main()
     {
         c = new calcable([]);

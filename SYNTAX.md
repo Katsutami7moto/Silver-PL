@@ -4,14 +4,14 @@
 > `{ }` means `1 or many`
 > `[{ }]` means `0 or many`
 > Things in code are terminals, just words/symbols - nonterminals
+> Nonterminals in italic are obvious to define.
+> Nonterminals in bold will be defined in future.
 
 Start = { Module } .
 
 Module = `module` _Ident_ ModuleBlock .
 
-ModuleBlock = `{` { Use | Import | Type | Typedef | Extend | Var | Let | Def } `}` .
-
-Use = `use` _Ident_ `;` .
+ModuleBlock = `{` { Import | Type | Typedef | VarB | LetB | Extend | Def } `}` .
 
 Import = `import` _Ident_ `;` .
 
@@ -29,13 +29,13 @@ InterVar = _Ident_ | Formal | Product .
 
 Typedef = `typedef` _Ident_ `=` _Ident_ Generic `;` .
 
+VarB = `varblock` `{` [{Naming}] `}` .
+
+LetB = `letblock` `{` [{Naming}] `}` .
+
 Extend = `extend` _Ident_ ( `:` Def | `{` { Def } `}` ) .
 
-Var = `var` Naming .
-
-Let = `let` Naming .
-
-Naming = _Ident_ ( `:` _Ident_ `=` XExpr | `=` ( _Data_ | New ) `;` ) .
+Naming = _Ident_ ( `:` _Ident_ `=` XExpr | `=` ( _Data_ | New ) ) `;` .
 
 New = `new` Call .
 
@@ -50,6 +50,10 @@ XExpr = _Expr_ | IfExpr | PipeExpr .
 IfExpr = `if` _Expr_ `:` XExpr [{ `elif` _Expr_ `:` XExpr }] `else` `:` XExpr .
 
 PipeExpr = ( _Expr_ | PipeExpr ) `|>` ( _Ident_ | Call ) .
+
+Var = `var` Naming .
+
+Let = `let` Naming .
 
 Mod = `mod` _Ident_ _AssignOp_ XExpr `;` .
 

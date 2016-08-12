@@ -3,13 +3,13 @@ Silver is general-purpose programming language, which goal is to collect many us
 
 ## Concepts
 
-- Functional programming features: anonymous functions, first-class functions, closures, currying, partial application, orientation on programminng w/out variables
+- Functional programming features: anonymous functions, first-class functions, closures, currying, partial application, orientation on programminng w/out mutations
 - Compound types and extension functions will make code more familiar to OOP-users
 - No automatical/implicit type conversion, static strong type system
 - Statement-based language, not expression-based
 - No low-level looking basic types like `uint32` (only `int` and `double` for trivial tasks)
 - Silver compiler translates code to C language (C89 standart) for good portabilty and performance
-- The core of Silver will be preserved after the end of its development - none of next updates will break compatibility!!!
+- The core of Silver will be preserved after the full completion of its development - none of next updates will break compatibility! And compatibility won't impede the further development (as it won't affect the core)
 
 ## Features
 

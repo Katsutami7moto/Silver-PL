@@ -49,29 +49,25 @@ int fib(int n) { if ((n == 0) || (n == 1)) { return n; } else if (n > 1) { retur
 
 ## Modules
 
-Importing and using modules are intransitive, so there won't be errors of recursive import/using (so, yeah, you won't be stopped from recursion like in example below), but, if you want to use a module 'clearly', you should have a 'reload' function in it.
+Importing and using modules are intransitive, so there won't be errors of recursive using (so, yeah, you won't be stopped from recursion like in example below), but, if you want to use a module 'clearly', you should have a 'reload' function in it.
 
 ### Silver
 
 ```
 module Fisrt
 {
-import Third;
-
 def foo() { ... Third::fuba(); ... }
 }
 
 module Second
 {
-import First;
-
 def bar() { ... First::foo(); ... }
 }
 
 module Third
 {
-use First;
-use Second;
+import First;
+import Second;
 
 def fuba() { ... foo(); ... bar(); ... }
 }

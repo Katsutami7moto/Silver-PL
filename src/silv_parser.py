@@ -37,18 +37,17 @@ class Node:
 
 
 class Module:
-    def __init__(self, n, i, decls, defs):
-        # type: (str, list, list, list) -> object
+    def __init__(self, n: str):
         self.name = n
-        self.imports = i
-        self.declarations = decls
-        self.definitions = defs
+        self.declarations = []
+        self.definitions = []
+        self.uses = {}
 
 
 nodes = []
 instructions_current = 0
 expr_current = 0
-tokens_list = []
+# tokens_list = []
 sems = {
     "var",
     "const",
@@ -248,7 +247,7 @@ def p_expr(tokens: list) -> list:
 #         raise Exception, "Отсутствует параметр %d:%d" % (term[0].line, term[0].symbol)
 
 
-def p_name(term, t):
+def p_name(term: list, t: str):
     global expr_current
     if len(term) > 2:
         if term[0].type == 'ident':
@@ -645,28 +644,49 @@ def p_imports():
     pass
 
 
-def p_module():
-    global instructions_current
-    instructions_current += 1
-    if cur_tok_is('ident'):
-        name = cur_tok().value
-        instructions_current += 1
-        if cur_tok_is('left-curl'):
-            instructions_current += 1
-            mstart = instructions_current
-            imps = p_imports()
-            declars = p_declarations()
-            instructions_current = mstart
-            defins = p_definitions()
-            return Module(name, imps, declars, defins)
+def make_module(module_info: tuple):
+    mdl = Module(module_info[0])
+    tokens = module_info[1]
+
+    # global instructions_current
+    # instructions_current += 1
+    # if cur_tok_is('ident'):
+    #     name = cur_tok().value
+    #     instructions_current += 1
+    #     if cur_tok_is('left-curl'):
+    #         instructions_current += 1
+    #         mstart = instructions_current
+    #         declars = p_declarations()
+    #         instructions_current = mstart
+    #         defins = p_definitions()
+    #         return Module(name, declars, defins)
 
 
-def p_start():
-    modules = []
-    while instructions_current < len(tokens_list):
-        if cur_tok_is('module'):
-            modules.append(p_module())
-    return modules
+def p_start(tokens: list) -> list:
+    modules_infos = []
+    i = 0
+    while i < len(tokens):
+        m = []
+        n = ''
+        if tokens[i].type == 'module':
+            i += 1
+        else:
+            pass
+        if tokens[i].type == 'ident':
+            n = tokens[i].value
+            i += 1
+        else:
+            pass
+        if tokens[i].type == 'left-curl':
+            i += 1
+        else:
+            pass
+        while tokens[i].type != 'right-curl':
+            m.append(tokens[i])
+            i += 1
+        modules_infos.append((n, m))
+        i += 1
+    return map(make_module, modules_infos)
 
 
 def m_rearrange(mods: list) -> list:
@@ -674,8 +694,4 @@ def m_rearrange(mods: list) -> list:
 
 
 def parsing(code: list) -> list:
-    # type: (list) -> list
-    global tokens_list
-    tokens_list = lexer.lexing(code)
-    if tokens_list:
-        return m_rearrange(p_start())
+    return m_rearrange(p_start(lexer.lexing(code)))

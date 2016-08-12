@@ -3,8 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="9008df4e-1652-4c48-b5cc-600fd6786a2d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lexer.py" afterPath="$PROJECT_DIR$/src/lexer.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/regexp.py" afterPath="$PROJECT_DIR$/src/regexp.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SYNTAX.md" afterPath="$PROJECT_DIR$/SYNTAX.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TODO.md" afterPath="$PROJECT_DIR$/TODO.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/code examples draft.md" afterPath="$PROJECT_DIR$/examples/code examples draft.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/coroutines example.md" afterPath="$PROJECT_DIR$/examples/coroutines example.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/silv_parser.py" afterPath="$PROJECT_DIR$/src/silv_parser.py" />
     </list>
     <ignored path="Cool-PL.iws" />
@@ -28,7 +31,7 @@
       <file leaf-file-name="translator.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/translator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
+            <state relative-caret-position="4437">
               <caret line="261" column="0" selection-start-line="261" selection-start-column="0" selection-end-line="261" selection-end-column="0" />
               <folding />
             </state>
@@ -38,14 +41,14 @@
       <file leaf-file-name="silv_parser.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/silv_parser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="681" column="0" selection-start-line="681" selection-start-column="0" selection-end-line="681" selection-end-column="0" />
+            <state relative-caret-position="419">
+              <caret line="662" column="0" selection-start-line="662" selection-start-column="0" selection-end-line="662" selection-end-column="0" />
               <folding>
-                <element signature="e#6536#6558#0" expanded="false" />
-                <element signature="e#19533#19549#0" expanded="false" />
-                <element signature="e#20088#20116#1" expanded="false" />
-                <element signature="e#20154#20182#1" expanded="false" />
-                <element signature="e#20215#20243#1" expanded="false" />
+                <element signature="e#6470#6492#0" expanded="false" />
+                <element signature="e#19478#19494#0" expanded="false" />
+                <element signature="e#20033#20061#1" expanded="false" />
+                <element signature="e#20099#20127#1" expanded="false" />
+                <element signature="e#20160#20188#1" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -100,9 +103,9 @@
         <option value="$PROJECT_DIR$/src/main.py" />
         <option value="$PROJECT_DIR$/src/translator.py" />
         <option value="$PROJECT_DIR$/src/test.py" />
-        <option value="$PROJECT_DIR$/src/silv_parser.py" />
         <option value="$PROJECT_DIR$/src/lexer.py" />
         <option value="$PROJECT_DIR$/src/regexp.py" />
+        <option value="$PROJECT_DIR$/src/silv_parser.py" />
       </list>
     </option>
   </component>
@@ -137,8 +140,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -187,6 +188,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -449,13 +452,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1467362169396</updated>
-    </task>
-    <task id="LOCAL-00014" summary="first version of parser is done">
-      <created>1467734578453</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1467734578453</updated>
     </task>
     <task id="LOCAL-00015" summary="first version of parser is done">
       <created>1467734709515</created>
@@ -793,7 +789,14 @@
       <option name="project" value="LOCAL" />
       <updated>1470967256261</updated>
     </task>
-    <option name="localTasksCounter" value="63" />
+    <task id="LOCAL-00063" summary="WIP: types annotating">
+      <created>1470968141933</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1470968141934</updated>
+    </task>
+    <option name="localTasksCounter" value="64" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -803,20 +806,20 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18081991" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3280757" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3280757" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329653" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44952682" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37223974" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4148265" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37223974" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3280757" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4148265" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -832,7 +835,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Stage 4: variables assignation for numbers" />
     <MESSAGE value="Stage 5: strings and numbers output, with or without new line" />
     <MESSAGE value="Stage 6: numbers input (only new)" />
     <MESSAGE value="Stage 6.5: numbers input (even defined)" />
@@ -857,7 +859,8 @@
     <MESSAGE value="WIP: implementing modules" />
     <MESSAGE value="WIP: turned to Python 3.4" />
     <MESSAGE value="WIP: DRY for token errors handling" />
-    <option name="LAST_COMMIT_MESSAGE" value="WIP: DRY for token errors handling" />
+    <MESSAGE value="WIP: types annotating" />
+    <option name="LAST_COMMIT_MESSAGE" value="WIP: types annotating" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -892,11 +895,11 @@
         <state relative-caret-position="153">
           <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
           <folding>
-            <element signature="e#6536#6558#0" expanded="false" />
-            <element signature="e#19533#19549#0" expanded="false" />
-            <element signature="e#20088#20116#1" expanded="false" />
-            <element signature="e#20154#20182#1" expanded="false" />
-            <element signature="e#20215#20243#1" expanded="false" />
+            <element signature="e#6470#6492#0" expanded="false" />
+            <element signature="e#19478#19494#0" expanded="false" />
+            <element signature="e#20033#20061#1" expanded="false" />
+            <element signature="e#20099#20127#1" expanded="false" />
+            <element signature="e#20160#20188#1" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -928,11 +931,11 @@
         <state relative-caret-position="153">
           <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
           <folding>
-            <element signature="e#6536#6558#0" expanded="false" />
-            <element signature="e#19533#19549#0" expanded="false" />
-            <element signature="e#20088#20116#1" expanded="false" />
-            <element signature="e#20154#20182#1" expanded="false" />
-            <element signature="e#20215#20243#1" expanded="false" />
+            <element signature="e#6470#6492#0" expanded="false" />
+            <element signature="e#19478#19494#0" expanded="false" />
+            <element signature="e#20033#20061#1" expanded="false" />
+            <element signature="e#20099#20127#1" expanded="false" />
+            <element signature="e#20160#20188#1" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -964,11 +967,11 @@
         <state relative-caret-position="136">
           <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
           <folding>
-            <element signature="e#6536#6558#0" expanded="false" />
-            <element signature="e#19533#19549#0" expanded="false" />
-            <element signature="e#20088#20116#1" expanded="false" />
-            <element signature="e#20154#20182#1" expanded="false" />
-            <element signature="e#20215#20243#1" expanded="false" />
+            <element signature="e#6470#6492#0" expanded="false" />
+            <element signature="e#19478#19494#0" expanded="false" />
+            <element signature="e#20033#20061#1" expanded="false" />
+            <element signature="e#20099#20127#1" expanded="false" />
+            <element signature="e#20160#20188#1" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1007,11 +1010,11 @@
         <state relative-caret-position="136">
           <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
           <folding>
-            <element signature="e#6536#6558#0" expanded="false" />
-            <element signature="e#19533#19549#0" expanded="false" />
-            <element signature="e#20088#20116#1" expanded="false" />
-            <element signature="e#20154#20182#1" expanded="false" />
-            <element signature="e#20215#20243#1" expanded="false" />
+            <element signature="e#6470#6492#0" expanded="false" />
+            <element signature="e#19478#19494#0" expanded="false" />
+            <element signature="e#20033#20061#1" expanded="false" />
+            <element signature="e#20099#20127#1" expanded="false" />
+            <element signature="e#20160#20188#1" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1095,26 +1098,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/silv_parser.py.bak">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/silv_parser.py.bak" />
+    <entry file="file://$PROJECT_DIR$/src/test.py" />
     <entry file="file://$PROJECT_DIR$/src/regexp.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="504">
           <caret line="348" column="0" selection-start-line="348" selection-start-column="0" selection-end-line="348" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/translator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4437">
+          <caret line="261" column="0" selection-start-line="261" selection-start-column="0" selection-end-line="261" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1127,32 +1131,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/translator.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="261" column="0" selection-start-line="261" selection-start-column="0" selection-end-line="261" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/silv_parser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="681" column="0" selection-start-line="681" selection-start-column="0" selection-end-line="681" selection-end-column="0" />
+        <state relative-caret-position="419">
+          <caret line="662" column="0" selection-start-line="662" selection-start-column="0" selection-end-line="662" selection-end-column="0" />
           <folding>
-            <element signature="e#6536#6558#0" expanded="false" />
-            <element signature="e#19533#19549#0" expanded="false" />
-            <element signature="e#20088#20116#1" expanded="false" />
-            <element signature="e#20154#20182#1" expanded="false" />
-            <element signature="e#20215#20243#1" expanded="false" />
+            <element signature="e#6470#6492#0" expanded="false" />
+            <element signature="e#19478#19494#0" expanded="false" />
+            <element signature="e#20033#20061#1" expanded="false" />
+            <element signature="e#20099#20127#1" expanded="false" />
+            <element signature="e#20160#20188#1" expanded="false" />
           </folding>
         </state>
       </provider>
