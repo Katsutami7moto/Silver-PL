@@ -85,19 +85,11 @@ def cur_tok(inc: int = 0) -> lexer.Token:
     return tokens_list[instructions_current + inc]
 
 
-def cur_tok_is(typename):
-    """
-    :rtype: bool
-    :type typename: str
-    """
+def cur_tok_is(typename: str) -> bool:
     return cur_tok().type == typename
 
 
-def cur_tok_not(typename):
-    """
-    :rtype: bool
-    :type typename: str
-    """
+def cur_tok_not(typename: str) -> bool:
     return cur_tok().type != typename
 
 
@@ -105,8 +97,7 @@ def token_error(msg: str, token: lexer.Token = cur_tok()):
     raise Exception(msg + " %d:%d" % (token.line, token.symbol))
 
 
-def p_atom(token):
-    # type: (lexer.Token) -> Node
+def p_atom(token: lexer.Token) -> Node:
     tmp = None
     if token.type in types:
         tmp = Node(token.type, token.value)
@@ -127,8 +118,7 @@ def p_atom(token):
     return tmp
 
 
-def build_expr_tree(tokens):
-    # type: (list) -> Node
+def build_expr_tree(tokens: list) -> Node:
     binary = {'asterisk': '*', 'slash': '/', 'percent': '%', 'plus': '+', 'minus': '-', 'and': '&&', 'or': '||',
               'comma': ',', 'left-chev': '<', 'right-chev': '>', 'less-equal': '<=', 'more-equal': '>=',
               'is-equal': '==', 'not-equal': '!='}
@@ -157,8 +147,7 @@ def build_expr_tree(tokens):
             return p_atom(tmp)
 
 
-def p_expr(tokens):
-    # type: (list) -> list
+def p_expr(tokens: list) -> list:
     op_stack = []
     rpn = []  # обратная польская нотация (постфиксная)
 
@@ -300,18 +289,15 @@ def p_name(term, t):
         token_error("Отсутствует параметр", term[0])
 
 
-def p_var(term):
-    # type: (list) -> Node
+def p_var(term: list) -> Node:
     return p_name(term, 'var')
 
 
-def p_let(term):
-    # type: (list) -> Node
+def p_let(term: list) -> Node:
     return p_name(term, 'let')
 
 
-def p_mod(term):
-    # type: (list) -> Node
+def p_mod(term: list) -> Node:
     global expr_current
     if len(term) > 2:
         if term[0].type == 'ident' and term[1].type in {'equal', 'self-inc', 'self-dec', 'self-mul', 'self-div',
@@ -342,8 +328,7 @@ def p_mod(term):
         token_error("Отсутствует параметр", term[0])
 
 
-def p_print(term):
-    # type: (list) -> Node
+def p_print(term: list) -> Node:
     global expr_current
     if len(term) > 0:
         if len(term) == 1:
@@ -358,8 +343,7 @@ def p_print(term):
         token_error("Отсутствует параметр", term[0])
 
 
-def p_printline(term):
-    # type: (list) -> Node
+def p_printline(term: list) -> Node:
     global expr_current
     if len(term) > 0:
         if len(term) == 1:
@@ -375,8 +359,7 @@ def p_printline(term):
         return nd
 
 
-def p_input(term):
-    # type: (list) -> Node
+def p_input(term: list) -> Node:
     if len(term) == 2:
         if term[0].value in {'int', 'double'} and term[1].type == 'ident':
             if term[1].value not in symbol_table['names']:
@@ -394,8 +377,7 @@ def p_input(term):
         token_error("Некорректное использование оператора ввода", term[0])
 
 
-def p_return(term):
-    # type: (list) -> Node
+def p_return(term: list) -> Node:
     global expr_current
     if len(term) >= 1:
         if len(term) == 1:
@@ -479,8 +461,7 @@ def p_curl(kot):
         token_error("Отсутствует открывающая фигурная скобка", kot)
 
 
-def p_while(term):
-    # type: (list) -> Node
+def p_while(term: list) -> Node:
     global expr_current
     if len(term) > 0:
         if len(term) == 1:
@@ -495,8 +476,7 @@ def p_while(term):
         token_error("Отсутствует параметр", term[0])
 
 
-def p_until(term):
-    # type: (list) -> Node
+def p_until(term: list) -> Node:
     global expr_current
     if len(term) > 0:
         if len(term) == 1:
@@ -511,8 +491,7 @@ def p_until(term):
         token_error("Отсутствует параметр", term[0])
 
 
-def p_if(term):
-    # type: (list) -> Node
+def p_if(term: list) -> Node:
     global expr_current
     if len(term) > 0:
         if len(term) == 1:
@@ -527,8 +506,7 @@ def p_if(term):
         token_error("Отсутствует параметр", term[0])
 
 
-def p_elif(term):
-    # type: (list) -> Node
+def p_elif(term: list) -> Node:
     global expr_current
     if len(term) > 0:
         if len(term) == 1:
@@ -691,12 +669,11 @@ def p_start():
     return modules
 
 
-def m_rearrange(mods):
-    # type: (list) -> list
+def m_rearrange(mods: list) -> list:
     pass
 
 
-def parsing(code):
+def parsing(code: list) -> list:
     # type: (list) -> list
     global tokens_list
     tokens_list = lexer.lexing(code)

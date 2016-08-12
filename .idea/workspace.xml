@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="9008df4e-1652-4c48-b5cc-600fd6786a2d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lexer.py" afterPath="$PROJECT_DIR$/src/lexer.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/regexp.py" afterPath="$PROJECT_DIR$/src/regexp.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/silv_parser.py" afterPath="$PROJECT_DIR$/src/silv_parser.py" />
     </list>
     <ignored path="Cool-PL.iws" />
@@ -23,16 +25,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="translator.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/translator.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -46,15 +38,14 @@
       <file leaf-file-name="silv_parser.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/silv_parser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="370">
-              <caret line="106" column="0" selection-start-line="106" selection-start-column="0" selection-end-line="106" selection-end-column="0" />
+            <state relative-caret-position="504">
+              <caret line="681" column="0" selection-start-line="681" selection-start-column="0" selection-end-line="681" selection-end-column="0" />
               <folding>
-                <element signature="e#1973#2025#1" expanded="false" />
-                <element signature="e#2097#2149#1" expanded="false" />
-                <element signature="e#19803#19819#0" expanded="false" />
-                <element signature="e#20358#20386#1" expanded="false" />
-                <element signature="e#20424#20452#1" expanded="false" />
-                <element signature="e#20485#20513#1" expanded="false" />
+                <element signature="e#6536#6558#0" expanded="false" />
+                <element signature="e#19533#19549#0" expanded="false" />
+                <element signature="e#20088#20116#1" expanded="false" />
+                <element signature="e#20154#20182#1" expanded="false" />
+                <element signature="e#20215#20243#1" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -64,17 +55,7 @@
         <entry file="file://$PROJECT_DIR$/src/lexer.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="504">
-              <caret line="155" column="0" selection-start-line="155" selection-start-column="0" selection-end-line="155" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="regexp.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/regexp.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="349" column="0" selection-start-line="349" selection-start-column="0" selection-end-line="349" selection-end-column="0" />
+              <caret line="154" column="0" selection-start-line="154" selection-start-column="0" selection-end-line="154" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -118,10 +99,10 @@
         <option value="$PROJECT_DIR$/examples/code examples draft.md" />
         <option value="$PROJECT_DIR$/src/main.py" />
         <option value="$PROJECT_DIR$/src/translator.py" />
-        <option value="$PROJECT_DIR$/src/lexer.py" />
-        <option value="$PROJECT_DIR$/src/regexp.py" />
         <option value="$PROJECT_DIR$/src/test.py" />
         <option value="$PROJECT_DIR$/src/silv_parser.py" />
+        <option value="$PROJECT_DIR$/src/lexer.py" />
+        <option value="$PROJECT_DIR$/src/regexp.py" />
       </list>
     </option>
   </component>
@@ -469,13 +450,6 @@
       <option name="presentableId" value="Default" />
       <updated>1467362169396</updated>
     </task>
-    <task id="LOCAL-00013" summary="first version of lexer is done">
-      <created>1467718656906</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1467718656906</updated>
-    </task>
     <task id="LOCAL-00014" summary="first version of parser is done">
       <created>1467734578453</created>
       <option name="number" value="00014" />
@@ -812,7 +786,14 @@
       <option name="project" value="LOCAL" />
       <updated>1470963832258</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL-00062" summary="WIP: DRY for token errors handling">
+      <created>1470967256261</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1470967256261</updated>
+    </task>
+    <option name="localTasksCounter" value="63" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -851,7 +832,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Stage 3.6: refactoring, p_def() looks better" />
     <MESSAGE value="Stage 4: variables assignation for numbers" />
     <MESSAGE value="Stage 5: strings and numbers output, with or without new line" />
     <MESSAGE value="Stage 6: numbers input (only new)" />
@@ -876,7 +856,8 @@
     <MESSAGE value="version 0.14: issue #4 closed - now composite operators parse good; also &quot;==&quot; is back" />
     <MESSAGE value="WIP: implementing modules" />
     <MESSAGE value="WIP: turned to Python 3.4" />
-    <option name="LAST_COMMIT_MESSAGE" value="WIP: turned to Python 3.4" />
+    <MESSAGE value="WIP: DRY for token errors handling" />
+    <option name="LAST_COMMIT_MESSAGE" value="WIP: DRY for token errors handling" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -911,12 +892,11 @@
         <state relative-caret-position="153">
           <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
           <folding>
-            <element signature="e#1973#2025#1" expanded="false" />
-            <element signature="e#2097#2149#1" expanded="false" />
-            <element signature="e#19803#19819#0" expanded="false" />
-            <element signature="e#20358#20386#1" expanded="false" />
-            <element signature="e#20424#20452#1" expanded="false" />
-            <element signature="e#20485#20513#1" expanded="false" />
+            <element signature="e#6536#6558#0" expanded="false" />
+            <element signature="e#19533#19549#0" expanded="false" />
+            <element signature="e#20088#20116#1" expanded="false" />
+            <element signature="e#20154#20182#1" expanded="false" />
+            <element signature="e#20215#20243#1" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -948,12 +928,11 @@
         <state relative-caret-position="153">
           <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
           <folding>
-            <element signature="e#1973#2025#1" expanded="false" />
-            <element signature="e#2097#2149#1" expanded="false" />
-            <element signature="e#19803#19819#0" expanded="false" />
-            <element signature="e#20358#20386#1" expanded="false" />
-            <element signature="e#20424#20452#1" expanded="false" />
-            <element signature="e#20485#20513#1" expanded="false" />
+            <element signature="e#6536#6558#0" expanded="false" />
+            <element signature="e#19533#19549#0" expanded="false" />
+            <element signature="e#20088#20116#1" expanded="false" />
+            <element signature="e#20154#20182#1" expanded="false" />
+            <element signature="e#20215#20243#1" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -985,12 +964,11 @@
         <state relative-caret-position="136">
           <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
           <folding>
-            <element signature="e#1973#2025#1" expanded="false" />
-            <element signature="e#2097#2149#1" expanded="false" />
-            <element signature="e#19803#19819#0" expanded="false" />
-            <element signature="e#20358#20386#1" expanded="false" />
-            <element signature="e#20424#20452#1" expanded="false" />
-            <element signature="e#20485#20513#1" expanded="false" />
+            <element signature="e#6536#6558#0" expanded="false" />
+            <element signature="e#19533#19549#0" expanded="false" />
+            <element signature="e#20088#20116#1" expanded="false" />
+            <element signature="e#20154#20182#1" expanded="false" />
+            <element signature="e#20215#20243#1" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1029,12 +1007,11 @@
         <state relative-caret-position="136">
           <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
           <folding>
-            <element signature="e#1973#2025#1" expanded="false" />
-            <element signature="e#2097#2149#1" expanded="false" />
-            <element signature="e#19803#19819#0" expanded="false" />
-            <element signature="e#20358#20386#1" expanded="false" />
-            <element signature="e#20424#20452#1" expanded="false" />
-            <element signature="e#20485#20513#1" expanded="false" />
+            <element signature="e#6536#6558#0" expanded="false" />
+            <element signature="e#19533#19549#0" expanded="false" />
+            <element signature="e#20088#20116#1" expanded="false" />
+            <element signature="e#20154#20182#1" expanded="false" />
+            <element signature="e#20215#20243#1" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1126,6 +1103,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/regexp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="504">
+          <caret line="348" column="0" selection-start-line="348" selection-start-column="0" selection-end-line="348" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lexer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="504">
+          <caret line="154" column="0" selection-start-line="154" selection-start-column="0" selection-end-line="154" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -1142,41 +1143,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lexer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="155" column="0" selection-start-line="155" selection-start-column="0" selection-end-line="155" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/regexp.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="349" column="0" selection-start-line="349" selection-start-column="0" selection-end-line="349" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/silv_parser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="370">
-          <caret line="106" column="0" selection-start-line="106" selection-start-column="0" selection-end-line="106" selection-end-column="0" />
+        <state relative-caret-position="504">
+          <caret line="681" column="0" selection-start-line="681" selection-start-column="0" selection-end-line="681" selection-end-column="0" />
           <folding>
-            <element signature="e#1973#2025#1" expanded="false" />
-            <element signature="e#2097#2149#1" expanded="false" />
-            <element signature="e#19803#19819#0" expanded="false" />
-            <element signature="e#20358#20386#1" expanded="false" />
-            <element signature="e#20424#20452#1" expanded="false" />
-            <element signature="e#20485#20513#1" expanded="false" />
+            <element signature="e#6536#6558#0" expanded="false" />
+            <element signature="e#19533#19549#0" expanded="false" />
+            <element signature="e#20088#20116#1" expanded="false" />
+            <element signature="e#20154#20182#1" expanded="false" />
+            <element signature="e#20215#20243#1" expanded="false" />
           </folding>
         </state>
       </provider>

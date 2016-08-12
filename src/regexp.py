@@ -288,8 +288,7 @@ def dfabuild(posset):
                 del temp2
 
 
-def dfareturner(stt, state, word):
-    # type: (dict, set, str) -> bool
+def dfareturner(stt: dict, state: set, word: str) -> bool:
     for symbol in word:
         if symbol in stt[state]:
             state = frozenset().union(stt[state][symbol])
@@ -334,7 +333,7 @@ string_dfa = dfa
 closing()
 
 
-def returner(regular, word):
+def returner(regular: str, word: str) -> bool:
     if regular == 'id':
         result = dfareturner(id_dfa, id_state, word)
     elif regular == 'i':

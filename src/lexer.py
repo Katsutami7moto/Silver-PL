@@ -130,8 +130,7 @@ def paren_check():
             sign = ''
 
 
-def lexing(code):
-    # type: (list) -> list
+def lexing(code: list) -> list:
     global other, sign, LINE, SYMBOL
     for line in code:
         assert isinstance(line, str)
