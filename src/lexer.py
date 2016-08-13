@@ -1,4 +1,5 @@
 from src import regexp
+from collections import namedtuple
 
 symbols = {
     '+': 'plus',
@@ -40,15 +41,13 @@ composites = {
 ignore = {'\n', '\t', ' '}
 keywords = {
     "module",
-    "use",
     "import",
     "var",
     "let",
+    "varblock",
+    "letblock",
     "mod",  # TODO: точно ли такое слово ?
-    "def",
-    "print",
-    "printline",
-    "input",
+    "def"
     "type",
     "typedef",
     "new",
@@ -77,17 +76,15 @@ tokens = []
 LINE = 0
 SYMBOL = 0
 
-
-class Token:
-    def __init__(self, t, ln, sm, v=None):
-        self.type = t
-        self.value = v
-        self.line = ln
-        self.symbol = sm
+Token = namedtuple('Token', 'type line symbol value')
 
 
 def lexer_error():
     raise Exception("Некорректная лексема %d:%d" % (LINE, SYMBOL))
+
+
+def uminus(token: Token):
+    return token._replace(type='-u')
 
 
 def word_check():
@@ -95,7 +92,7 @@ def word_check():
     if len(other) > 0:
         if other[0] not in {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'}:
             if other in keywords:
-                tokens.append(Token(other, LINE, SYMBOL))
+                tokens.append(Token(other, LINE, SYMBOL, None))
             elif regexp.returner('id', other):
                 tokens.append(Token("ident", LINE, SYMBOL, other))
             else:
@@ -114,9 +111,9 @@ def sign_check():
     global sign
     if len(sign) > 0:
         if sign in symbols:
-            tokens.append(Token(symbols[sign], LINE, SYMBOL))
+            tokens.append(Token(symbols[sign], LINE, SYMBOL, None))
         elif sign in composites:
-            tokens.append(Token(composites[sign], LINE, SYMBOL))
+            tokens.append(Token(composites[sign], LINE, SYMBOL, None))
         else:
             lexer_error()
         sign = ''
@@ -126,7 +123,7 @@ def paren_check():
     global sign
     if len(sign) > 0:
         if sign == '(' or sign == ')':
-            tokens.append(Token(symbols[sign], LINE, SYMBOL))
+            tokens.append(Token(symbols[sign], LINE, SYMBOL, None))
             sign = ''
 
 

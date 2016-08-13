@@ -9,7 +9,7 @@ Silver is general-purpose programming language, which goal is to collect many us
 - Statement-based language, not expression-based
 - No low-level looking basic types like `uint32` (only `int` and `double` for trivial tasks)
 - Silver compiler translates code to C language (C89 standart) for good portabilty and performance
-- The core of Silver will be preserved after the full completion of its development - none of next updates will break compatibility! And compatibility won't impede the further development (as it won't affect the core)
+- The core of Silver will be preserved after the full completion of its design - none of next updates will break compatibility! And compatibility won't impede the further development (as it won't affect the core)
 
 ## Features
 

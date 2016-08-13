@@ -335,14 +335,12 @@ closing()
 
 def returner(regular: str, word: str) -> bool:
     if regular == 'id':
-        result = dfareturner(id_dfa, id_state, word)
+        return dfareturner(id_dfa, id_state, word)
     elif regular == 'i':
-        result = dfareturner(int_dfa, int_state, word)
+        return dfareturner(int_dfa, int_state, word)
     elif regular == 'f':
-        result = dfareturner(float_dfa, float_state, word)
+        return dfareturner(float_dfa, float_state, word)
     elif regular == 's':
-        result = dfareturner(string_dfa, string_state, word)
+        return dfareturner(string_dfa, string_state, word)
     else:
         raise Exception("Некорректный тип регулярного выражения")
-
-    return result

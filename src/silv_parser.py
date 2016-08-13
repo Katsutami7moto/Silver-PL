@@ -35,15 +35,6 @@ class Node:
             else:
                 return self.type
 
-
-class Module:
-    def __init__(self, n: str):
-        self.name = n
-        self.declarations = []
-        self.definitions = []
-        self.uses = {}
-
-
 nodes = []
 instructions_current = 0
 expr_current = 0
@@ -75,9 +66,9 @@ types = {
     "int",
     "double"
 }
-symbol_table = dict(names=dict())
 in_function = False  # TODO: уточнить работу и переименовать в 'in_block'
 current_scope = dict()  # TODO: уточнить работу
+symbol_table = dict()
 
 
 def cur_tok(inc: int = 0) -> lexer.Token:
@@ -185,7 +176,7 @@ def p_expr(tokens: list) -> list:
         if not token:
             continue
         if token.type == 'minus' and getprec(last.type) >= 0:
-            token.type = '-u'
+            token = lexer.uminus(token)
         if token.type in {'int', 'double', 'ident'}:
             if last.type in {'int', 'double', 'ident', 'right-paren'}:
                 token_error("Отсутствует оператор между значениями", token)
@@ -608,90 +599,16 @@ def p_instructions():
         pass
 
 
-# def p_block():
-#     while instructions_current < len(tokens_list) and tokens_list[instructions_current].type != 'right-curl':
-#         p_instructions()
-#
-#
-# def p_fdefs():
-#     global instructions_current
-#     while instructions_current < len(tokens_list):
-#         if tokens_list[instructions_current].value in types and tokens_list[instructions_current - 1].type != 'input':
-#             p_func(tokens_list[instructions_current])
-#         else:
-#             instructions_current += 1
-#     instructions_current = 0
+def p_block():
+    while instructions_current < len(tokens_list) and tokens_list[instructions_current].type != 'right-curl':
+        p_instructions()
 
 
-def p_definitions():
-    """
-    :rtype: list
-    """
-    pass
-
-
-def p_declarations():
-    """
-    :rtype: list
-    """
-    pass
-
-
-def p_imports():
-    """
-    :rtype: list
-    """
-    pass
-
-
-def make_module(module_info: tuple):
-    mdl = Module(module_info[0])
-    tokens = module_info[1]
-
-    # global instructions_current
-    # instructions_current += 1
-    # if cur_tok_is('ident'):
-    #     name = cur_tok().value
-    #     instructions_current += 1
-    #     if cur_tok_is('left-curl'):
-    #         instructions_current += 1
-    #         mstart = instructions_current
-    #         declars = p_declarations()
-    #         instructions_current = mstart
-    #         defins = p_definitions()
-    #         return Module(name, declars, defins)
-
-
-def p_start(tokens: list) -> list:
-    modules_infos = []
-    i = 0
-    while i < len(tokens):
-        m = []
-        n = ''
-        if tokens[i].type == 'module':
-            i += 1
+def p_fdefs():
+    global instructions_current
+    while instructions_current < len(tokens_list):
+        if tokens_list[instructions_current].value in types and tokens_list[instructions_current - 1].type != 'input':
+            p_func(tokens_list[instructions_current])
         else:
-            pass
-        if tokens[i].type == 'ident':
-            n = tokens[i].value
-            i += 1
-        else:
-            pass
-        if tokens[i].type == 'left-curl':
-            i += 1
-        else:
-            pass
-        while tokens[i].type != 'right-curl':
-            m.append(tokens[i])
-            i += 1
-        modules_infos.append((n, m))
-        i += 1
-    return map(make_module, modules_infos)
-
-
-def m_rearrange(mods: list) -> list:
-    pass
-
-
-def parsing(code: list) -> list:
-    return m_rearrange(p_start(lexer.lexing(code)))
+            instructions_current += 1
+    instructions_current = 0

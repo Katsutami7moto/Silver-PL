@@ -11,7 +11,7 @@ Start = { Module } .
 
 Module = `module` _Ident_ ModuleBlock .
 
-ModuleBlock = `{` { Import | Type | Typedef | VarB | LetB | Extend | Def } `}` .
+ModuleBlock = `{` { Import | Type | Typedef | Extend | VarB | LetB | Def } `}` .
 
 Import = `import` _Ident_ `;` .
 
