@@ -128,7 +128,7 @@ def p_imports(statements: list) -> set:
 
 
 def make_module(module_info: tuple) -> Module:
-    name, tokens = module_info
+    module_name, tokens = module_info
     module_statements = []
     i = 0
     while i < len(tokens):
@@ -143,8 +143,9 @@ def make_module(module_info: tuple) -> Module:
             s.append(tokens[i])
             i += 1
         module_statements.append((kw, s))
-    return Module(name, p_imports(module_statements),  # TODO: к этим импортам и имени нельзя обратиться - исправить !!!
-                  p_declarations(module_statements), p_definitions(module_statements))
+    imports = p_imports(module_statements)  # TODO: к этим импортам и имени нельзя обратиться - исправить !!!
+    declarations = p_declarations(module_statements)
+    definitions = p_definitions(module_statements)
 
 
 def p_start(tokens: list) -> list:
