@@ -50,7 +50,7 @@ Silver is general-purpose programming language, which goal is to collect many us
             - [ ] `Dict<K, T>` (associative array, with all keys (no duplicates) of type K and all elements of type T)
             - [ ] ...
         - [ ] String (based on List of Unicode characters)
-        - [ ] Functional type (in C turns to function pointer) (`T -> R` or `R(T)` ??)
+        - [ ] Functional type `(T): R` (in C turns to function pointer)
         - [ ] BigNum (list based, one for int and float, with ext-functions, flags NoSign, NoFloat, NoComplex and so on..)
         - [ ] ComplexNum
         - [ ] `None`

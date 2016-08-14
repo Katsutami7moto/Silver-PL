@@ -1,6 +1,42 @@
 from src import lexer
 from collections import namedtuple
 
+
+class Node:
+    def __init__(self, t, v=None):
+        self.type = t
+        self.value = v
+
+        self.lchild = None
+        self.rchild = None
+
+    def setl(self, obj):
+        self.lchild = obj
+
+    def setr(self, obj):
+        self.rchild = obj
+
+    def get_type(self):
+        if self.rchild and not self.lchild:
+            if isinstance(self.type, list):
+                return self.type[1][0]
+            else:
+                return self.rchild.get_type()
+        elif self.lchild and self.rchild:
+            if self.type in {'+', '-', '*', '/', '%'}:
+                if self.lchild.get_type() == 'double' or self.rchild.get_type() == 'double':
+                    return 'double'
+                elif self.lchild.get_type() == self.rchild.get_type():
+                    return self.rchild.get_type()
+            elif self.type in {'<', '>', '<=', '>=', '!=', '==', '!', '||', '&&'}:
+                return 'int'
+        else:
+            if self.type == 'ident':
+                return symbol_table['names'][self.value][0]
+            else:
+                return self.type
+
+
 Module = namedtuple('Module', 'name imports declarations definitions')
 symbol_table = dict()
 module_kwords = {
@@ -14,6 +50,30 @@ module_kwords = {
 }
 
 
+def p_def_type(tokens: list) -> Node:
+    pass
+
+
+def p_def_typedef(tokens: list) -> Node:
+    pass
+
+
+def p_def_varblock(tokens: list) -> Node:
+    pass
+
+
+def p_def_letblock(tokens: list) -> Node:
+    pass
+
+
+def p_def_extend(tokens: list) -> Node:
+    pass
+
+
+def p_def_def(tokens: list) -> Node:
+    pass
+
+
 def p_definitions(statements: list) -> list:
     defs = []
     kwords = (module_kwords - {"import"})
@@ -21,6 +81,30 @@ def p_definitions(statements: list) -> list:
         if x[0] in kwords:
             defs.append(eval('p_def_' + x[0] + '(x[1])'))
     return defs
+
+
+def p_decl_type(tokens: list) -> Node:
+    pass
+
+
+def p_decl_typedef(tokens: list) -> Node:
+    pass
+
+
+def p_decl_varblock(tokens: list) -> Node:
+    pass
+
+
+def p_decl_letblock(tokens: list) -> Node:
+    pass
+
+
+def p_decl_extend(tokens: list) -> Node:
+    pass
+
+
+def p_decl_def(tokens: list) -> Node:
+    pass
 
 
 def p_declarations(statements: list) -> list:
@@ -59,7 +143,7 @@ def make_module(module_info: tuple) -> Module:
             s.append(tokens[i])
             i += 1
         module_statements.append((kw, s))
-    return Module(name, p_imports(module_statements),
+    return Module(name, p_imports(module_statements),  # TODO: к этим импортам и имени нельзя обратиться - исправить !!!
                   p_declarations(module_statements), p_definitions(module_statements))
 
 
@@ -92,7 +176,12 @@ def p_start(tokens: list) -> list:
 
 
 def m_rearrange(mods: list) -> list:
-    pass
+    nodes = []
+    for m in mods:
+        nodes.extend(m.declarations)
+    for m in mods:
+        nodes.extend(m.definitions)
+    return nodes
 
 
 def parsing(code: list) -> list:
