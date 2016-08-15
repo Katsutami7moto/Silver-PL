@@ -3,259 +3,98 @@ from src import silv_parser
 
 def walk_expr_tree(node):
     # type: (silv_parser.Node) -> str
-    s = ''
     if node.value:
-        s += node.value
         if node.type[0] == 'call':
-            s += '('
-            s += walk_expr_tree(node.rchild)
-            s += ')'
+            return '%s(%s)' % (node.value, walk_expr_tree(node.rchild))
+        else:
+            return node.value
     else:
-        if node.type != ',':
-            s += '('
-        if node.lchild:
-            s += walk_expr_tree(node.lchild)
-            s += ' '
-        s += node.type
-        if node.lchild:
-            s += ' '
-        if node.rchild:
-            s += walk_expr_tree(node.rchild)
-        if node.type != ',':
-            s += ')'
-    return s
-
-
-def t_name(node, const=False):
-    # type: (silv_parser.Node) -> str
-    s = ''
-    if const:
-        s += 'const '
-    s += node.type[1]
-    s += ' '
-    s += node.value
-    s += ' = '
-    s += walk_expr_tree(node.rchild)
-    s += ';'
-    return s
+        if node.type == ',':
+            return '{0:s}, {1:s}'.format(walk_expr_tree(node.lchild), walk_expr_tree(node.rchild))
+        elif node.lchild and node.rchild:
+            return '({0:s} {1:s} {2:s})'.format(walk_expr_tree(node.lchild), node.type, walk_expr_tree(node.rchild))
+        elif node.lchild:
+            return '({0:s} {1:s} )'.format(walk_expr_tree(node.lchild), node.type)
+        elif node.rchild:
+            return '({0:s}{1:s})'.format(node.type, walk_expr_tree(node.rchild))
+        else:
+            return '({0:s})'.format(node.type)
 
 
 def t_var(node):
     # type: (silv_parser.Node) -> str
-    return t_name(node)
+    return '{0:s} {1:s} = {2:s};'.format(node.type[1], node.value, walk_expr_tree(node.rchild))
 
 
 def t_let(node):
     # type: (silv_parser.Node) -> str
-    return t_name(node, True)
+    return 'const {0:s} {1:s} = {2:s};'.format(node.type[1], node.value, walk_expr_tree(node.rchild))
 
 
 def t_mod(node):
     # type: (silv_parser.Node) -> str
-    s = ''
-    s += node.value
-    s += ' '
-    s += node.type[1]
-    s += ' '
-    s += walk_expr_tree(node.rchild)
-    s += ';'
-    return s
-
-
-def t_print(node):
-    # type: (silv_parser.Node) -> str
-    s = ''
-    mod = ''
-    if node.type[1] == 'int':
-        mod = '%d'
-    elif node.type[1] == 'double':
-        mod = '%f'
-    s += 'printf("'
-    s += mod
-    s += '", '
-    s += walk_expr_tree(node.rchild)
-    s += ');'
-    return s
-
-
-def t_printline(node):
-    # type: (silv_parser.Node) -> str
-    s = ''
-    mod = ''
-    if node.type[1] == 'int':
-        mod = '%d\\n'
-    elif node.type[1] == 'double':
-        mod = '%f\\n'
-    elif node.type[1] == 'line':
-        mod = '\\n'
-    s += 'printf("'
-    s += mod
-    s += '"'
-    if node.rchild:
-        s += ', '
-        s += walk_expr_tree(node.rchild)
-    s += ');'
-    return s
-
-
-def t_input(node):
-    # type: (silv_parser.Node) -> str
-    s = ''
-    mod = ''
-    if node.type[1] == 'int':
-        mod = '%d'
-    elif node.type[1] == 'double':
-        mod = '%f'
-    if len(node.type) == 3:
-        s += node.type[1]
-        s += ' '
-        s += node.value
-        s += ';\n'
-    s += 'scanf("'
-    s += mod
-    s += '", &'
-    s += node.value
-    s += ');'
-    return s
+    return '{0:s} {1:s} {2:s};'.format(node.value, node.type[1], walk_expr_tree(node.rchild))
 
 
 def t_loop(node):
     # type: (silv_parser.Node) -> str
-    s = 'while (1)\n{\n'
-    ltmp = nlist_walk(node.rchild)
-    for line in ltmp:
-        s += line
-        s += '\n'
-    s += '}'
-    return s
+    return 'while (1)\n{{\n{0:s}\n}}'.format('\n'.join(nlist_walk(node.rchild)))
 
 
 def t_do(node):
     # type: (silv_parser.Node) -> str
-    s = 'do\n{\n'
-    ltmp = nlist_walk(node.rchild)
-    for line in ltmp:
-        s += line
-        s += '\n'
-    s += '} while '
-    s += walk_expr_tree(node.lchild)
-    s += ';'
-    return s
+    return 'do\n{{\n{0:s}\n}} while {1:s};'.format('\n'.join(nlist_walk(node.rchild)), walk_expr_tree(node.lchild))
 
 
 def t_while(node):
     # type: (silv_parser.Node) -> str
-    s = 'while '
-    s += walk_expr_tree(node.lchild)
-    s += '\n{\n'
-    ltmp = nlist_walk(node.rchild)
-    for line in ltmp:
-        s += line
-        s += '\n'
-    s += '}'
-    return s
+    return 'while {0:s}\n{{\n{1:s}\n}}'.format(walk_expr_tree(node.lchild), '\n'.join(nlist_walk(node.rchild)))
 
 
 def t_until(node):
     # type: (silv_parser.Node) -> str
-    s = 'while (!'
-    s += walk_expr_tree(node.lchild)
-    s += ')\n{\n'
-    ltmp = nlist_walk(node.rchild)
-    for line in ltmp:
-        s += line
-        s += '\n'
-    s += '}'
-    return s
+    return 'while (!{0:s})\n{{\n{1:s}\n}}'.format(walk_expr_tree(node.lchild), '\n'.join(nlist_walk(node.rchild)))
 
 
 def t_break(node):
     # type: (silv_parser.Node) -> str
-    s = node.type[0]
-    s += ';'
-    return s
+    return '{0:s};'.format(node.type[0])
 
 
 def t_continue(node):
     # type: (silv_parser.Node) -> str
-    s = node.type[0]
-    s += ';'
-    return s
+    return '{0:s};'.format(node.type[0])
 
 
 def t_if(node):
     # type: (silv_parser.Node) -> str
-    s = 'if '
-    s += walk_expr_tree(node.lchild)
-    s += '\n{\n'
-    ltmp = nlist_walk(node.rchild)
-    for line in ltmp:
-        s += line
-        s += '\n'
-    s += '}'
-    return s
+    return 'if {0:s}\n{{\n{1:s}\n}}'.format(walk_expr_tree(node.lchild), '\n'.join(nlist_walk(node.rchild)))
 
 
 def t_elif(node):
     # type: (silv_parser.Node) -> str
-    s = 'else if '
-    s += walk_expr_tree(node.lchild)
-    s += '\n{\n'
-    ltmp = nlist_walk(node.rchild)
-    for line in ltmp:
-        s += line
-        s += '\n'
-    s += '}'
-    return s
+    return 'else if {0:s}\n{{\n{1:s}\n}}'.format(walk_expr_tree(node.lchild), '\n'.join(nlist_walk(node.rchild)))
 
 
 def t_else(node):
     # type: (silv_parser.Node) -> str
-    s = 'else\n{\n'
-    ltmp = nlist_walk(node.rchild)
-    for line in ltmp:
-        s += line
-        s += '\n'
-    s += '}'
-    return s
+    return 'else\n{{\n{0:s}\n}}'.format('\n'.join(nlist_walk(node.rchild)))
 
 
 def t_func(node):
     # type: (silv_parser.Node) -> str
-    s = node.type[1]
-    s += ' '
-    s += node.value
-    s += ' ('
-    for token in node.lchild:
-        s += token
-        s += ' '
-    s += ')\n{\n'
-    ltmp = nlist_walk(node.rchild)
-    for line in ltmp:
-        s += line
-        s += '\n'
-    s += '}'
-    return s
+    return '{0:s} {1:s}({2:s})\n{{\n{3:s}\n}}'.format(node.type[1], node.value,
+                                                      ' '.join(node.lchild), '\n'.join(nlist_walk(node.rchild)))
 
 
 def t_return(node):
     # type: (silv_parser.Node) -> str
-    s = 'return '
-    s += walk_expr_tree(node.rchild)
-    s += ';'
-    return s
+    return 'return {0:s};'.format(walk_expr_tree(node.rchild))
 
 
-def translating(code):
-    # type: (list) -> list
+def translating(code: list) -> list:
     return nlist_walk(silv_parser.parsing(code))
 
 
-def nlist_walk(nlist):
-    # type: (list) -> list
-    slist = []
-    for node in nlist:
-        assert isinstance(node, silv_parser.Node)
-        func = 't_' + node.type[0] + '(node)'
-        slist.append(eval(func))
-    return slist
+def nlist_walk(nlist: list) -> list:
+    return [eval('t_{0:s}(node)'.format(node.type[0])) for node in nlist]

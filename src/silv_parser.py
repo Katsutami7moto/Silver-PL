@@ -66,8 +66,8 @@ types = {
     "int",
     "double"
 }
-in_function = False  # TODO: уточнить работу и переименовать в 'in_block'
-current_scope = dict()  # TODO: уточнить работу
+in_function = False
+current_scope = dict()
 symbol_table = dict()
 
 
@@ -84,7 +84,7 @@ def cur_tok_not(typename: str) -> bool:
 
 
 def token_error(msg: str, token: lexer.Token = cur_tok()):
-    raise Exception(msg + " %d:%d" % (token.line, token.column))
+    raise Exception("{0:s} '{1:s}', строка {2:d}, колонка {3:d}".format(msg, token.type, token.line, token.column))
 
 
 def p_atom(token: lexer.Token) -> Node:
@@ -418,13 +418,13 @@ def p_curl(kot):
                     instructions_current += 1
                 instructions_current += 1
             elif cur_tok_is('until'):
-                term.append(lexer.Token('not', 0, 0))
-                term.append(lexer.Token('left-paren', 0, 0))
+                term.append(lexer.Token('not', 0, 0, None))
+                term.append(lexer.Token('left-paren', 0, 0, None))
                 instructions_current += 1
                 while cur_tok_not('semicolon'):
                     term.append(cur_tok())
                     instructions_current += 1
-                term.append(lexer.Token('right-paren', 0, 0))
+                term.append(lexer.Token('right-paren', 0, 0, None))
                 instructions_current += 1
             else:
                 token_error("Некорректное использование оператора do (нет while или until)", kot)

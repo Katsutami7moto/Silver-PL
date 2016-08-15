@@ -5,8 +5,8 @@ from collections import namedtuple
 Token = namedtuple('Token', 'type line column value')
 
 
-def lexer_error(lexem, line, column):
-    raise Exception("Некорректная лексема '%s', строка %d, колонка %d" % (lexem, line, column))
+def lexer_error(lexem: str, line: int, column: int):
+    raise Exception("Некорректная лексема '{0:s}', строка {1:d}, колонка {2:d}".format(lexem, line, column))
 
 
 def uminus(token: Token) -> Token:

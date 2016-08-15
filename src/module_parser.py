@@ -80,31 +80,31 @@ def p_definitions(statements: list) -> list:
     kwords = (module_kwords - {"import"})
     for x in statements:
         if x[0] in kwords:
-            defs.append(eval('p_def_' + x[0] + '(x[1])'))
+            defs.append(eval('p_def_{0:s}(x[1])'.format(x[0])))
     return defs
 
 
-def p_decl_type(tokens: list) -> Node:
+def p_decl_type(tokens: list) -> Declaration:
     pass
 
 
-def p_decl_typedef(tokens: list) -> Node:
+def p_decl_typedef(tokens: list) -> Declaration:
     pass
 
 
-def p_decl_varblock(tokens: list) -> Node:
+def p_decl_varblock(tokens: list) -> Declaration:
     pass
 
 
-def p_decl_letblock(tokens: list) -> Node:
+def p_decl_letblock(tokens: list) -> Declaration:
     pass
 
 
-def p_decl_extend(tokens: list) -> Node:
+def p_decl_extend(tokens: list) -> Declaration:
     pass
 
 
-def p_decl_def(tokens: list) -> Node:
+def p_decl_def(tokens: list) -> Declaration:
     pass
 
 
@@ -113,7 +113,7 @@ def p_declarations(statements: list) -> list:
     kwords = (module_kwords - {"import"})
     for x in statements:
         if x[0] in kwords:
-            decls.append(eval('p_decl_' + x[0] + '(x[1])'))
+            decls.append(eval('p_decl_{0:s}(x[1])'.format(x[0])))
     return decls
 
 
