@@ -5,15 +5,15 @@ from collections import namedtuple
 Token = namedtuple('Token', 'type line column value')
 
 
-def lexer_error(line, column):
-    raise Exception("Некорректная лексема %d:%d" % (line, column))
+def lexer_error(lexem, line, column):
+    raise Exception("Некорректная лексема '%s', строка %d, колонка %d" % (lexem, line, column))
 
 
 def uminus(token: Token) -> Token:
     return token._replace(type='-u')
 
 
-def word_check(other: str, line: int, column: int) -> Token:
+def word_check(word: str, line: int, column: int) -> Token:
     keywords = {
         "module",
         "import",
@@ -45,20 +45,20 @@ def word_check(other: str, line: int, column: int) -> Token:
         "not",
         "in"
     }
-    if other[0] not in {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'}:
-        if other in keywords:
-            return Token(other, line, column, None)
-        elif regexp.returner('id', other):
-            return Token("ident", line, column, other)
+    if word[0] not in {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'}:
+        if word in keywords:
+            return Token(word, line, column, None)
+        elif regexp.returner('id', word):
+            return Token("ident", line, column, word)
         else:
-            lexer_error(line, column)
+            lexer_error(word, line, column)
     else:
-        if regexp.returner('i', other):
-            return Token("int", line, column, other)
-        elif regexp.returner('f', other):
-            return Token("double", line, column, other)
+        if regexp.returner('i', word):
+            return Token("int", line, column, word)
+        elif regexp.returner('f', word):
+            return Token("double", line, column, word)
         else:
-            lexer_error(line, column)
+            lexer_error(word, line, column)
 
 
 def sign_check(sign: str, line: int, column: int) -> Token:
@@ -90,7 +90,7 @@ def sign_check(sign: str, line: int, column: int) -> Token:
     if sign in all_signs:
         return Token(all_signs[sign], line, column, None)
     else:
-        lexer_error(line, column)
+        lexer_error(sign, line, column)
 
 
 def lexing(code: list) -> list:
@@ -106,18 +106,7 @@ def lexing(code: list) -> list:
         ';': 'semicolon',
         ',': 'comma'
     }
-    composable = {
-        '+': 'plus',
-        '-': 'minus',
-        '*': 'asterisk',
-        '/': 'slash',
-        '%': 'percent',
-        '=': 'equal',
-        '<': 'left-chev',
-        '>': 'right-chev',
-        '!': 'exclam',
-        '|': 'vertical'
-    }
+    composable = {'+', '-', '*', '/', '%', '=', '<', '>', '!', '|'}
     some_word = ''
     some_sign = ''
     tokens = []
@@ -146,5 +135,5 @@ def lexing(code: list) -> list:
                     tokens.append(sign_check(some_sign, line, column))
                     some_sign = ''
                 some_word += sym
-            column = 0
+        column = 0
     return tokens
