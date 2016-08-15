@@ -84,7 +84,7 @@ def cur_tok_not(typename: str) -> bool:
 
 
 def token_error(msg: str, token: lexer.Token = cur_tok()):
-    raise Exception(msg + " %d:%d" % (token.line, token.symbol))
+    raise Exception(msg + " %d:%d" % (token.line, token.column))
 
 
 def p_atom(token: lexer.Token) -> Node:
@@ -176,6 +176,7 @@ def p_expr(tokens: list) -> list:
         if not token:
             continue
         if token.type == 'minus' and getprec(last.type) >= 0:
+            # Заменяем токен минуса на токен унарного минуса
             token = lexer.uminus(token)
         if token.type in {'int', 'double', 'ident'}:
             if last.type in {'int', 'double', 'ident', 'right-paren'}:
@@ -184,7 +185,7 @@ def p_expr(tokens: list) -> list:
         elif token.type == 'left-paren':
             if last.type == 'ident':
                 op_stack.append(
-                    lexer.Token(['call', symbol_table['names'][last.value]], last.line, last.symbol, last.value))
+                    lexer.Token(['call', symbol_table['names'][last.value]], last.line, last.column, last.value))
                 rpn.pop()
             op_stack.append(token)
         elif token.type == 'right-paren':

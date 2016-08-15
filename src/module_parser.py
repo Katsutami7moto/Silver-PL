@@ -38,6 +38,7 @@ class Node:
 
 
 Module = namedtuple('Module', 'name imports declarations definitions')
+Declaration = namedtuple('Declaration', 'subject name type args')
 symbol_table = dict()
 module_kwords = {
     "import",
