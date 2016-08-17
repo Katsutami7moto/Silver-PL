@@ -3,7 +3,7 @@
 ## Variables/constants declaration
 
 If the type of variable/constant is obvious (rvalue is a basic type literal or a compound type constructor), then you don't need explicit type declaration, just `var x = ...;`.
-If rvalue is a function call or any kind of expression, then the type should be declared: `var x : Type = ...;`.
+If rvalue is a function call or any kind of expression, then the type must be declared: `var x : Type = ...;`.
 
 ### Silver
 

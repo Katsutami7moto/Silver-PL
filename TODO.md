@@ -18,3 +18,12 @@
 - [ ] String literals
 - [ ] `String` type (`typedef String = List<char>;` or like that)
 - [ ] ...
+
+### Where is symbol table needed (according to silv_parser):
+
+- In checking the type of element/expression (getting type of ident-element);
+- In atom parsing (external var);
+- In expression parsing (making function call Token);
+- In var/let parsing (checking written and writing new ones);
+- In mod parsing (checking if present, if var, and proper rvalue type checking);
+- In func parsing (checking written and writing new ones);

@@ -149,6 +149,8 @@ for n in numbers(11) { n.print(); }
 
 ### Translates in C as
 
+Use this: http://club.shelek.ru/viewart.php?id=338 
+
 ```c
 int numbers(ccrContParam, int x) {
     ccrBeginContext;

@@ -59,7 +59,7 @@ Silver is general-purpose programming language, which goal is to collect many us
             - [ ] With generics `<T>`
         - [ ] Intersection types (x & y & ...) (made of product types without equal-named fields) (rename it into 'conjunction type' or smth??)
             - [ ] With generics `<T>`
-        - [ ] Variant types (sum/union) (x | y | ...) (made of any types)
+        - [ ] Variant types (sum/tagged union) (x | y | ...) (made of any types) (http://en.wikipedia.org/wiki/Tagged_union)
             - [ ] With generics `<T>`
             - [ ] `type Option<T> = T | None;`
     - [ ] Type aliases (`typedef`)
@@ -69,7 +69,10 @@ Silver is general-purpose programming language, which goal is to collect many us
     - [x] Functions
     - [ ] Modules (to group functions and some external variables/constants for them)
     - [ ] Expression-returning functoins (`def sum(x: int, y: int): int => x + y;`)
-    - [ ] Extension functions (`extend Type: func() { ... }`; also bunch of functions `extend Type { def func() { ... } ... }`)
+    - [ ] Extension functions (`extend Type: func() { ... }`; also bunch of functions `extend Type { func() { ... } ... }`)
+        - [ ] For product types
+        - [ ] For intersection types
+        - [ ] For variant types
     - [ ] Multiple and keyword function parameters (like in Python)
     - [ ] Function parameters with default values (like in Python)
     - [ ] Bindings with C functions/libraries (not only C?)

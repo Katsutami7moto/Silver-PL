@@ -39,6 +39,8 @@ class Node:
 
 Module = namedtuple('Module', 'name imports declarations definitions')
 Declaration = namedtuple('Declaration', 'subject name type args')
+Definition = namedtuple('Definition', 'subject name type statements args')
+Statement = namedtuple('Statement', 'subject name type rvalue args statements')
 symbol_table = dict()
 module_kwords = {
     "import",
@@ -51,27 +53,27 @@ module_kwords = {
 }
 
 
-def p_def_type(tokens: list) -> Node:
+def p_def_type(tokens: list) -> Definition:
     pass
 
 
-def p_def_typedef(tokens: list) -> Node:
+def p_def_typedef(tokens: list) -> Definition:
     pass
 
 
-def p_def_varblock(tokens: list) -> Node:
+def p_def_varblock(tokens: list) -> list:
     pass
 
 
-def p_def_letblock(tokens: list) -> Node:
+def p_def_letblock(tokens: list) -> list:
     pass
 
 
-def p_def_extend(tokens: list) -> Node:
+def p_def_extend(tokens: list) -> Definition:
     pass
 
 
-def p_def_def(tokens: list) -> Node:
+def p_def_def(tokens: list) -> Definition:
     pass
 
 
@@ -92,11 +94,11 @@ def p_decl_typedef(tokens: list) -> Declaration:
     pass
 
 
-def p_decl_varblock(tokens: list) -> Declaration:
+def p_decl_varblock(tokens: list) -> list:
     pass
 
 
-def p_decl_letblock(tokens: list) -> Declaration:
+def p_decl_letblock(tokens: list) -> list:
     pass
 
 

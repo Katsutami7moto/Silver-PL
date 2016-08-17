@@ -45,18 +45,18 @@ def word_check(word: str, line: int, column: int) -> Token:
         "not",
         "in"
     }
-    if word[0] not in {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'}:
-        if word in keywords:
-            return Token(word, line, column, None)
-        elif regexp.returner('id', word):
-            return Token("ident", line, column, word)
-        else:
-            lexer_error(word, line, column)
-    else:
+    if word[0] in {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'}:
         if regexp.returner('i', word):
             return Token("int", line, column, word)
         elif regexp.returner('f', word):
             return Token("double", line, column, word)
+        else:
+            lexer_error(word, line, column)
+    else:
+        if word in keywords:
+            return Token(word, line, column, None)
+        elif regexp.returner('id', word):
+            return Token("ident", line, column, word)
         else:
             lexer_error(word, line, column)
 
