@@ -82,4 +82,5 @@ Silver is general-purpose programming language, which goal is to collect many us
     - [ ] Pure functions boost (memoization or smth)
     - [ ] Multi-threading programming support
     - [ ] Coroutines and generators (?)
+    - [ ] Interfaces (?)
     - [ ] Monads (?)
