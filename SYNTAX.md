@@ -11,7 +11,7 @@ Start = { Module } .
 
 Module = `module` _Ident_ ModuleBlock .
 
-ModuleBlock = `{` { Import | Type | Typedef | Extend | VarB | LetB | Def } `}` .
+ModuleBlock = `{` { Import | Type | Typedef | Extend | Fields | Def } `}` .
 
 Import = `import` _Ident_ `;` .
 
@@ -29,13 +29,9 @@ InterVar = _Ident_ | Formal | Product .
 
 Typedef = `typedef` _Ident_ `=` _Ident_ Generic `;` .
 
-VarB = `varblock` `{` [{Naming}] `}` .
-
-LetB = `letblock` `{` [{Naming}] `}` .
+Fields = `fields` `{` { Var | Let } `}` .
 
 Extend = `extend` _Ident_ ( `:` Def | `{` { Def } `}` ) .
-
-Naming = _Ident_ ( `:` _Ident_ `=` XExpr | `=` ( _Data_ | New ) ) `;` .
 
 New = `new` Call .
 
@@ -54,6 +50,8 @@ PipeExpr = ( _Expr_ | PipeExpr ) `|>` ( _Ident_ | Call ) .
 Var = `var` Naming .
 
 Let = `let` Naming .
+
+Naming = _Ident_ ( `:` _Ident_ `=` XExpr | `=` ( _Data_ | New ) ) `;` .
 
 Mod = `mod` _Ident_ _AssignOp_ XExpr `;` .
 

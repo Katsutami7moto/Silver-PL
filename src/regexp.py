@@ -9,13 +9,6 @@
 #
 # Работает с ограниченным набором регулярок (специально для транслятора) !!!
 
-
-r_ident = "((a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z)" \
-          "(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|0|1|2|3|4|5|6|7|8|9|\\_)*)#"
-r_int = "(0|(1|2|3|4|5|6|7|8|9)(0|1|2|3|4|5|6|7|8|9)*)#"
-r_float = "(0|(1|2|3|4|5|6|7|8|9)(0|1|2|3|4|5|6|7|8|9)*\\.(0|1|2|3|4|5|6|7|8|9)+)#"
-r_string = "(\".+\")#"
-
 current = 0
 curposnum = 1
 hashposnum = 0
@@ -299,6 +292,8 @@ def dfareturner(stt: dict, state: set, word: str) -> bool:
     return True
 
 
+r_ident = "((a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z)" \
+          "(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|0|1|2|3|4|5|6|7|8|9|\\_)*)#"
 id_tree = parse(r_ident)
 calc(id_tree)
 id_state = frozenset().union(id_tree.f)
@@ -307,6 +302,7 @@ dfabuild(id_state)
 id_dfa = dfa
 relaunch()
 
+r_int = "(0|(1|2|3|4|5|6|7|8|9)(0|1|2|3|4|5|6|7|8|9)*)#"
 int_tree = parse(r_int)
 calc(int_tree)
 int_state = frozenset().union(int_tree.f)
@@ -315,6 +311,7 @@ dfabuild(int_state)
 int_dfa = dfa
 relaunch()
 
+r_float = "(0|(1|2|3|4|5|6|7|8|9)(0|1|2|3|4|5|6|7|8|9)*\\.(0|1|2|3|4|5|6|7|8|9)+)#"
 float_tree = parse(r_float)
 calc(float_tree)
 float_state = frozenset().union(float_tree.f)
@@ -323,6 +320,7 @@ dfabuild(float_state)
 float_dfa = dfa
 relaunch()
 
+r_string = "((\".+\")|(\'.+\'))#"
 string_tree = parse(r_string)
 calc(string_tree)
 string_state = frozenset().union(string_tree.f)

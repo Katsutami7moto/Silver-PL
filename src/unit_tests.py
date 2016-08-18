@@ -10,7 +10,7 @@ lexer_right_float = "74363.28728"
 
 lexer_wrong_ident = "dhd6$8_@fj^j"
 
-lexer_right_ident = "cool_guy___87___"
+lexer_right_ident = "cool_guy___87"
 
 lexer_wrong_signs = "+\n-\n>___<"
 

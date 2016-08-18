@@ -19,8 +19,7 @@ def word_check(word: str, line: int, column: int) -> Token:
         "import",
         "var",
         "let",
-        "varblock",
-        "letblock",
+        "fields",
         "mod",  # TODO: точно ли такое слово ?
         "def"
         "type",

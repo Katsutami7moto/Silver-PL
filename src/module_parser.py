@@ -2,41 +2,6 @@ from src import lexer
 from collections import namedtuple
 
 
-class Node:
-    def __init__(self, t, v=None):
-        self.type = t
-        self.value = v
-
-        self.lchild = None
-        self.rchild = None
-
-    def setl(self, obj):
-        self.lchild = obj
-
-    def setr(self, obj):
-        self.rchild = obj
-
-    def get_type(self):
-        if self.rchild and not self.lchild:
-            if isinstance(self.type, list):
-                return self.type[1][0]
-            else:
-                return self.rchild.get_type()
-        elif self.lchild and self.rchild:
-            if self.type in {'+', '-', '*', '/', '%'}:
-                if self.lchild.get_type() == 'double' or self.rchild.get_type() == 'double':
-                    return 'double'
-                elif self.lchild.get_type() == self.rchild.get_type():
-                    return self.rchild.get_type()
-            elif self.type in {'<', '>', '<=', '>=', '!=', '==', '!', '||', '&&'}:
-                return 'int'
-        else:
-            if self.type == 'ident':
-                return symbol_table['names'][self.value][0]
-            else:
-                return self.type
-
-
 Module = namedtuple('Module', 'name imports declarations definitions')
 Declaration = namedtuple('Declaration', 'subject name type args')
 Definition = namedtuple('Definition', 'subject name type statements args')
@@ -46,8 +11,7 @@ module_kwords = {
     "import",
     "type",
     "typedef",
-    "varblock",
-    "letblock",
+    "fields",
     "extend",
     "def"
 }
@@ -61,11 +25,7 @@ def p_def_typedef(tokens: list) -> Definition:
     pass
 
 
-def p_def_varblock(tokens: list) -> list:
-    pass
-
-
-def p_def_letblock(tokens: list) -> list:
+def p_def_fields(tokens: list) -> list:
     pass
 
 
@@ -94,11 +54,7 @@ def p_decl_typedef(tokens: list) -> Declaration:
     pass
 
 
-def p_decl_varblock(tokens: list) -> list:
-    pass
-
-
-def p_decl_letblock(tokens: list) -> list:
+def p_decl_fields(tokens: list) -> list:
     pass
 
 

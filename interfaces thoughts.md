@@ -57,15 +57,15 @@ int main()
 
 ### How to make this in Silver
 
-Interfaces contain only functions.
-Interfaces can't have instances (objects).
-You describe what types are suitable for this interface instead of what interface implements this type.
-Same type can suit to many interfaces.
-You may add new type suiting to some interface when and where you want it.
-You may extend interfaces wtih new function prototypes when and where you want it.
-If function takes an interface argument, it compiles in several functions with different arguments in its place. (or use macro?)
-The interface itself isn't presented in generated code.
-In the example below we can't yet use interface as a type for value returning from a function.
+- Interface contains only functions.
+- Interface can't have instances (objects).
+- Interface can't be a return type of a function.
+- You describe what types are suitable for these interfaces instead of what interfaces implement these types.
+- Same type can suit to many interfaces.
+- You may add new type suiting to some interface when and where you want it.
+- You may extend interfaces wtih new function prototypes when and where you want it.
+- If function takes an interface argument, it compiles in several functions with different arguments in its place. (or use macro?)
+- The interface itself isn't presented in generated code.
 
 ```
 interface iOpenable
