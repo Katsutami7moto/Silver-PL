@@ -6,6 +6,8 @@ lexer_wrong_float = "26757783.323ksdis333"
 
 lexer_right_float = "74363.28728"
 
+# In future - tests for string, list, other containers
+
 lexer_wrong_ident = "dhd6$8_@fj^j"
 
 lexer_right_ident = "cool_guy___87___"
