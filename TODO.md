@@ -6,7 +6,7 @@
 - [ ] Modules (statements `module` and `import`, with correct placing of declarations and realizations)
 - [ ] Product types, their constructors and destructors (`del` statement)
 - [ ] Extension functions
-- [ ] Product types with generics `<T>` (use `<T>` or `[T]` ??)
+- [ ] Product types with generics (use `<T>` or `[T]` ??)
 - [ ] List literals
 - [ ] List type, basic fucntions and behavior (`[x..y..z], list[i], list[a:b]`; List.append and others..)
 - [ ] `for` loop

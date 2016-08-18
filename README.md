@@ -24,7 +24,7 @@ Silver is general-purpose programming language, which goal is to collect many us
     - [x] Logical expressions
     - [ ] Conditions `x in y`, `x not in y`
     - [ ] Conditional expression (`if cond: x elif cond: y else: z`)
-    - [ ] Containers comprehensions (`for x in container: expr(x)`)
+    - [ ] Containers comprehensions (`[for x in container: expr(x)]`)
     - [ ] Lambda expressions (`fun (x) => expr(x)`)
     - [ ] Pipe operator (`|>`)
     - [ ] Pattern matching (expr)
@@ -35,7 +35,7 @@ Silver is general-purpose programming language, which goal is to collect many us
     - [x] Variables assignment (also augmented) `mod x = ...;`
     - [x] Loops
         - [x] Conditional loops: infinite, while, until, do..while, do..until
-        - [ ] Container loop: `for x in container doSomething();` or `for x in container { ... }`
+        - [ ] Container loop: `for x in container { ... }`
     - [x] Conditional: if-elif-else
     - [ ] Pattern matching (stmnt)
 - Types
@@ -61,9 +61,9 @@ Silver is general-purpose programming language, which goal is to collect many us
             - [ ] With generics `<T>`
         - [ ] Variant types (sum/tagged union) (x | y | ...) (made of any types) (http://en.wikipedia.org/wiki/Tagged_union)
             - [ ] With generics `<T>`
-            - [ ] `type Option<T> = T | None;`
+            - [ ] `type Option<T> = T | None;` ??
     - [ ] Type aliases (`typedef`)
-    - [ ] With generics `<T>`
+        - [ ] With generics `<T>`
     - [ ] Loading types from C
 - Definitions
     - [x] Functions

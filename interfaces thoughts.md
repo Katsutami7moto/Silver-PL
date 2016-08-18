@@ -1,6 +1,8 @@
 ## Interfaces
 
-### Example in C++ (interface is an abstract class with only abstract methods (virtual and without realization in interface itself)):
+### Example in C++:
+
+(interface is an abstract class with only abstract methods (virtual and without realization in interface itself))
 
 ```cpp
 class iOpenable
@@ -58,11 +60,12 @@ int main()
 Interfaces contain only functions.
 Interfaces can't have instances (objects).
 You describe what types are suitable for this interface instead of what interface implements this type.
+Same type can suit to many interfaces.
 You may add new type suiting to some interface when and where you want it.
 You may extend interfaces wtih new function prototypes when and where you want it.
-Suiting types are absolutely normal Silver types.
 If function takes an interface argument, it compiles in several functions with different arguments in its place. (or use macro?)
 The interface itself isn't presented in generated code.
+In the example below we can't yet use interface as a type for value returning from a function.
 
 ```
 interface iOpenable
