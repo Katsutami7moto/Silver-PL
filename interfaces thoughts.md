@@ -69,14 +69,16 @@ The whole example:
 
 **Silver**
 ```
-type VariantTypeName = Type1 | Type2;
+type VariantTypeName =
+    | First Type1
+    | Second Type2;
 def func1(arg: VariantTypeName) { ... }
 let t = new Type2(...);
-func1(t);
-def func2(): VariantTypeName
+func1(First t);
+def func2(...): VariantTypeName
 {
     var tmp = new Type1(...);
-    return tmp;
+    return Second tmp;
 }
 ```
 
@@ -88,7 +90,7 @@ struct VariantTypeName* VariantTypeName__Type2(Type2 arg);
 void func1(struct VariantTypeName * arg) { ... }
 const Type2 t = Type2__Constructor(...);
 func1(VariantTypeName__Type2(t));
-struct VariantTypeName* func2()
+struct VariantTypeName* func2(...)
 {
     Type1 tmp = Type1__Constructor(...);
     return VariantTypeName__Type1(tmp);
@@ -99,10 +101,9 @@ struct VariantTypeName* func2()
 - Interfaces can't have instances (objects).
 - You describe what types are suitable for these interfaces instead of what interfaces implement these types.
 - Same type can suit to many interfaces.
-
 - You may add new type suiting to some interface when and where you want it.
 - You may extend interfaces wtih new function prototypes when and where you want it.
-- Any of these two operations in your module done to the interface from another module creates a copy of this interface in your module. (or make a special operation to copy types?)
+- Before you, in any way, extend any type from another module inside yours, you must copy this type to your module: `suit ThisType: ThatModule.ThisType;` even if you already imported ThatModule (so you may not import a module only for types).
 
 ```
 type Door = ... ;
@@ -116,7 +117,9 @@ interface iOpenable
 
 extend iOpenable: some_func(some_item: some_type): some_type;
 
-suit iOpenable: Door, Book;
+suit iOpenable:
+    | Door
+    | Book;
 
 extend Door
 {

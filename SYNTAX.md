@@ -21,7 +21,7 @@ Generic = [ `<` _Ident_ [{ `,` _Ident_ }] `>` ] .
 
 Product = { `*` Formal } .
 
-Variant = { `|` _Ident_ } .
+Variant = { `|` _Ident_ _Ident_ } .
 
 Intersection = `&` _Ident_ { `&` InterVar } .
 

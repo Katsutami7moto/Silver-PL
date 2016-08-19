@@ -4,6 +4,8 @@
 - [ ] Fix issue #2
 - [ ] Fix issue #1
 - [ ] Modules (statements `module` and `import`, with correct placing of declarations and realizations)
+- [ ] Nested modules
+- [ ] Appeal to nested modules/fields through dots
 - [ ] Product types, their constructors and destructors (`del` statement)
 - [ ] Extension functions
 - [ ] Product types with generics (use `<T>` or `[T]` ??)
