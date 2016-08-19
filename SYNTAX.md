@@ -19,11 +19,11 @@ Type = `type` _Ident_ Generic `=` ( Product | Variant | Intersection | **Functio
 
 Generic = [ `<` _Ident_ [{ `,` _Ident_ }] `>` ] .
 
-Product = Formal [{ `*` Formal }] .
+Product = { `*` Formal } .
 
-Variant = _Ident_ `|` _Ident_ [{ `|` _Ident_ }] .
+Variant = { `|` _Ident_ } .
 
-Intersection = _Ident_ `&` InterVar [{ `&` InterVar }] .
+Intersection = `&` _Ident_ { `&` InterVar } .
 
 InterVar = _Ident_ | Formal | Product .
 
