@@ -24,6 +24,9 @@ def word_check(word: str, line: int, column: int) -> Token:
         "def"
         "type",
         "typedef",
+        "interface",
+        "extend",
+        "suit",
         "new",
         "del",
         "while",

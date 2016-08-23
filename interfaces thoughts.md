@@ -85,8 +85,8 @@ def func2(...): VariantTypeName
 **C** (without modules names prefixes)
 ```c
 struct VariantTypeName { ... };
-struct VariantTypeName* VariantTypeName__Type1(Type1 arg);
-struct VariantTypeName* VariantTypeName__Type2(Type2 arg);
+struct VariantTypeName* VariantTypeName__Type1(Type1 arg) { ... };
+struct VariantTypeName* VariantTypeName__Type2(Type2 arg) { ... };
 void func1(struct VariantTypeName * arg) { ... }
 const Type2 t = Type2__Constructor(...);
 func1(VariantTypeName__Type2(t));

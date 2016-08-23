@@ -13,6 +13,8 @@ module_kwords = {
     "typedef",
     "fields",
     "extend",
+    "interface",
+    "suit",
     "def"
 }
 

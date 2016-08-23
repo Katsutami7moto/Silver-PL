@@ -1,16 +1,13 @@
 ## TODO
 
-- [x] Fix issue #4
-- [ ] Fix issue #2
-- [ ] Fix issue #1
 - [ ] Modules (statements `module` and `import`, with correct placing of declarations and realizations)
-- [ ] Nested modules
-- [ ] Appeal to nested modules/fields through dots
+- [ ] Appeal to module's fields/functions (and modules in directories) through dots
+- [ ] `bool` type
 - [ ] Product types, their constructors and destructors (`del` statement)
-- [ ] Extension functions
-- [ ] Product types with generics (use `<T>` or `[T]` ??)
+- [ ] Extension functions for product types
+- [ ] Product types with generics
 - [ ] List literals
-- [ ] List type, basic fucntions and behavior (`[x..y..z], list[i], list[a:b]`; List.append and others..)
+- [ ] `List` type, basic fucntions and behavior (`[x..y..z], list[i], list[a:b]`; List.append and others..)
 - [ ] `for` loop
 - [ ] Conditions `in`/`not in`, using in `if` and loops
 - [ ] List comprehensions
@@ -19,6 +16,37 @@
 - [ ] `typedef`
 - [ ] String literals
 - [ ] `String` type (`typedef String = List<char>;` or like that)
+- [ ] Inersection types, their constructors and destructors (`del` statement)
+- [ ] Extension functions for intersection types
+- [ ] Intersection types with generics
+- [ ] Passing intersection type value to one of its product types argument in function call
+- [ ] Variant types
+- [ ] Variant types with generics
+- [ ] `None`
+- [ ] `Option<T>` type (??)
+- [ ] Passing to variant type argument in function call one of its types value
+- [ ] Interfaces
+- [ ] Interfaces with generics (??)
+- [ ] Standart interfaces (??)
+- [ ] Containers through interfaces (??)
+- [ ] Nested generics
+- [ ] `typedef` with generics (??)
+- [ ] Expression-returning functions
+- [ ] Functional type
+- [ ] Lambda expressions
+- [ ] Functional programming features
+- [ ] Naming function parameters in call (like in Python)
+- [ ] Multiple and keyword function parameters (like in Python)
+- [ ] Function parameters with default values (like in Python)
+- [ ] Pipe operator with just functions
+- [ ] Pipe operator with module/extension functions
+- [ ] Pattern matching expression
+- [ ] Pattern matching statement
+- [ ] Appealing to C functions/libraries
+- [ ] IO functions
+- [ ] Loading types from C
+- [ ] Multiple files compilation (project configuration file)
+- [ ] Make all types as structures with smart pointers (??)
 - [ ] ...
 
 ### Where is symbol table needed (according to silv_parser):

@@ -4,8 +4,8 @@ Silver is general-purpose programming language, which goal is to collect many us
 ## Concepts
 
 - Functional programming features: anonymous functions, first-class functions, closures, currying, partial application, orientation on programminng w/out mutations
-- Compound types and extension functions will make code more familiar to OOP-users
-- No automatical/implicit type conversion, static strong type system
+- Compound types, interfaces and extension functions will make code more familiar to OOP-users
+- No automatic/implicit type conversion, static strong type system
 - Statement-based language, not expression-based
 - No low-level looking basic types like `uint32` (only `int` and `double` for trivial tasks)
 - Silver compiler translates code to C language (C89 standart) for good portabilty and performance
@@ -40,7 +40,7 @@ Silver is general-purpose programming language, which goal is to collect many us
     - [ ] Pattern matching (stmnt)
 - Types
     - [ ] Basic types
-        - [x] Bool (`True` and `False` -> `0` and `1` in C)
+        - [x] bool (`True` and `False` -> `0` and `1` in C)
         - [x] int
         - [x] double
         - [ ] char (Unicode)
@@ -50,29 +50,30 @@ Silver is general-purpose programming language, which goal is to collect many us
             - [ ] `Dict<K, T>` (associative array, with all keys (no duplicates) of type K and all elements of type T)
             - [ ] ...
         - [ ] String (based on List of Unicode characters)
+        - [ ] `None`
         - [ ] Functional type `(T): R` (in C turns to function pointer)
         - [ ] BigNum (list based, one for int and float, with ext-functions, flags NoSign, NoFloat, NoComplex and so on..)
         - [ ] ComplexNum
-        - [ ] `None`
     - [ ] Compound types
-        - [ ] Product types (namedtuple/struct) (x * y * ...) (made of any types)
+        - [ ] Product types (namedtuple/struct) (* x * y ...) (made of any types)
             - [ ] With generics `<T>`
-        - [ ] Intersection types (x & y & ...) (made of product types without equal-named fields) (rename it into 'conjunction type' or smth??)
+        - [ ] Intersection types (& x & y ...) (made of product types without equal-named fields) (rename it into 'conjunction type' or smth??)
             - [ ] With generics `<T>`
-        - [ ] Variant types (sum/tagged union) (x | y | ...) (made of any types) (http://en.wikipedia.org/wiki/Tagged_union)
+        - [ ] Variant types (sum/tagged union) (| x | y ...) (made of any types) (http://en.wikipedia.org/wiki/Tagged_union)
             - [ ] With generics `<T>`
-            - [ ] `type Option<T> = T | None;` ??
+            - [ ] `type Option<T> = T | None;` (??)
+        - [ ] Interfaces (variant types with extension functions)
+            - [ ] With generics `<T>` (??)
     - [ ] Type aliases (`typedef`)
-        - [ ] With generics `<T>`
+        - [ ] With generics `<T>` (??)
     - [ ] Loading types from C
 - Definitions
     - [x] Functions
     - [ ] Modules (to group functions and some external variables/constants for them)
-    - [ ] Expression-returning functoins (`def sum(x: int, y: int): int => x + y;`)
     - [ ] Extension functions (`extend Type: func() { ... }`; also bunch of functions `extend Type { func() { ... } ... }`)
         - [ ] For product types
         - [ ] For intersection types
-        - [ ] For variant types
+    - [ ] Expression-returning functions (`def sum(x: int, y: int): int => x + y;`)
     - [ ] Multiple and keyword function parameters (like in Python)
     - [ ] Function parameters with default values (like in Python)
     - [ ] Bindings with C functions/libraries (not only C?)
@@ -80,7 +81,6 @@ Silver is general-purpose programming language, which goal is to collect many us
     - [ ] IO standart functions
     - [ ] Multiple files compilation (as a project)
     - [ ] Pure functions boost (memoization or smth)
-    - [ ] Multi-threading programming support
+    - [ ] Multi-threading programming support (?)
     - [ ] Coroutines and generators (?)
-    - [ ] Interfaces (?)
     - [ ] Monads (?)

@@ -11,23 +11,27 @@ Start = { Module } .
 
 Module = `module` _Ident_ ModuleBlock .
 
-ModuleBlock = `{` { Import | Type | Typedef | Extend | Fields | Def } `}` .
+ModuleBlock = `{` { Import | Type | Typedef | **Interface** | **Suit** | Fields | Extend | Def } `}` .
 
 Import = `import` _Ident_ `;` .
 
-Type = `type` _Ident_ Generic `=` ( Product | Variant | Intersection | **Functional** ) `;` .
+Type = `type` TypeName `=` ( Product | Variant | Intersection | Functional ) `;` .
+
+TypeName = _Ident_ Generic .
 
 Generic = [ `<` _Ident_ [{ `,` _Ident_ }] `>` ] .
 
 Product = { `*` Formal } .
 
-Variant = { `|` _Ident_ _Ident_ } .
+Variant = { `|` _Ident_ TypeName } .
 
-Intersection = `&` _Ident_ { `&` InterVar } .
+Intersection = `&` TypeName { `&` InterVar } .
 
-InterVar = _Ident_ | Formal | Product .
+InterVar = TypeName | Formal | Product .
 
-Typedef = `typedef` _Ident_ `=` _Ident_ Generic `;` .
+Functional = `(` TypeName { `,` TypeName } `)` `:` TypeName .
+
+Typedef = `typedef` _Ident_ `=` TypeName `;` .
 
 Fields = `fields` `{` { Var | Let } `}` .
 
@@ -35,9 +39,9 @@ Extend = `extend` _Ident_ ( `:` Def | `{` { Def } `}` ) .
 
 New = `new` Call .
 
-Def = `def` _Ident_ `(` [ Formal [{ `,` Formal }] ] `)` ( `:` _Ident_ ( CodeBlock | `=>` XExpr `;` ) | CodeBlock ) .
+Def = `def` _Ident_ `(` [ Formal [{ `,` Formal }] ] `)` ( `:` TypeName ( CodeBlock | `=>` XExpr `;` ) | CodeBlock ) .
 
-Formal = _Ident_ `:` _Ident_ .
+Formal = _Ident_ `:` TypeName .
 
 CodeBlock = `{` { Var | Let | Mod | Loops | If | Call `;` | PipeExpr `;` | Return } `}` .
 
