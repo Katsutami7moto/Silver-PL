@@ -3,11 +3,11 @@ Silver is general-purpose programming language, which goal is to collect many us
 
 ## Concepts
 
+- Everything must be resonable
 - Functional programming features: anonymous functions, first-class functions, closures
 - Compound types, interfaces and extension functions will make code more familiar to OOP-users
 - No automatic/implicit type conversion, static strong type system
 - Statement-based language, not expression-based
-- No low-level looking basic types like `uint32` (only `int` and `double` for trivial tasks)
 - Silver compiler translates code to C language (C89 standart) for good portabilty and performance
 - The core of Silver will be preserved after the full completion of its design - none of next updates will break compatibility! And compatibility won't impede the further development (as it won't affect the core)
 
@@ -55,28 +55,27 @@ Silver is general-purpose programming language, which goal is to collect many us
         - [ ] BigNum (list based, one for int and float, with ext-functions, flags NoSign, NoFloat, NoComplex and so on..)
         - [ ] ComplexNum
     - [ ] Compound types
-        - [ ] Product types (namedtuple/struct) (* x * y ...) (made of any types)
-            - [ ] With generics `<T>`
-        - [ ] Intersection types (& x & y ...) (made of product types without equal-named fields) (rename it into 'conjunction type' or smth??)
-            - [ ] With generics `<T>`
-        - [ ] Variant types (sum/tagged union) (| x | y ...) (made of any types) (http://en.wikipedia.org/wiki/Tagged_union)
-            - [ ] With generics `<T>`
-            - [ ] `type Option<T> = T | None;` (??)
+        - [ ] Product types (namedtuple/struct) (`* x * y ...`) (made of any types)
+            - [ ] With generics
+        - [ ] Intersection types (`& x & y ...`) (made of product types without equal-named fields) (rename it into 'conjunction type' or smth??)
+            - [ ] With generics
+        - [ ] Variant types (sum/tagged union) (`| x | y ...`) (made of any types) ( http://en.wikipedia.org/wiki/Tagged_union )
+            - [ ] With generics
+            - [ ] `type Option<T> = | T | None;` (??)
         - [ ] Interfaces (variant types with extension functions)
-            - [ ] With generics `<T>` (??)
+            - [ ] With generics (??)
     - [ ] Type aliases (`typedef`)
-        - [ ] With generics `<T>` (??)
-    - [ ] Loading types from C
+        - [ ] With generics (??)
 - Definitions
     - [x] Functions
     - [ ] Modules (to group functions and some external variables/constants for them)
-    - [ ] Extension functions (`extend Type: func() { ... }`; also bunch of functions `extend Type { func() { ... } ... }`)
+    - [ ] Extension functions
         - [ ] For product types
         - [ ] For intersection types
-    - [ ] Expression-returning functions (`def sum(x: int, y: int): int => x + y;`)
+    - [ ] Expression-returning functions
     - [ ] Multiple and keyword function parameters (like in Python)
     - [ ] Function parameters with default values (like in Python)
-    - [ ] Bindings with C functions/libraries (not only C?)
+    - [ ] Foreign functions/types interface (at first, for C)
 - Other
     - [ ] IO standart functions
     - [ ] Multiple files compilation (as a project)
@@ -84,3 +83,4 @@ Silver is general-purpose programming language, which goal is to collect many us
     - [ ] Multi-threading programming support (?)
     - [ ] Coroutines and generators (?)
     - [ ] Monads (?)
+    - [ ] Different back-ends (??)

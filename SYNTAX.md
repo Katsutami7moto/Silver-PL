@@ -1,11 +1,11 @@
 ## Syntax (RBNF)
 
-> `[ ]` means `0 or 1`
-> `{ }` means `1 or many`
-> `[{ }]` means `0 or many`
-> Things in code are terminals, just words/symbols - nonterminals
-> Nonterminals in italic are obvious to define.
-> Nonterminals in bold will be defined in future.
+> - `[ ]` means `0 or 1`
+> - `{ }` means `1 or many`
+> - `[{ }]` means `0 or many`
+> - Things in code are terminals, just words/symbols - nonterminals
+> - Nonterminals in italic are obvious to define.
+> - Nonterminals in bold will be defined in future.
 
 Start = { Module } .
 
@@ -59,9 +59,9 @@ FuncImpl = FuncDecl ( CodeBlock | `=>` XExpr `;` )
 
 Def = `def` FuncImpl .
 
-CodeBlock = `{` { Var | Let | Mod | Loops | If | Call `;` | PipeExpr `;` | Return } `}` .
+CodeBlock = `{` { Var | Let | Mod | Loops | If | Call `;` | PipeExpr `;` | Return | **Del** | **MatchStat** } `}` .
 
-XExpr = _Expr_ | IfExpr | PipeExpr | **Lambda** .
+XExpr = _Expr_ | IfExpr | PipeExpr | **Lambda** | **MatchExpr** .
 
 IfExpr = `if` _Expr_ `:` XExpr [{ `elif` _Expr_ `:` XExpr }] `else` `:` XExpr .
 

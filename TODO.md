@@ -4,6 +4,7 @@
 - [ ] Appeal to module's fields/functions (and modules in directories) through dots
 - [ ] `bool` type
 - [ ] Product types, their constructors and destructors (`del` statement)
+- [ ] Choose memory management system
 - [ ] Extension functions for product types
 - [ ] Product types with generics
 - [ ] List literals
