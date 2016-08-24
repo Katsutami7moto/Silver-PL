@@ -3,7 +3,7 @@ Silver is general-purpose programming language, which goal is to collect many us
 
 ## Concepts
 
-- Functional programming features: anonymous functions, first-class functions, closures, currying, partial application, orientation on programminng w/out mutations
+- Functional programming features: anonymous functions, first-class functions, closures
 - Compound types, interfaces and extension functions will make code more familiar to OOP-users
 - No automatic/implicit type conversion, static strong type system
 - Statement-based language, not expression-based

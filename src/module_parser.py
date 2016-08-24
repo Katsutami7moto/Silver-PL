@@ -9,12 +9,14 @@ Statement = namedtuple('Statement', 'subject name type rvalue args statements')
 symbol_table = dict()
 module_kwords = {
     "import",
+    "use",
     "type",
     "typedef",
-    "fields",
-    "extend",
     "interface",
     "suit",
+    "var",
+    "let",
+    "extend",
     "def"
 }
 

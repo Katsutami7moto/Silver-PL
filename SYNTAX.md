@@ -11,9 +11,11 @@ Start = { Module } .
 
 Module = `module` _Ident_ ModuleBlock .
 
-ModuleBlock = `{` { Import | Type | Typedef | **Interface** | **Suit** | Fields | Extend | Def } `}` .
+ModuleBlock = `{` `connections:` { Import | Use } `types:` { Type | Typedef | Interface | Suit } `fields:` { Var | Let } `functions:` { Extend | Def } `}` .
 
 Import = `import` _Ident_ `;` .
+
+Use = `use` _Ident_ `;` .
 
 Type = `type` TypeName `=` ( Product | Variant | Intersection | Functional ) `;` .
 
@@ -22,6 +24,8 @@ TypeName = _Ident_ Generic .
 Generic = [ `<` _Ident_ [{ `,` _Ident_ }] `>` ] .
 
 Product = { `*` Formal } .
+
+Formal = _Ident_ `:` TypeName .
 
 Variant = { `|` _Ident_ TypeName } .
 
@@ -33,29 +37,35 @@ Functional = `(` TypeName { `,` TypeName } `)` `:` TypeName .
 
 Typedef = `typedef` _Ident_ `=` TypeName `;` .
 
-Fields = `fields` `{` { Var | Let } `}` .
+Interface = `interface` _Ident_ `{` { FuncDecl `;` } `}` .
 
-Extend = `extend` _Ident_ ( `:` Def | `{` { Def } `}` ) .
+FuncDecl = _Ident_ `(` FormalsList `)` [ `:` TypeName ] .
 
-New = `new` Call .
+FormalsList = [ Formal [{ `,` Formal }] ] .
 
-Def = `def` _Ident_ `(` [ Formal [{ `,` Formal }] ] `)` ( `:` TypeName ( CodeBlock | `=>` XExpr `;` ) | CodeBlock ) .
-
-Formal = _Ident_ `:` TypeName .
-
-CodeBlock = `{` { Var | Let | Mod | Loops | If | Call `;` | PipeExpr `;` | Return } `}` .
-
-XExpr = _Expr_ | IfExpr | PipeExpr .
-
-IfExpr = `if` _Expr_ `:` XExpr [{ `elif` _Expr_ `:` XExpr }] `else` `:` XExpr .
-
-PipeExpr = ( _Expr_ | PipeExpr ) `|>` ( _Ident_ | Call ) .
+Suit = `suit` _Ident_ `:` ( _Ident_ | Variant ) .
 
 Var = `var` Naming .
 
 Let = `let` Naming .
 
 Naming = _Ident_ ( `:` _Ident_ `=` XExpr | `=` ( _Data_ | New ) ) `;` .
+
+New = `new` Call .
+
+Extend = `extend` _Ident_ ( `:` ( FuncDecl | FuncImpl ) | `{` { Def } `}` ) .
+
+FuncImpl = FuncDecl ( CodeBlock | `=>` XExpr `;` )
+
+Def = `def` FuncImpl .
+
+CodeBlock = `{` { Var | Let | Mod | Loops | If | Call `;` | PipeExpr `;` | Return } `}` .
+
+XExpr = _Expr_ | IfExpr | PipeExpr | **Lambda** .
+
+IfExpr = `if` _Expr_ `:` XExpr [{ `elif` _Expr_ `:` XExpr }] `else` `:` XExpr .
+
+PipeExpr = ( _Expr_ | PipeExpr ) `|>` ( _Ident_ | Call ) .
 
 Mod = `mod` _Ident_ _AssignOp_ XExpr `;` .
 

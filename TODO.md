@@ -1,6 +1,6 @@
 ## TODO
 
-- [ ] Modules (statements `module` and `import`, with correct placing of declarations and realizations)
+- [ ] Modules (statements `module`, `import` and `use`, with correct placing of declarations and realizations)
 - [ ] Appeal to module's fields/functions (and modules in directories) through dots
 - [ ] `bool` type
 - [ ] Product types, their constructors and destructors (`del` statement)
@@ -46,7 +46,7 @@
 - [ ] IO functions
 - [ ] Loading types from C
 - [ ] Multiple files compilation (project configuration file)
-- [ ] Make all types as structures with smart pointers (??)
+- [ ] Implement all types as structures with smart pointers (??)
 - [ ] ...
 
 ### Where is symbol table needed (according to silv_parser):

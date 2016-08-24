@@ -103,7 +103,7 @@ struct VariantTypeName* func2(...)
 - Same type can suit to many interfaces.
 - You may add new type suiting to some interface when and where you want it.
 - You may extend interfaces wtih new function prototypes when and where you want it.
-- Before you, in any way, extend any type from another module inside yours, you must copy this type to your module: `suit ThisType: ThatModule.ThisType;` even if you already imported ThatModule (so you may not import a module only for types).
+- Before you, in any way, extend any type from an `import`'ed module inside yours, you must copy this type to your module: `suit ThisType: ThatModule.ThisType;`. If copy a type from some module, you can't `use` that module.
 
 ```
 type Door = ... ;
