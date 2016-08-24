@@ -33,7 +33,9 @@ Intersection = `&` TypeName { `&` InterVar } .
 
 InterVar = TypeName | Formal | Product .
 
-Functional = `(` TypeName { `,` TypeName } `)` `:` TypeName .
+Functional = `(` TypeNamesList `)` [ `:` TypeName ] .
+
+TypeNamesList = [ TypeName [{ `,` TypeName }] ] .
 
 Typedef = `typedef` _Ident_ `=` TypeName `;` .
 
