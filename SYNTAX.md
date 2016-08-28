@@ -53,7 +53,9 @@ intersection ::= `&` typename (`&` intervar)+ .
 
 intervar ::= typename | formal | product .
 
-functional ::= `(` typename (`,` typename)+ `)` `:` typename .
+functional ::= `(` typenames_list `)` `:` typename .
+
+typenames_list = typename (`,` typename)+ .
 
 typedef ::= `typedef` _ident_ `=` typename `;` .
 
@@ -79,7 +81,7 @@ def ::= func | proc | pure | cort .
 
 func ::= `func` funcimpl .
 
-proc ::= `proc` _ident_ `(` formalslist `)` code_block .
+proc ::= `proc` _ident_ `(` formals_list `)` code_block .
 
 pure ::= `pure` funcimpl .
 
@@ -87,9 +89,9 @@ cort ::= `cort` funcdecl code_block .
 
 funcimpl ::= funcdecl (code_block | `=>` x_expr `;`) .
 
-funcdecl ::= _ident_ `(` formalslist `)` `:` typename .
+funcdecl ::= _ident_ `(` formals_list `)` `:` typename .
 
-formalslist ::= (formal (`,` formal)*)? .
+formals_list ::= (formal (`,` formal)*)? .
 
 ---
 
