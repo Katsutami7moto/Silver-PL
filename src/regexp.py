@@ -2,7 +2,7 @@
 # - парсит регэксп в дерево
 # - строит по дереву ДКА без построения НКА
 # - по получившемуся ДКА парсит входной текст
-# Регэксп записывать в виде: "(регэксп)#", как в примерах ниже.
+# Регэксп записывать в виде: "(регэксп)#" (использовать regexp_wrapper() !!!).
 # Входной текст записывать в кавычках.
 # ? - 0 или 1, * - 0 или много, + - 1 или много
 # . - любой символ (можно итерировать), \\ - экранирование
@@ -292,8 +292,35 @@ def dfareturner(stt: dict, state: set, word: str) -> bool:
     return True
 
 
-r_ident = "((a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z)" \
-          "(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|0|1|2|3|4|5|6|7|8|9|\\_)*)#"
+def regexp_wrapper(re: str) -> str:
+    return '(' + re + ')#'
+
+
+def zero_many(re: str) -> str:
+    return '(' + re + ')*'
+
+
+def one_many(re: str) -> str:
+    return '(' + re + ')+'
+
+
+def screened(re: str) -> str:
+    return "\\" + re
+
+
+def parens(re: str) -> str:
+    return '(' + re + ')'
+
+
+regexp_or = '|'
+letters = "a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z"
+isymbols = "a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|0|1|2|3|4|5|6|7|8|9" + regexp_or + screened('_')
+digits = "1|2|3|4|5|6|7|8|9"
+zero = '0'
+zdigits = zero + regexp_or + "1|2|3|4|5|6|7|8|9"
+
+identifier = parens(letters) + zero_many(isymbols)
+r_ident = regexp_wrapper(zero_many(identifier + screened('.')) + identifier)
 id_tree = parse(r_ident)
 calc(id_tree)
 id_state = frozenset().union(id_tree.f)
@@ -302,7 +329,8 @@ dfabuild(id_state)
 id_dfa = dfa
 relaunch()
 
-r_int = "(0|(1|2|3|4|5|6|7|8|9)(0|1|2|3|4|5|6|7|8|9)*)#"
+integer = zero + regexp_or + parens(digits) + zero_many(zdigits)
+r_int = regexp_wrapper(integer)
 int_tree = parse(r_int)
 calc(int_tree)
 int_state = frozenset().union(int_tree.f)
@@ -311,7 +339,7 @@ dfabuild(int_state)
 int_dfa = dfa
 relaunch()
 
-r_float = "(0|(1|2|3|4|5|6|7|8|9)(0|1|2|3|4|5|6|7|8|9)*\\.(0|1|2|3|4|5|6|7|8|9)+)#"
+r_float = regexp_wrapper(integer + screened('.') + one_many(zdigits))
 float_tree = parse(r_float)
 calc(float_tree)
 float_state = frozenset().union(float_tree.f)
@@ -320,7 +348,9 @@ dfabuild(float_state)
 float_dfa = dfa
 relaunch()
 
-r_string = "((\".+\")|(\'.+\'))#"
+s1 = screened('"') + '.+' + screened('"')
+s2 = screened("'") + '.+' + screened("'")
+r_string = regexp_wrapper(parens(s1) + regexp_or + parens(s2))
 string_tree = parse(r_string)
 calc(string_tree)
 string_state = frozenset().union(string_tree.f)

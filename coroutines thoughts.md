@@ -16,17 +16,17 @@ def calc():
 
 c = calc()
 
-print type(c) # <type 'generator'>
+print type(c)  # <type 'generator'>
 
-c.next() # Необходимая инициация. Можно написать c.send(None)
-c.send((1,2)) # Выведет 3
-c.send((100, 30)) # Выведет 130
-c.send((666, 0)) # Выведет 666
-c.send(('h',0)) # Выведет [3, 130, 666]
-c.close() # Закрывем генератор
+c.next()  # Необходимая инициация. Можно написать c.send(None)
+c.send((1,2))  # Выведет 3
+c.send((100, 30))  # Выведет 130
+c.send((666, 0))  # Выведет 666
+c.send(('h',0))  # Выведет [3, 130, 666]
+c.close()  # Закрывем генератор
 ```
 
-### Trying to make this in Silver with module (no generator objects, no prepared methods, but easier usage)
+### Trying to make this in Silver with module (no generator objects, no prepared methods, but easier usage), but that's not real coroutine
 
 ```
 module crtn

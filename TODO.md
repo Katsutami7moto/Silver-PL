@@ -1,14 +1,15 @@
 ## TODO
 
-- [ ] Modules (statements `module`, `import` and `use`, with correct placing of declarations and realizations)
+- [ ] Modules (statements `module`, `import` (no special effect, just for visibility) and `use` (to skip full module path; the modules mustn't have anything with equal names), with correct placing of declarations and realizations)
 - [ ] Appeal to module's fields/functions (and modules in directories) through dots
-- [ ] `bool` type
+- [ ] All basic statements in functions
 - [ ] Product types, their constructors and destructors (`del` statement)
 - [ ] Choose memory management system
 - [ ] Extension functions for product types
+- [ ] `bool` type
 - [ ] Product types with generics
 - [ ] List literals
-- [ ] `List` type, basic fucntions and behavior (`[x..y..z], list[i], list[a:b]`; List.append and others..)
+- [ ] `List` type, basic functions and behavior (`[x..y..z], list[i], list[a:b]`; List.append and others..)
 - [ ] `for` loop
 - [ ] Conditions `in`/`not in`, using in `if` and loops
 - [ ] List comprehensions

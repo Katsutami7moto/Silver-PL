@@ -68,6 +68,10 @@ Silver is general-purpose programming language, which goal is to collect many us
         - [ ] With generics (??)
 - Definitions
     - [x] Functions
+        - [ ] `func` - for common functions
+        - [ ] `proc` - for functions that don't return any value
+        - [ ] `pure` - for pure functions
+        - [ ] `cort` - for coroutines
     - [ ] Modules (to group functions and some external variables/constants for them)
     - [ ] Extension functions
         - [ ] For product types
@@ -83,4 +87,4 @@ Silver is general-purpose programming language, which goal is to collect many us
     - [ ] Multi-threading programming support (?)
     - [ ] Coroutines and generators (?)
     - [ ] Monads (?)
-    - [ ] Different back-ends (??)
+    - [ ] Different back-ends (?)

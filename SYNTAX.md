@@ -1,90 +1,122 @@
-## Syntax (RBNF)
+## Syntax
 
-> - `[ ]` means `0 or 1`
-> - `{ }` means `1 or many`
-> - `[{ }]` means `0 or many`
-> - Things in code are terminals, just words/symbols - nonterminals
-> - Nonterminals in italic are obvious to define.
+> - `?` after an item means `0 or 1`
+> - `*` after an item means `0 or many`
+> - `+` after an item means `1 or many`
+> - `( )` group items.
+> - Things in code are terminals, just words/symbols - nonterminals.
+> - Nonterminals in italic are too obvious to define.
 > - Nonterminals in bold will be defined in future.
 
-Start = { Module } .
+---
 
-Module = `module` _Ident_ ModuleBlock .
+start ::= module+ .
 
-ModuleBlock = `{` `connections:` { Import | Use } `types:` { Type | Typedef | Interface | Suit } `fields:` { Var | Let } `functions:` { Extend | Def } `}` .
+module ::= `module` _ident_ module_block .
 
-Import = `import` _Ident_ `;` .
+module_block ::=
+`{`
+    `connections:`
+        (import | use)*
+    `types:`
+        (type | typedef | interface | suit)*
+    `fields:`
+        (var | let)*
+    (`extend` _ident_ `:`
+        ((func | proc)+ | (funcdecl `;`)+)
+    )*
+    `functions:`
+        def+
+`}` .
 
-Use = `use` _Ident_ `;` .
+---
 
-Type = `type` TypeName `=` ( Product | Variant | Intersection | Functional ) `;` .
+import ::= `import` _ident_ `;` .
 
-TypeName = _Ident_ Generic .
+use ::= `use` _ident_ `;` .
 
-Generic = [ `<` _Ident_ [{ `,` _Ident_ }] `>` ] .
+---
 
-Product = { `*` Formal } .
+type ::= `type` typename `=` (product | variant | intersection | functional) `;` .
 
-Formal = _Ident_ `:` TypeName .
+typename ::= _ident_ generic .
 
-Variant = { `|` _Ident_ TypeName } .
+generic ::= (`<` _ident_ (`,` _ident_)* `>`)? .
 
-Intersection = `&` TypeName { `&` InterVar } .
+product ::= (`*` formal)+ .
 
-InterVar = TypeName | Formal | Product .
+formal ::= _ident_ `:` typename .
 
-Functional = `(` TypeName { `,` TypeName } `)` `:` TypeName .
+variant ::= (`|` _ident_ typename)+ .
 
-Typedef = `typedef` _Ident_ `=` TypeName `;` .
+intersection ::= `&` typename (`&` intervar)+ .
 
-Interface = `interface` _Ident_ `{` { FuncDecl `;` } `}` .
+intervar ::= typename | formal | product .
 
-FuncDecl = _Ident_ `(` FormalsList `)` [ `:` TypeName ] .
+functional ::= `(` typename (`,` typename)+ `)` `:` typename .
 
-FormalsList = [ Formal [{ `,` Formal }] ] .
+typedef ::= `typedef` _ident_ `=` typename `;` .
 
-Suit = `suit` _Ident_ `:` ( _Ident_ | Variant ) .
+interface ::= `interface` _ident_ `{` (funcdecl `;`)+ `}` .
 
-Var = `var` Naming .
+suit ::= `suit` _ident_ `:` (_ident_ | variant) .
 
-Let = `let` Naming .
+---
 
-Naming = _Ident_ ( `:` _Ident_ `=` XExpr | `=` ( _Data_ | New ) ) `;` .
+var ::= `var` naming .
 
-New = `new` Call .
+let ::= `let` naming .
 
-Extend = `extend` _Ident_ ( `:` ( FuncDecl | FuncImpl ) | `{` { Def } `}` ) .
+naming ::= _ident_ (`:` _ident_ `=` x_expr | `=` (_data_ | new)) `;` .
 
-FuncImpl = FuncDecl ( CodeBlock | `=>` XExpr `;` )
+new ::= `new` funcall .
 
-Def = `def` FuncImpl .
+funcall ::= _ident_ `(` (_expr_ (`,` _expr_)*)? `)` .
 
-CodeBlock = `{` { Var | Let | Mod | Loops | If | Call `;` | PipeExpr `;` | Return | **Del** | **MatchStat** } `}` .
+---
 
-XExpr = _Expr_ | IfExpr | PipeExpr | **Lambda** | **MatchExpr** .
+def ::= func | proc | pure | cort .
 
-IfExpr = `if` _Expr_ `:` XExpr [{ `elif` _Expr_ `:` XExpr }] `else` `:` XExpr .
+func ::= `func` funcimpl .
 
-PipeExpr = ( _Expr_ | PipeExpr ) `|>` ( _Ident_ | Call ) .
+proc ::= `proc` _ident_ `(` formalslist `)` code_block .
 
-Mod = `mod` _Ident_ _AssignOp_ XExpr `;` .
+pure ::= `pure` funcimpl .
 
-Loops = Loop | While | Until | DoWhile | DoUntil | For CodeBlock .
+cort ::= `cort` funcdecl code_block .
 
-Loop = `loop` CodeBlock .
+funcimpl ::= funcdecl (code_block | `=>` x_expr `;`) .
 
-While = `while` _Expr_ CodeBlock .
+funcdecl ::= _ident_ `(` formalslist `)` `:` typename .
 
-Until = `until` _Expr_ CodeBlock .
+formalslist ::= (formal (`,` formal)*)? .
 
-DoWhile = `do` CodeBlock `while` _Expr_ `;` .
+---
 
-DoUntil = `do` CodeBlock `until` _Expr_ `;` .
+x_expr ::= _expr_ | if_expr | pipe_expr | **lambda** | **matchexpr** | **comprehension** .
 
-For = `for` _Ident_ `in` ( _Container_ | _Ident_ | Call ) .
+if_expr ::= `if` _expr_ `:` x_expr (`elif` _expr_ `:` x_expr)* `else` `:` x_expr .
 
-If = `if` _Expr_ CodeBlock [{ `elif` _Expr_ CodeBlock }] [ `else` CodeBlock ] .
+pipe_expr ::= (_expr_ | pipe_expr) `|>` (_ident_ | funcall) .
 
-Call = _Ident_ `(` [ _Expr_ [{ `,` _Expr_ }] ] `)` .
+---
 
-Return = `return` XExpr `;` .
+code_block ::= `{` (var | let | mod | loops | if | proc_call | return | **del** | **matchstat**)+ `}` .
+
+mod ::= `mod` _ident_ _assignop_ x_expr `;` .
+
+loops ::= (loop | while | until | for) code_block | `do` code_block (while | until) `;` .
+
+loop ::= `loop` .
+
+while ::= `while` _expr_ .
+
+until ::= `until` _expr_ .
+
+for ::= `for` _ident_ `in` (_container_ | _ident_ | funcall) .
+
+if ::= `if` _expr_ code_block (`elif` _expr_ code_block)* (`else` code_block)? .
+
+proc_call ::= `call` (funcall | pipe_expr) `;` .
+
+return ::= `return` x_expr `;` .

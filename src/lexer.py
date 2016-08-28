@@ -1,4 +1,3 @@
-from src import regexp
 from collections import namedtuple
 
 
@@ -14,35 +13,51 @@ def uminus(token: Token) -> Token:
 
 
 def word_check(word: str, line: int, column: int) -> Token:
+    from src import regexp
     keywords = {
         "module",
+
+        "connections",
+        "types",
+        "fields",
+        "functions",
+
         "import",
         "use",
-        "var",
-        "let",
-        "fields",
-        "mod",  # TODO: точно ли такое слово ?
-        "def"
+
         "type",
         "typedef",
         "interface",
-        "extend",
         "suit",
+
+        "var",
+        "let",
+
+        "extend",
+        "def",
+
         "new",
         "del",
+
+        "mod",  # TODO: точно ли такое слово ?
         "while",
         "loop",
         "do",
         "until",
+        "for",
         "break",
         "continue",
         "if",
         "elif",
         "else",
+        "call",  # TODO: точно ли такое слово ?
+        "match",
+        "lambda",  # TODO: точно ли такое слово ?
         "return",
+
         "True",
         "False",
-        "None",
+        "None",  # TODO: точно ли такое слово ? реализация ???
         "and",
         "or",
         "not",
