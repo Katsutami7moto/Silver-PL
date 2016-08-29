@@ -32,12 +32,14 @@ def word_check(word: str, line: int, column: int) -> Token:
 
         "var",
         "let",
+        "new",
 
         "extend",
-        "def",
 
-        "new",
-        "del",
+        "func",
+        "proc",
+        "pure",
+        "cort",
 
         "mod",  # TODO: точно ли такое слово ?
         "while",
@@ -54,6 +56,7 @@ def word_check(word: str, line: int, column: int) -> Token:
         "match",
         "lambda",  # TODO: точно ли такое слово ?
         "return",
+        "del",
 
         "True",
         "False",

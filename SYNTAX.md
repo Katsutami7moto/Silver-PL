@@ -23,7 +23,7 @@ module_block ::=
     `fields:`
         (var | let)*
     (`extend` _ident_ `:`
-        ((func | proc)+ | (funcdecl `;`)+)
+        ((func | proc)+ | (func_decl `;`)+)
     )*
     `functions:`
         def+
@@ -59,7 +59,7 @@ typenames_list = typename (`,` typename)+ .
 
 typedef ::= `typedef` _ident_ `=` typename `;` .
 
-interface ::= `interface` _ident_ `{` (funcdecl `;`)+ `}` .
+interface ::= `interface` _ident_ `{` (func_decl `;`)+ `}` .
 
 suit ::= `suit` _ident_ `:` (_ident_ | variant) .
 
@@ -71,54 +71,62 @@ let ::= `let` naming .
 
 naming ::= _ident_ (`:` _ident_ `=` x_expr | `=` (_data_ | new)) `;` .
 
-new ::= `new` funcall .
+new ::= `new` func_call .
 
-funcall ::= _ident_ `(` (_expr_ (`,` _expr_)*)? `)` .
+func_call ::= _ident_ `(` (x_expr (`,` x_expr)*)? `)` .
 
 ---
 
 def ::= func | proc | pure | cort .
 
-func ::= `func` funcimpl .
+func ::= `func` func_impl .
 
 proc ::= `proc` _ident_ `(` formals_list `)` code_block .
 
-pure ::= `pure` funcimpl .
+pure ::= `pure` func_impl .
 
-cort ::= `cort` funcdecl code_block .
+cort ::= `cort` func_decl code_block .
 
-funcimpl ::= funcdecl (code_block | `=>` x_expr `;`) .
+func_impl ::= func_decl (code_block | `=>` x_expr `;`) .
 
-funcdecl ::= _ident_ `(` formals_list `)` `:` typename .
+func_decl ::= _ident_ `(` formals_list `)` `:` typename .
 
 formals_list ::= (formal (`,` formal)*)? .
 
 ---
 
-x_expr ::= _expr_ | if_expr | pipe_expr | **lambda** | **matchexpr** | **comprehension** .
+x_expr ::= _expr_ | if_expr | pipe_expr | lambda | match_expr | comprehension .
 
-if_expr ::= `if` _expr_ `:` x_expr (`elif` _expr_ `:` x_expr)* `else` `:` x_expr .
+if_expr ::= `(` `if` _expr_ `:` x_expr (`elif` _expr_ `:` x_expr)* (`else` `:` x_expr)? `)` .
 
-pipe_expr ::= (_expr_ | pipe_expr) `|>` (_ident_ | funcall) .
+pipe_expr ::= x_expr `|>` (_ident_ | func_call | lambda) .
+
+lambda ::= `lambda` `(` formals_list `)` `:` typename `=>` x_expr .
+
+match_expr ::= `match` _ident_ `{` (_expr_ `:` x_expr `;`)+ (`else:` x_expr `;`)? `}` .
+
+comprehension ::= `[` for `:` (_expr_ | if_expr | pipe_expr) `]` .
 
 ---
 
-code_block ::= `{` (var | let | mod | loops | if | proc_call | return | **del** | **matchstat**)+ `}` .
+code_block ::= `{` (var | let | mod | loop | if | proc_call | return | del | match_stat)+ `}` .
 
 mod ::= `mod` _ident_ _assignop_ x_expr `;` .
 
-loops ::= (loop | while | until | for) code_block | `do` code_block (while | until) `;` .
-
-loop ::= `loop` .
+loop ::= (`loop` | while | until | for) code_block | `do` code_block (while | until) `;` .
 
 while ::= `while` _expr_ .
 
 until ::= `until` _expr_ .
 
-for ::= `for` _ident_ `in` (_container_ | _ident_ | funcall) .
+for ::= `for` _ident_ `in` (_container_ | _ident_ | func_call) .
 
 if ::= `if` _expr_ code_block (`elif` _expr_ code_block)* (`else` code_block)? .
 
-proc_call ::= `call` (funcall | pipe_expr) `;` .
+proc_call ::= `call` (func_call | pipe_expr) `;` .
 
 return ::= `return` x_expr `;` .
+
+del ::= `del` _ident_ .
+
+match_stat ::= `match` _ident_ `{` (_expr_ `:` code_block)+ (`else:` code_block)? `}` .
