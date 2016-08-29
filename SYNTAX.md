@@ -3,6 +3,7 @@
 > - `?` after an item means `0 or 1`
 > - `*` after an item means `0 or many`
 > - `+` after an item means `1 or many`
+> - Infix `-` means `except`
 > - `( )` group items.
 > - Things in code are terminals, just words/symbols - nonterminals.
 > - Nonterminals in italic are too obvious to define.
@@ -26,7 +27,7 @@ module_block ::=
         ((func | proc)+ | (func_decl `;`)+)
     )*
     `functions:`
-        def+
+        functions+
 `}` .
 
 ---
@@ -67,9 +68,9 @@ suit ::= `suit` _ident_ `:` (_ident_ | variant) .
 
 var ::= `var` naming .
 
-let ::= `let` naming .
+let ::= `let` (naming | _ident_ `=` lambda) .
 
-naming ::= _ident_ (`:` _ident_ `=` x_expr | `=` (_data_ | new)) `;` .
+naming ::= _ident_ (`:` _ident_ `=` (x_expr - lambda) | `=` (_data_ | new)) `;` .
 
 new ::= `new` func_call .
 
@@ -77,17 +78,17 @@ func_call ::= _ident_ `(` (x_expr (`,` x_expr)*)? `)` .
 
 ---
 
-def ::= func | proc | pure | cort .
+functions ::= func | proc | pure | cort .
 
 func ::= `func` func_impl .
 
-proc ::= `proc` _ident_ `(` formals_list `)` code_block .
+proc ::= `proc` _ident_ `(` formals_list `)` func_code_block .
 
 pure ::= `pure` func_impl .
 
-cort ::= `cort` func_decl code_block .
+cort ::= `cort` func_decl func_code_block .
 
-func_impl ::= func_decl (code_block | `=>` x_expr `;`) .
+func_impl ::= func_decl (func_code_block | `=>` x_expr `;`) .
 
 func_decl ::= _ident_ `(` formals_list `)` `:` typename .
 
@@ -101,7 +102,7 @@ if_expr ::= `(` `if` _expr_ `:` x_expr (`elif` _expr_ `:` x_expr)* (`else` `:` x
 
 pipe_expr ::= x_expr `|>` (_ident_ | func_call | lambda) .
 
-lambda ::= `lambda` `(` formals_list `)` `:` typename `=>` x_expr .
+lambda ::= `lambda` `(` formals_list `)` (`:` typename `=>` (x_expr - lambda) | `=>` lambda) .
 
 match_expr ::= `match` _ident_ `{` (_expr_ `:` x_expr `;`)+ (`else:` x_expr `;`)? `}` .
 
@@ -109,7 +110,11 @@ comprehension ::= `[` for `:` (_expr_ | if_expr | pipe_expr) `]` .
 
 ---
 
-code_block ::= `{` (var | let | mod | loop | if | proc_call | return | del | match_stat)+ `}` .
+func_code_block ::= `{` (statements | def)+ `}` .
+
+statements = var | let | mod | loop | if | proc_call | return | del | match_stat .
+
+code_block ::= `{` (statements | _break_ | _continue_)+ `}` .
 
 mod ::= `mod` _ident_ _assignop_ x_expr `;` .
 
@@ -130,3 +135,5 @@ return ::= `return` x_expr `;` .
 del ::= `del` _ident_ .
 
 match_stat ::= `match` _ident_ `{` (_expr_ `:` code_block)+ (`else:` code_block)? `}` .
+
+def = `def` func_impl .
