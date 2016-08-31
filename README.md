@@ -78,7 +78,7 @@ Silver is general-purpose programming language, which goal is to collect many us
         - [ ] `proc` - for functions that don't return any value
         - [ ] `pure` - for pure functions
         - [ ] `cort` - for coroutines
-        - [ ] `def` - for nested functions (making closures)
+        - [ ] `nest` - for nested functions (making closures)
     - [ ] Expression-returning functions (can be `func` and `pure`)
     - [ ] Naming function parameters in call (like in Python)
     - [ ] Multiple and keyword function parameters (like in Python)

@@ -1,7 +1,11 @@
 from src import translator
 
-silver_file = open("C:\\Users\\napan\\Documents\\github\\Silver-PL\\examples\\example.silver")
-c_file = open("C:\\Users\\napan\\Documents\\github\\Silver-PL\\examples\\result.c", "w")
-c_file.write('\n\n'.join(translator.translating(list(silver_file))))
+spath = ""
+silver_file = open(spath)
+sfile = list(silver_file)
 silver_file.close()
+
+cpath = ""
+c_file = open(cpath, "w")
+c_file.write('\n\n'.join(translator.translating(sfile)))
 c_file.close()

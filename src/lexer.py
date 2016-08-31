@@ -32,7 +32,6 @@ def word_check(word: str, line: int, column: int) -> Token:
 
         "var",
         "let",
-        "new",
 
         "extend",
 
@@ -41,6 +40,7 @@ def word_check(word: str, line: int, column: int) -> Token:
         "pure",
         "cort",
 
+        "new",
         "mod",  # TODO: точно ли такое слово ?
         "while",
         "loop",
@@ -93,7 +93,7 @@ def sign_check(sign: str, line: int, column: int) -> Token:
         '<': 'left-chev',
         '>': 'right-chev',
         '<=': 'less-equal',
-        '>=': 'more-equal',
+        '>=': 'greater-equal',
         '==': 'is-equal',
         '!=': 'not-equal',
         '**': 'exponent',

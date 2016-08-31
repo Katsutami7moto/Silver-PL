@@ -110,7 +110,7 @@ def p_atom(token: lexer.Token) -> Node:
 
 def build_expr_tree(tokens: list) -> Node:
     binary = {'asterisk': '*', 'slash': '/', 'percent': '%', 'plus': '+', 'minus': '-', 'and': '&&', 'or': '||',
-              'comma': ',', 'left-chev': '<', 'right-chev': '>', 'less-equal': '<=', 'more-equal': '>=',
+              'comma': ',', 'left-chev': '<', 'right-chev': '>', 'less-equal': '<=', 'greater-equal': '>=',
               'is-equal': '==', 'not-equal': '!='}
     unary = {'not': '!', '-u': '-'}
     global expr_current
@@ -139,7 +139,7 @@ def build_expr_tree(tokens: list) -> Node:
 
 def p_expr(tokens: list) -> list:
     op_stack = []
-    rpn = []  # обратная польская нотация (постфиксная)
+    rpn = []  # обратная польская нотация (постфиксная запись)
 
     prec = {
         'call': 9,
@@ -153,7 +153,7 @@ def p_expr(tokens: list) -> list:
         'left-chev': 5,
         'right-chev': 5,
         'less-equal': 5,
-        'more-equal': 5,
+        'greater-equal': 5,
         'is-equal': 4,
         'not-equal': 4,
         'and': 3,

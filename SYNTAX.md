@@ -110,7 +110,7 @@ comprehension ::= `[` for `:` (_expr_ | if_expr | pipe_expr) `]` .
 
 ---
 
-func_code_block ::= `{` (statements | def)+ `}` .
+func_code_block ::= `{` (statements | nested)+ `}` .
 
 statements = var | let | mod | loop | if | proc_call | return | del | match_stat .
 
@@ -136,4 +136,4 @@ del ::= `del` _ident_ .
 
 match_stat ::= `match` _ident_ `{` (_expr_ `:` code_block)+ (`else:` code_block)? `}` .
 
-def = `def` func_impl .
+nested = `nest` func_impl .
