@@ -21,7 +21,7 @@ module_block ::=
         (import | use)*
     `types:`
         (type | typedef | interface | suit)*
-    `fields:`
+    `attributes:`
         (var | let)*
     (`extend` _ident_ `:`
         ((func | proc)+ | (func_decl `;`)+)
@@ -52,7 +52,7 @@ variant ::= (`|` _ident_ typename)+ .
 
 intersection ::= `&` typename (`&` intervar)+ .
 
-intervar ::= typename | formal | product .
+intervar ::= typename | formal .
 
 functional ::= `(` typenames_list `)` `:` typename .
 
@@ -78,7 +78,7 @@ func_call ::= _ident_ `(` (x_expr (`,` x_expr)*)? `)` .
 
 ---
 
-functions ::= func | proc | pure | cort .
+functions ::= func | proc | pure | cort | cell .
 
 func ::= `func` func_impl .
 
@@ -87,6 +87,8 @@ proc ::= `proc` _ident_ `(` formals_list `)` func_code_block .
 pure ::= `pure` func_impl .
 
 cort ::= `cort` func_decl func_code_block .
+
+cell ::= `cell` _ident_ `:` typename (func_code_block | `=>` (x_expr - lambda) `;`) .
 
 func_impl ::= func_decl (func_code_block | `=>` x_expr `;`) .
 
@@ -104,7 +106,7 @@ pipe_expr ::= x_expr `|>` (_ident_ | func_call | lambda) .
 
 lambda ::= `lambda` `(` formals_list `)` (`:` typename `=>` (x_expr - lambda) | `=>` lambda) .
 
-match_expr ::= `match` _ident_ `{` (_expr_ `:` x_expr `;`)+ (`else:` x_expr `;`)? `}` .
+match_expr ::= `match` _ident_ `{` (_logop_ _expr_ `:` x_expr `;`)+ (`else:` x_expr `;`)? `}` .
 
 comprehension ::= `[` for `:` (_expr_ | if_expr | pipe_expr) `]` .
 
@@ -112,7 +114,7 @@ comprehension ::= `[` for `:` (_expr_ | if_expr | pipe_expr) `]` .
 
 func_code_block ::= `{` (statements | nested)+ `}` .
 
-statements = var | let | mod | loop | if | proc_call | return | del | match_stat .
+statements ::= var | let | mod | loop | if | proc_call | return | del | match_stat .
 
 code_block ::= `{` (statements | _break_ | _continue_)+ `}` .
 
@@ -134,6 +136,17 @@ return ::= `return` x_expr `;` .
 
 del ::= `del` _ident_ .
 
-match_stat ::= `match` _ident_ `{` (_expr_ `:` code_block)+ (`else:` code_block)? `}` .
+match_stat ::= `match` _ident_ `{` (_logop_ _expr_ `:` code_block)+ (`else:` code_block)? `}` .
 
-nested = `nest` func_impl .
+nested ::= `nest` (functions - pure) .
+
+## Algorithm of compiler
+
+1. Turn a source code file into list of text lines
+2. Turn the list of text lines into list of structured lexems (tokens)
+3. Divide list of tokens by modules into several lists of tokens
+4. Parse all modules' lists of tokens to make lists of modules' declarations (abstract data types) and to make symbol table
+5. Using symbol table, parse again all modules' lists of tokens to make lists of modules' function definitions (abstract data types)
+6. Process all lists of modules' declarations to make C code of forward declarations
+7. Process all lists of modules' function definitions to make C code of functions definitions
+8. Compose C code of declarations and definitions into a file and compile this file

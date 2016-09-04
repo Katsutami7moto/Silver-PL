@@ -6,6 +6,7 @@ Silver is general-purpose programming language, which goal is to collect many us
 - Everything must be resonable
 - Functional programming features: anonymous functions, first-class functions, closures
 - Compound types, interfaces and extension functions will make code more familiar to OOP-users
+- All basic types are structures with some useful information/behavior
 - No automatic/implicit type conversion, static strong type system
 - Statement-based language, not expression-based
 - Silver compiler translates code to C language (C89 standart) for good portabilty and performance
@@ -22,11 +23,14 @@ Silver is general-purpose programming language, which goal is to collect many us
 - Expressions
     - [x] Math expressions
     - [x] Logical expressions
+    - [ ] `self.` for objects' attributes
+    - [ ] `home.` for modules' attributes
     - [ ] Conditions `x in y`, `x not in y`
-    - [ ] Conditional expression (`if cond: x elif cond: y else: z`)
-    - [ ] Containers comprehensions (`[for x in container: expr(x)]`)
-    - [ ] Lambda expressions (`lambda (x) => expr(x)`)
-    - [ ] Pipe operator (`|>`)
+    - [ ] Type checking conditions `x is T`, `y is not T`
+    - [ ] Conditional expression `if cond: x elif cond: y else: z`
+    - [ ] Containers comprehensions `[for x in container: expr(x)]`
+    - [ ] Lambda expressions `lambda (x) => expr(x)`
+    - [ ] Pipe operator `|>` (what about `<|` and function composition like `>>` and `<<` ?)
     - [ ] Pattern matching (expr)
 - Statements
     - [ ] Variables/constants definitions (**no declaration w/out definition with a value!**)
@@ -76,10 +80,11 @@ Silver is general-purpose programming language, which goal is to collect many us
     - [ ] Functions
         - [ ] `func` - for common functions
         - [ ] `proc` - for functions that don't return any value
+        - [ ] `cell` - for reactive formula' cells (no arguments; acts in code like variable)
         - [ ] `pure` - for pure functions
         - [ ] `cort` - for coroutines
         - [ ] `nest` - for nested functions (making closures)
-    - [ ] Expression-returning functions (can be `func` and `pure`)
+    - [ ] Expression-returning functions (can be `func`, `cell` and `pure`)
     - [ ] Naming function parameters in call (like in Python)
     - [ ] Multiple and keyword function parameters (like in Python)
     - [ ] Function parameters with default values (like in Python)

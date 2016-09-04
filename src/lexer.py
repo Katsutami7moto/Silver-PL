@@ -39,6 +39,7 @@ def word_check(word: str, line: int, column: int) -> Token:
         "proc",
         "pure",
         "cort",
+        "cell",
 
         "new",
         "mod",  # TODO: точно ли такое слово ?
@@ -57,14 +58,20 @@ def word_check(word: str, line: int, column: int) -> Token:
         "lambda",  # TODO: точно ли такое слово ?
         "return",
         "del",
+        "nest",
 
         "True",
         "False",
         "None",  # TODO: точно ли такое слово ? реализация ???
         "and",
         "or",
+        "xand"
+        "xor",
         "not",
-        "in"
+        "in",
+        "is",
+        "self",
+        "home"
     }
     if word[0] in {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'}:
         if regexp.returner('i', word):
@@ -98,6 +105,7 @@ def sign_check(sign: str, line: int, column: int) -> Token:
         '!=': 'not-equal',
         '**': 'exponent',
         '//': 'floor-div',
+        '++': 'concat',
         '+=': 'self-inc',
         '-=': 'self-dec',
         '*=': 'self-mul',
@@ -105,6 +113,7 @@ def sign_check(sign: str, line: int, column: int) -> Token:
         '%=': 'self-mod',
         '**=': 'self-exp',
         '//=': 'self-floor',
+        '++=': 'self-cat',
         '=>': 'arrow',
         '|>': 'pipe'
     }
@@ -125,7 +134,8 @@ def lexing(code: list) -> list:
         '}': 'right-curl',
         ':': 'colon',
         ';': 'semicolon',
-        ',': 'comma'
+        ',': 'comma',
+        '?': 'question'
     }
     composable = {'+', '-', '*', '/', '%', '=', '<', '>', '!', '|'}
     some_word = ''

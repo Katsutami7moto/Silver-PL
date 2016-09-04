@@ -100,12 +100,12 @@ Lambda example
 
 Memoization by saving arguments (in tuple) and results in pairs into a special dictionary (named "modulename__funcname__sanctuary") and cheking them inside the pure function (added automatically).
 
-You define pure functions by keyword `pure`.
+You define pure functions by keyword `pure`. Any other function is automatically 'impure'.
 In pure functions you can't:
     - Use/modify module fields or any fieds from outside scopes
     - Modify function arguments
-    - Call unpure functions
-    - Return unpure functions
-    - Do IO operations
+    - Call impure functions
+    - Return impure functions
+    - Do IO operations (what about monads?)
     - Not to return a value
     - Not to take values

@@ -3,6 +3,8 @@
 - [ ] Modules (statements `module`, `import` (no special effect, just for visibility) and `use` (to skip full module path; the modules mustn't have anything with equal names), with correct placing of declarations and realizations)
 - [ ] Appeal to module's fields/functions (and modules in directories) through dots
 - [ ] All basic statements in functions
+- [ ] `func`
+- [ ] `proc`
 - [ ] Product types, their constructors and destructors (`del` statement)
 - [ ] Choose memory management system
 - [ ] Extension functions for product types
@@ -33,10 +35,15 @@
 - [ ] Containers through interfaces (??)
 - [ ] Nested generics
 - [ ] `typedef` with generics (??)
+- [ ] Implement all basic types as structures (including attribute of typename and so on)
 - [ ] Expression-returning functions
+- [ ] `cell`
+- [ ] `cort`
+- [ ] Functional programming features
 - [ ] Functional type
 - [ ] Lambda expressions
-- [ ] Functional programming features
+- [ ] `pure`
+- [ ] `nest`
 - [ ] Naming function parameters in call (like in Python)
 - [ ] Multiple and keyword function parameters (like in Python)
 - [ ] Function parameters with default values (like in Python)
@@ -44,11 +51,9 @@
 - [ ] Pipe operator with module/extension functions
 - [ ] Pattern matching expression
 - [ ] Pattern matching statement
-- [ ] Appealing to C functions/libraries
+- [ ] Foreign functions/types interface
 - [ ] IO functions
-- [ ] Loading types from C
 - [ ] Multiple files compilation (project configuration file)
-- [ ] Implement all types as structures with smart pointers (??)
 - [ ] ...
 
 ### Where is symbol table needed (according to silv_parser):

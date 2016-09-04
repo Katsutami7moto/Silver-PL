@@ -7,18 +7,6 @@ Declaration = namedtuple('Declaration', 'subject name type args')
 Definition = namedtuple('Definition', 'subject name type statements args')
 Statement = namedtuple('Statement', 'subject name type rvalue args statements')
 symbol_table = dict()
-module_kwords = {
-    "import",
-    "use",
-    "type",
-    "typedef",
-    "interface",
-    "suit",
-    "var",
-    "let",
-    "extend",
-    "def"
-}
 
 
 def p_def_type(tokens: list) -> Definition:
