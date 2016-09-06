@@ -20,9 +20,9 @@ module_block ::=
     `connections:`
         (import | use)*
     (`types:`
-        type | typedef | interface | suit
+        type | typedef | interface
     )*
-    (`attributes:`
+    (`fields:`
         var | let
     )*
     (`extend` _ident_ `:`
@@ -62,9 +62,7 @@ typenames_list = typename (`,` typename)+ .
 
 typedef ::= `typedef` _ident_ `=` typename `;` .
 
-interface ::= `interface` _ident_ `{` (func_decl `;`)+ `}` .
-
-suit ::= `suit` _ident_ `:` (_ident_ | variant) .
+interface ::= `interface` _ident_ `;` .
 
 ---
 
@@ -84,15 +82,15 @@ functions ::= func | proc | pure | cort | cell .
 
 func ::= `func` func_impl .
 
-proc ::= `proc` _ident_ `(` formals_list `)` func_code_block .
+proc ::= `proc` _ident_ `(` formals_list `)` code_block .
 
 pure ::= `pure` func_impl .
 
-cort ::= `cort` func_decl func_code_block .
+cort ::= `cort` func_decl code_block .
 
-cell ::= `cell` _ident_ `:` typename (func_code_block | `=>` (x_expr - lambda) `;`) .
+cell ::= `cell` _ident_ `:` typename (code_block | `=>` (x_expr - lambda) `;`) .
 
-func_impl ::= func_decl (func_code_block | `=>` x_expr `;`) .
+func_impl ::= func_decl (code_block | `=>` x_expr `;`) .
 
 func_decl ::= _ident_ `(` formals_list `)` `:` typename .
 
@@ -114,11 +112,9 @@ comprehension ::= `[` for `:` (_expr_ | if_expr | pipe_expr) `]` .
 
 ---
 
-func_code_block ::= `{` (statements | nested)+ `}` .
+code_block ::= `{` (statements | _break_ | _continue_)+ `}` .
 
 statements ::= var | let | mod | loop | if | proc_call | return | del | match_stat .
-
-code_block ::= `{` (statements | _break_ | _continue_)+ `}` .
 
 mod ::= `mod` _ident_ _assignop_ x_expr `;` .
 
@@ -139,8 +135,6 @@ return ::= `return` x_expr `;` .
 del ::= `del` _ident_ .
 
 match_stat ::= `match` _ident_ `{` (_logop_ _expr_ `:` code_block)+ (`else:` code_block)? `}` .
-
-nested ::= `nest` functions .
 
 ## Algorithm of compiler
 

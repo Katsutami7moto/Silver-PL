@@ -23,8 +23,8 @@ Silver is general-purpose programming language, which goal is to collect many us
 - Expressions
     - Math expressions
     - Logical expressions
-    - `self.` for objects' attributes
-    - `home.` for modules' attributes
+    - `self.` for objects' fields
+    - `home.` for modules' fields
     - Conditions `x in y`, `x not in y`
     - Type checking conditions `x is T`, `y is not T`
     - Conditional expression `(if cond: x elif cond: y else: z)`
@@ -83,7 +83,6 @@ Silver is general-purpose programming language, which goal is to collect many us
         - `cell` - for reactive formula' cells (no arguments; acts in code like variable)
         - `pure` - for pure functions
         - `cort` - for coroutines
-        - `nest` - for nested functions (making closures)
     - Expression-returning functions (can be `func`, `cell` and `pure`)
     - Naming function parameters in call (like in Python)
     - Multiple and keyword function parameters (like in Python)

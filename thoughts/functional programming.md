@@ -80,15 +80,15 @@ print(mysqrt(123456))
 
 # =>
 
-mysqrt__args = namedtuple("mysqrt__args", "n")
-def mysqrt__s(margs: mysqrt__args, a):
-    if a * a - margs.n > 0.000000001:
-        return mysqrt__s(margs, 0.5 * (a + margs.n / a))
+mysqrt__closured = namedtuple("mysqrt__closured", "n")
+def mysqrt__s(closured: mysqrt__closured, a):
+    if a * a - closured.n > 0.000000001:
+        return mysqrt__s(closured, 0.5 * (a + closured.n / a))
     else:
         return a
-def mysqrt(margs: mysqrt__args):
-    return mysqrt__s(margs, margs.n)
-print(mysqrt(mysqrt__args(123456)))
+def mysqrt(closured: mysqrt__closured):
+    return mysqrt__s(closured, closured.n)
+print(mysqrt(mysqrt__closured(123456)))
 ```
 
 **Silver**

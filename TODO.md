@@ -42,9 +42,9 @@
 - [ ] `cort`
 - [ ] Functional programming features
 - [ ] Functional type
+- [ ] Closures
 - [ ] Lambda expressions
 - [ ] `pure`
-- [ ] `nest`
 - [ ] Naming function parameters in call (like in Python)
 - [ ] Multiple and keyword function parameters (like in Python)
 - [ ] Function parameters with default values (like in Python)
