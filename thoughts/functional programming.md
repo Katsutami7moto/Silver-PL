@@ -65,32 +65,6 @@ const int foot = Tfoo(9);
 
 https://ru.wikibooks.org/wiki/%D0%A0%D0%B5%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8_%D0%B0%D0%BB%D0%B3%D0%BE%D1%80%D0%B8%D1%82%D0%BC%D0%BE%D0%B2/%D0%97%D0%B0%D0%BC%D1%8B%D0%BA%D0%B0%D0%BD%D0%B8%D0%B5#Python
 
-**Python**
-
-Nested function example
-```python
-def mysqrt(n):
-    def s(a):
-        if a * a - n > 0.000000001:
-            return s(0.5 * (a + n / a))
-        else:
-            return a
-    return s(n)
-print(mysqrt(123456))
-
-# =>
-
-mysqrt__closured = namedtuple("mysqrt__closured", "n")
-def mysqrt__s(closured: mysqrt__closured, a):
-    if a * a - closured.n > 0.000000001:
-        return mysqrt__s(closured, 0.5 * (a + closured.n / a))
-    else:
-        return a
-def mysqrt(closured: mysqrt__closured):
-    return mysqrt__s(closured, closured.n)
-print(mysqrt(mysqrt__closured(123456)))
-```
-
 **Silver**
 
 Nested function example
