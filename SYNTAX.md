@@ -19,10 +19,12 @@ module_block ::=
 `{`
     `connections:`
         (import | use)*
-    `types:`
-        (type | typedef | interface | suit)*
-    `attributes:`
-        (var | let)*
+    (`types:`
+        type | typedef | interface | suit
+    )*
+    (`attributes:`
+        var | let
+    )*
     (`extend` _ident_ `:`
         ((func | proc)+ | (func_decl `;`)+)
     )*
@@ -68,9 +70,9 @@ suit ::= `suit` _ident_ `:` (_ident_ | variant) .
 
 var ::= `var` naming .
 
-let ::= `let` (naming | _ident_ `=` lambda) .
+let ::= `let` naming.
 
-naming ::= _ident_ (`:` _ident_ `=` (x_expr - lambda) | `=` (_data_ | new)) `;` .
+naming ::= _ident_ (`:` _ident_ `=` x_expr | `=` (_data_ | new)) `;` .
 
 new ::= `new` func_call .
 
@@ -138,7 +140,7 @@ del ::= `del` _ident_ .
 
 match_stat ::= `match` _ident_ `{` (_logop_ _expr_ `:` code_block)+ (`else:` code_block)? `}` .
 
-nested ::= `nest` (functions - pure) .
+nested ::= `nest` functions .
 
 ## Algorithm of compiler
 

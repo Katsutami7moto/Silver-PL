@@ -29,8 +29,8 @@ You may take functions as arguments of other functions
 
 **Silver**
 ```
-def map(x: IntList, f: (int): int): IntList { ... }
-def foo(x: int): int { ... }
+func map(x: IntList, f: (int): int): IntList { ... }
+func foo(x: int): int { ... }
 var list2: IntList = map(list1, foo);
 ```
 
@@ -45,9 +45,9 @@ You may return functions from other functions
 
 **Silver**
 ```
-def foo(x: int): int { ... }
-def bar(x: int): int { ... }
-def choose(a: bool): (int): int { if a { return foo; } else { return bar; } }
+func foo(x: int): int { ... }
+func bar(x: int): int { ... }
+func choose(a: bool): (int): int { if a { return foo; } else { return bar; } }
 var Tfoo: (int): int = choose(5 > 4);
 let foot: int = Tfoo(9);
 ```
@@ -65,11 +65,37 @@ const int foot = Tfoo(9);
 
 https://ru.wikibooks.org/wiki/%D0%A0%D0%B5%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8_%D0%B0%D0%BB%D0%B3%D0%BE%D1%80%D0%B8%D1%82%D0%BC%D0%BE%D0%B2/%D0%97%D0%B0%D0%BC%D1%8B%D0%BA%D0%B0%D0%BD%D0%B8%D0%B5#Python
 
+**Python**
+
+Nested function example
+```python
+def mysqrt(n):
+    def s(a):
+        if a * a - n > 0.000000001:
+            return s(0.5 * (a + n / a))
+        else:
+            return a
+    return s(n)
+print(mysqrt(123456))
+
+# =>
+
+mysqrt__args = namedtuple("mysqrt__args", "n")
+def mysqrt__s(margs: mysqrt__args, a):
+    if a * a - margs.n > 0.000000001:
+        return mysqrt__s(margs, 0.5 * (a + margs.n / a))
+    else:
+        return a
+def mysqrt(margs: mysqrt__args):
+    return mysqrt__s(margs, margs.n)
+print(mysqrt(mysqrt__args(123456)))
+```
+
 **Silver**
 
 Nested function example
 ```
-def funky(a: int): (int): double
+func funky(a: int): (int): double
 {
     ...
 }
@@ -98,14 +124,15 @@ Lambda example
 
 ### Pure functions boost
 
-Memoization by saving arguments (in tuple) and results in pairs into a special dictionary (named "modulename__funcname__sanctuary") and cheking them inside the pure function (added automatically).
+Memoization by saving arguments (in tuple) and results in pairs into a special dictionary (named "modulename__funcname__sanctuary") and checking them inside the pure function (added automatically).
 
 You define pure functions by keyword `pure`. Any other function is automatically 'impure'.
 In pure functions you can't:
-    - Use/modify module fields or any fieds from outside scopes
-    - Modify function arguments
-    - Call impure functions
-    - Return impure functions
-    - Do IO operations (what about monads?)
-    - Not to return a value
-    - Not to take values
+
+- Use/modify module attributes or anything from outside scopes
+- Modify function arguments
+- Call impure functions
+- Return impure functions
+- Do IO operations (what about monads?)
+- Not to return a value
+- Not to take values

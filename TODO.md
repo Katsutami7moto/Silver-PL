@@ -3,6 +3,7 @@
 - [ ] Modules (statements `module`, `import` (no special effect, just for visibility) and `use` (to skip full module path; the modules mustn't have anything with equal names), with correct placing of declarations and realizations)
 - [ ] Appeal to module's fields/functions (and modules in directories) through dots
 - [ ] All basic statements in functions
+- [ ] System that will convert all math, logic and containers' operations to functions
 - [ ] `func`
 - [ ] `proc`
 - [ ] Product types, their constructors and destructors (`del` statement)
