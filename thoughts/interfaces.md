@@ -102,7 +102,6 @@ struct VariantTypeName* func2(...)
 
 - Interfaces contain only functions.
 - Interfaces can't have instances (objects).
-- You may extend interfaces wtih new function prototypes when and where you want it.
 
 ```
 interface iOpenable
@@ -111,10 +110,10 @@ interface iOpenable
     close();
 }
 
+extend iOpenable: some_func(some_item: some_type): some_type;
+
 type Door = & iOpenable & ...;
 type Book = & iOpenable & ...;
-
-extend iOpenable: some_func(some_item: some_type): some_type;
 
 extend Door
 {
