@@ -55,12 +55,9 @@ int main()
 }
 ```
 
-### How to make this in Silver
+### Variant types in Silver
 
-- Variant type can't have his own methods like product and intersection types can, because this would lead to uncomfortable syntax.
-- So, interfaces are only way to create variant types with unified methods (and also, of course, to make OOP-like interfaces and abstract classes).
-- Using the interface automatically creates a variant type with its name (in compiled code remains the one structure).
-- If a function takes an argument (or returnes a value) of variant/interface type, the value in call (or in `return` statement) gets replaced by call of a function kind of:
+- If a function takes an argument (or returnes a value) of variant type, the value in call (or in `return` statement) gets replaced by call of a function kind of:
 ```c
 VariantTypeName* VariantTypeName__ObjectTypeName(ObjectTypeName arg)
 ```
@@ -97,29 +94,27 @@ struct VariantTypeName* func2(...)
 }
 ```
 
+### Intersection types in Silver
+
+...
+
+### Interfaces in Silver
+
 - Interfaces contain only functions.
 - Interfaces can't have instances (objects).
-- You describe what types are suitable for these interfaces instead of what interfaces implement these types.
-- Same type can suit to many interfaces.
-- You may add new type suiting to some interface when and where you want it.
 - You may extend interfaces wtih new function prototypes when and where you want it.
-- Before you, in any way(**hey, ext-functions don't need this!?**), extend any type from an `import`'ed module inside yours, you must copy this type to your module: `suit ThisType: ThatModule.ThisType;`. If copy a type from some module, you can't `use` that module.
 
 ```
-type Door = ... ;
-type Book = ... ;
-
 interface iOpenable
 {
     open();
     close();
 }
 
-extend iOpenable: some_func(some_item: some_type): some_type;
+type Door = & iOpenable & ...;
+type Book = & iOpenable & ...;
 
-suit iOpenable:
-    | Door
-    | Book;
+extend iOpenable: some_func(some_item: some_type): some_type;
 
 extend Door
 {
