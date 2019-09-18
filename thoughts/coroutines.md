@@ -32,7 +32,7 @@ c.close()  # Закрывем генератор
 module crtn
 {
     var history = new List();
-    def calc(x: int = 0, y: int = 0)
+    proc calc(x: int = 0, y: int = 0)
     {
         if x == 0 and y == 0 { history.print(); }
         else
@@ -42,7 +42,10 @@ module crtn
             history.append(result);
         }
     }
-    def close() { history.empty(); }
+    proc close()
+    {
+        history.empty();
+    }
 }
 
 module main
@@ -50,11 +53,11 @@ module main
     import crtn;
     def main()
     {
-        calc(1, 2);
-        calc(100, 30);
-        calc(666, 0);
-        calc();
-        close();
+        call calc(1, 2);
+        call calc(100, 30);
+        call calc(666, 0);
+        call calc();
+        call close();
     }
 }
 ```
@@ -67,7 +70,7 @@ module crtn
     type calcable = history: List;
     extend calcable
     {
-        def calc(x: int = 0, y: int = 0)
+        proc calc(x: int = 0, y: int = 0)
         {
             if x == 0 and y == 0 { self.history.print(); }
             else
@@ -77,7 +80,10 @@ module crtn
                 self.history.append(result);
             }
         }
-        def close() { self.history.empty(); }
+        proc close()
+        {
+            self.history.empty();
+        }
     }
 }
 
