@@ -13,7 +13,9 @@
 
 start ::= module+ .
 
-module ::= `module` _ident_ module_block .
+module ::= `module` point_idents module_block .
+
+point_idents ::= _ident_ ( `.` _ident_ )* .
 
 module_block ::=
 `{`
@@ -74,7 +76,7 @@ naming ::= _ident_ (`:` _ident_ `=` x_expr | `=` (_data_ | new)) `;` .
 
 new ::= `new` func_call .
 
-func_call ::= _ident_ `(` (x_expr (`,` x_expr)*)? `)` .
+func_call ::= _ident_ `(` (x_expr (`,` x_expr)* )? `)` .
 
 ---
 
@@ -98,11 +100,13 @@ formals_list ::= (formal (`,` formal)*)? .
 
 ---
 
-x_expr ::= _expr_ | if_expr | pipe_expr | lambda | match_expr | comprehension .
+x_expr ::= _expr_ | if_expr | pipe_expr | method_expr | lambda | match_expr | comprehension .
 
 if_expr ::= `(` `if` _expr_ `:` x_expr (`elif` _expr_ `:` x_expr)* (`else` `:` x_expr)? `)` .
 
 pipe_expr ::= x_expr `|>` (_ident_ | func_call | lambda) .
+
+method_expr ::= point_idents `.` func_call .
 
 lambda ::= `lambda` `(` formals_list `)` (`:` typename `=>` (x_expr - lambda) | `=>` lambda) .
 
@@ -128,7 +132,7 @@ for ::= `for` _ident_ `in` (_container_ | _ident_ | func_call) .
 
 if ::= `if` _expr_ code_block (`elif` _expr_ code_block)* (`else` code_block)? .
 
-proc_call ::= `call` (func_call | pipe_expr) `;` .
+proc_call ::= `call` (func_call | pipe_expr | method_expr) `;` .
 
 return ::= `return` x_expr `;` .
 
