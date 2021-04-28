@@ -36,9 +36,9 @@ module_block ::=
 
 ---
 
-import ::= `import` _ident_ `;` .
+import ::= `import` point_idents `;` .
 
-use ::= `use` _ident_ `;` .
+use ::= `use` point_idents `;` .
 
 ---
 
