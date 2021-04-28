@@ -13,26 +13,26 @@
 
 start ::= module+ .
 
-module ::= `module` point_idents module_block .
+module ::= `module` point_idents `;` module_block .
 
 point_idents ::= _ident_ ( `.` _ident_ )* .
 
 module_block ::=
-`{`
-    `connections:`
-        (import | use)*
-    (`types:`
-        type | typedef | interface
-    )*
-    (`fields:`
-        var | let
-    )*
-    (`extend` _ident_ `:`
-        ((func | proc)+ | (func_decl `;`)+)
-    )*
-    `functions:`
-        functions+
-`}` .
+(`connections:`
+    import | use
+)*
+(`types:`
+    type | typedef | interface
+)*
+(`fields:`
+    var | let
+)*
+(`extend` _ident_ `:`
+    ( (func | proc)+ | (func_decl `;`)+ )
+)*
+`functions:`
+    functions+
+.
 
 ---
 
@@ -104,7 +104,7 @@ x_expr ::= _expr_ | if_expr | pipe_expr | method_expr | lambda | match_expr | co
 
 if_expr ::= `(` `if` _expr_ `:` x_expr (`elif` _expr_ `:` x_expr)* (`else` `:` x_expr)? `)` .
 
-pipe_expr ::= x_expr `|>` (_ident_ | func_call | lambda) .
+pipe_expr ::= x_expr `|>` (_ident_ | func_call | method_expr | lambda) .
 
 method_expr ::= point_idents `.` func_call .
 
