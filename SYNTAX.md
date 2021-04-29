@@ -19,13 +19,13 @@ point_idents ::= _ident_ ( `.` _ident_ )* .
 
 module_block ::=
 (`connections:`
-    import | use
+    (import | use)
 )*
 (`types:`
-    type | typedef | interface
+    (type | typedef | interface)
 )*
 (`fields:`
-    var | let
+    (var | let)
 )*
 (`extend` _ident_ `:`
     ( (func | proc)+ | (func_decl `;`)+ )
@@ -42,7 +42,9 @@ use ::= `use` point_idents `;` .
 
 ---
 
-type ::= `type` typename `=` (product | variant | intersection | functional) `;` .
+type ::= `type` typename `=` (product | variant | intersection | functional) methods `;` .
+
+methods ::= `methods:` functions+ .
 
 typename ::= _ident_ generic .
 
@@ -64,7 +66,7 @@ typenames_list = typename (`,` typename)+ .
 
 typedef ::= `typedef` _ident_ `=` typename `;` .
 
-interface ::= `interface` _ident_ `;` .
+interface ::= `interface` typename (`=` intersection )? methods `;` .
 
 ---
 
@@ -100,7 +102,11 @@ formals_list ::= (formal (`,` formal)*)? .
 
 ---
 
-x_expr ::= _expr_ | if_expr | pipe_expr | method_expr | lambda | match_expr | comprehension .
+x_expr ::= _expr_ | self | home | if_expr | pipe_expr | method_expr | lambda | match_expr | comprehension .
+
+self ::= `self.` (_ident_ | func_call) .
+
+home ::= `home.` (_ident_ | func_call) .
 
 if_expr ::= `(` `if` _expr_ `:` x_expr (`elif` _expr_ `:` x_expr)* (`else` `:` x_expr)? `)` .
 
@@ -116,9 +122,9 @@ comprehension ::= `[` for `:` (_expr_ | if_expr | pipe_expr) `]` .
 
 ---
 
-code_block ::= `{` (statements | _break_ | _continue_)+ `}` .
+code_block ::= `{` (statements+ | `break;` | `continue;` | return) `}` .
 
-statements ::= var | let | mod | loop | if | proc_call | return | del | match_stat .
+statements ::= var | let | mod | loop | if | proc_call | del | match_stat .
 
 mod ::= `mod` _ident_ _assignop_ x_expr `;` .
 
